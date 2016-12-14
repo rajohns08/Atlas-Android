@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/atlas_color_primary_gray"
+              android:paddingBottom="@dimen/atlas_padding_large"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <TextView
+        android:text="Touch &amp; Hold"
+        android:paddingTop="@dimen/atlas_padding_large"
+        android:gravity="center"
+        android:textSize="@dimen/atlas_text_size_primary_item_subtitle"
+        android:textColor="@color/atlas_text_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/record_button"
+        android:layout_marginTop="@dimen/atlas_margin_normal"
+        android:layout_gravity="center"
+        android:background="@drawable/atlas_message_composer_background"
+        android:tint="@color/atlas_color_primary_blue"
+        android:src="@drawable/ic_mic_white_24dp"
+        android:layout_width="@dimen/atlas_void_message_recorder_icon_width"
+        android:layout_height="@dimen/atlas_void_message_recorder_icon_height"/>
+
+</LinearLayout>

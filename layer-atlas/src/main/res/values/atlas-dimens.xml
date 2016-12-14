@@ -19,8 +19,18 @@
     <!-- # Standard Dimensions                                                                 # -->
     <!-- ####################################################################################### -->
 
+    <dimen name="atlas_margin_x_large">32dp</dimen>
+    <dimen name="atlas_margin_large">24dp</dimen>
+    <dimen name="atlas_margin_normal">16dp</dimen>
+    <dimen name="atlas_margin_small">8dp</dimen>
+    <dimen name="atlas_margin_x_small">4dp</dimen>
+    <dimen name="atlas_margin_xx_small">2dp</dimen>
+
+    <dimen name="atlas_padding_x_large">32dp</dimen>
+    <dimen name="atlas_padding_large">24dp</dimen>
     <dimen name="atlas_padding_normal">16dp</dimen>
     <dimen name="atlas_padding_narrow">8dp</dimen>
+
     <dimen name="atlas_primary_item_height">72dp</dimen>
     <dimen name="atlas_secondary_item_height">56dp</dimen>
     <dimen name="atlas_dropdown_item_height">48dp</dimen>
@@ -84,5 +94,12 @@
 
     <dimen name="atlas_participant_filter_min_width">32dp</dimen>
     <dimen name="atlas_selected_participant_group_max_height">96dp</dimen>
+
+    <!-- ####################################################################################### -->
+    <!-- # Voice Message Recorder                                                              # -->
+    <!-- ####################################################################################### -->
+
+    <dimen name="atlas_void_message_recorder_icon_width">72dp</dimen>
+    <dimen name="atlas_void_message_recorder_icon_height">72dp</dimen>
 
 </resources>

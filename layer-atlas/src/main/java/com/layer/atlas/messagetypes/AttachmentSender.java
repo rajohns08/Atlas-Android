@@ -7,7 +7,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import static android.support.v4.app.ActivityCompat.requestPermissions;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
 /**
@@ -92,13 +91,11 @@ public abstract class AttachmentSender extends MessageSender {
         return mIcon;
     }
 
-
     /**
-     *
      * Convenience method to check if a set of permissions have been granted
      */
     protected boolean hasPermissions(@NonNull Activity activity, String... permissions) {
-        for (String permission: permissions) {
+        for (String permission : permissions) {
             if (TextUtils.isEmpty(permission)) continue;
 
             if (checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -109,7 +106,11 @@ public abstract class AttachmentSender extends MessageSender {
         return true;
     }
 
-    protected void requestPermissions (@NonNull Activity activity, final int permissionsCode, String... permissions) {
+    protected void requestPermissions(@NonNull Activity activity, final int permissionsCode, String... permissions) {
         android.support.v4.app.ActivityCompat.requestPermissions(activity, permissions, permissionsCode);
+    }
+
+    public AttachmentPicker getAttachementPicker() {
+        return null;
     }
 }

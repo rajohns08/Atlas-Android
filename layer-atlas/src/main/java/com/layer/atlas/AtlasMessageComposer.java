@@ -32,6 +32,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,10 +43,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.layer.atlas.messagetypes.AttachmentPicker;
 import com.layer.atlas.messagetypes.AttachmentSender;
 import com.layer.atlas.messagetypes.MessageSender;
 import com.layer.atlas.messagetypes.text.TextSender;
 import com.layer.atlas.util.EditTextUtil;
+import com.layer.atlas.util.Log;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
 import com.layer.sdk.messaging.Conversation;
@@ -316,7 +319,13 @@ public class AtlasMessageComposer extends FrameLayout {
         menuItem.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mAttachmentMenu.dismiss();
-                ((AttachmentSender) v.getTag()).requestSend();
+                AttachmentSender sender = (AttachmentSender) v.getTag();
+
+                if (sender.getAttachementPicker() != null) {
+                    showAttachementPicker(sender);
+                } else {
+                    sender.requestSend();
+                }
             }
         });
         if (sender.getIcon() != null) {
@@ -327,6 +336,24 @@ public class AtlasMessageComposer extends FrameLayout {
             DrawableCompat.setTint(d, getResources().getColor(R.color.atlas_icon_enabled));
         }
         menuLayout.addView(menuItem);
+    }
+
+    private void showAttachementPicker(final AttachmentSender attachmentSender) {
+        final FrameLayout attachementPickerParent = (FrameLayout) findViewById(R.id.attachment_picker);
+        attachmentSender.getAttachementPicker().bind(attachementPickerParent, new AttachmentPicker.Callback() {
+            @Override
+            public void onSuccess() {
+                attachementPickerParent.removeAllViews();
+                attachmentSender.requestSend();
+                Log.d("Attachment picker success");
+            }
+
+            @Override
+            public void onFailure(String error) {
+                attachementPickerParent.removeAllViews();
+                Log.e(error);
+            }
+        });
     }
 
     private void initAttachmentMenu(Context context, AttributeSet attrs, int defStyle) {
