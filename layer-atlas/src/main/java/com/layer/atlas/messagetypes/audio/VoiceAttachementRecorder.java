@@ -1,7 +1,9 @@
 package com.layer.atlas.messagetypes.audio;
 
+import android.Manifest;
 import android.content.Context;
 import android.media.MediaRecorder;
+import android.support.annotation.RequiresPermission;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,14 +20,17 @@ import java.io.IOException;
  */
 
 public class VoiceAttachementRecorder implements AttachmentPicker {
+    private static final String PERMISSION = Manifest.permission.RECORD_AUDIO;
     private MediaRecorder mMediaRecorder;
     private String mOutputFilePath;
     private Callback mCallback;
+
 
     public VoiceAttachementRecorder(String mOutputFilePath) {
         this.mOutputFilePath = mOutputFilePath;
     }
 
+    @RequiresPermission(PERMISSION)
     public void startRecording() {
         mMediaRecorder = new MediaRecorder();
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -70,6 +75,7 @@ public class VoiceAttachementRecorder implements AttachmentPicker {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(getPickerLayout(), root, false);
         root.addView(view);
+        mCallback = callback;
 
         ImageView micButton = (ImageView) view.findViewById(R.id.record_button);
         micButton.setOnTouchListener(new View.OnTouchListener() {
