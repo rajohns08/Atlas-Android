@@ -1,9 +1,12 @@
 package com.layer.atlas.messagetypes.audio;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,13 +24,16 @@ import java.io.IOException;
 
 public class VoiceAttachementRecorder implements AttachmentPicker {
     private static final String PERMISSION = Manifest.permission.RECORD_AUDIO;
+    private static final int PERMISSION_REQUEST_CODE = 100;
+
     private MediaRecorder mMediaRecorder;
     private String mOutputFilePath;
     private Callback mCallback;
+    private Activity mActivity;
 
-
-    public VoiceAttachementRecorder(String mOutputFilePath) {
+    public VoiceAttachementRecorder(String mOutputFilePath, Activity activity) {
         this.mOutputFilePath = mOutputFilePath;
+        this.mActivity = activity;
     }
 
     @RequiresPermission(PERMISSION)
@@ -54,26 +60,32 @@ public class VoiceAttachementRecorder implements AttachmentPicker {
         mMediaRecorder.stop();
         mMediaRecorder.release();
         mMediaRecorder = null;
-        if (mCallback!=null) {
+        if (mCallback != null) {
             mCallback.onSuccess();
             mCallback = null;
         }
     }
 
-    public void setOutputFilePath(String mOutputFilePath) {
-        this.mOutputFilePath = mOutputFilePath;
+    @Override
+    public boolean hasRequiredPermissions() {
+        return ContextCompat.checkSelfPermission(mActivity, PERMISSION) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override
-    public int getPickerLayout() {
-        return R.layout.atlas_voice_message_attachement_recorder;
+    public void requestPermissions(Callback callback) {
+        if (!hasRequiredPermissions()) {
+            String[] permissions = {PERMISSION};
+            ActivityCompat.requestPermissions(mActivity, permissions, PERMISSION_REQUEST_CODE);
+        }
+        else {
+            callback.onSuccess();
+        }
     }
 
     @Override
     public void bind(ViewGroup root, final Callback callback) {
-        Context context = root.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(getPickerLayout(), root, false);
+        LayoutInflater inflater = LayoutInflater.from(mActivity);
+        View view = inflater.inflate(R.layout.atlas_voice_message_attachement_recorder, root, false);
         root.addView(view);
         mCallback = callback;
 

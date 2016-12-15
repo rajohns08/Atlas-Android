@@ -8,10 +8,9 @@ import android.view.ViewGroup;
  */
 
 public interface AttachmentPicker {
-
-    public int getPickerLayout();
     public void bind(ViewGroup root, Callback callback);
-
+    public boolean hasRequiredPermissions();
+    public void requestPermissions(Callback callback);
 
     public static interface Callback {
         public void onSuccess();
