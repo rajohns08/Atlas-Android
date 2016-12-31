@@ -365,6 +365,8 @@ public class AtlasMessageComposer extends FrameLayout {
             mAttachmentMenu = new PopupWindow(context, attrs, defStyle);
         }
         mAttachmentMenu.setContentView(LayoutInflater.from(context).inflate(R.layout.atlas_message_composer_attachment_menu, null));
+
+        //TODO : update to not use deprecated method. - aj
         mAttachmentMenu.setWindowLayoutMode(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mAttachmentMenu.setOutsideTouchable(true);
         mAttachmentMenu.setBackgroundDrawable(mAttachmentSendersBackground);
