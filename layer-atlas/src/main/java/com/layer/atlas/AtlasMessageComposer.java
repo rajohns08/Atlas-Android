@@ -32,7 +32,6 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -320,9 +319,13 @@ public class AtlasMessageComposer extends FrameLayout {
             public void onClick(View v) {
                 mAttachmentMenu.dismiss();
                 AttachmentSender sender = (AttachmentSender) v.getTag();
-
-                if (sender.getAttachementPicker() != null) {
-                    showAttachementPicker(sender);
+                if (sender instanceof AttachmentSenderWithPicker) {
+                    AttachmentSenderWithPicker attachmentSenderWithPicker = (AttachmentSenderWithPicker) sender;
+                    if (attachmentSenderWithPicker.getAttachmentPicker() != null) {
+                        showAttachmentPicker(attachmentSenderWithPicker);
+                    } else {
+                        sender.requestSend();
+                    }
                 } else {
                     sender.requestSend();
                 }
@@ -338,19 +341,20 @@ public class AtlasMessageComposer extends FrameLayout {
         menuLayout.addView(menuItem);
     }
 
-    private void showAttachementPicker(final AttachmentSender attachmentSender) {
-        final FrameLayout attachementPickerParent = (FrameLayout) findViewById(R.id.attachment_picker);
-        attachmentSender.getAttachementPicker().bind(attachementPickerParent, new AttachmentPicker.Callback() {
+    private void showAttachmentPicker(final AttachmentSenderWithPicker attachmentSender) {
+        attachmentSender.
+        final FrameLayout attachmentPickerParent = (FrameLayout) findViewById(R.id.attachment_picker);
+        attachmentSender.getAttachmentPicker().bind(attachmentPickerParent, new AttachmentPicker.Callback() {
             @Override
             public void onSuccess() {
-                attachementPickerParent.removeAllViews();
+                attachmentPickerParent.removeAllViews();
                 attachmentSender.requestSend();
                 Log.d("Attachment picker success");
             }
 
             @Override
             public void onFailure(String error) {
-                attachementPickerParent.removeAllViews();
+                attachmentPickerParent.removeAllViews();
                 Log.e(error);
             }
         });

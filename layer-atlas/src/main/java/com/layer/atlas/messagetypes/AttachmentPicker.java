@@ -7,10 +7,9 @@ import android.view.ViewGroup;
  * Created by archit on 12/14/16.
  */
 
-public interface AttachmentPicker {
-    public void bind(ViewGroup root, Callback callback);
-    public boolean hasRequiredPermissions();
-    public void requestPermissions(Callback callback);
+public abstract class AttachmentPicker {
+    public abstract void bind(ViewGroup root, Callback callback);
+    public abstract String[] getRequiredPermissions();
 
     public static interface Callback {
         public void onSuccess();

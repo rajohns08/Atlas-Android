@@ -109,8 +109,4 @@ public abstract class AttachmentSender extends MessageSender {
     protected void requestPermissions(@NonNull Activity activity, final int permissionsCode, String... permissions) {
         android.support.v4.app.ActivityCompat.requestPermissions(activity, permissions, permissionsCode);
     }
-
-    public AttachmentPicker getAttachementPicker() {
-        return null;
-    }
 }
