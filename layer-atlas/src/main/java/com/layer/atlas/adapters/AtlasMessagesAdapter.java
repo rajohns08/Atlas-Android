@@ -470,8 +470,8 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
         return mShouldShowAvatarInOneOnOneConversations;
     }
 
-    public void setShouldShowAvatarInOneOnOneConversations(boolean mShouldShowAvatarInOneOnOneConversations) {
-        this.mShouldShowAvatarInOneOnOneConversations = mShouldShowAvatarInOneOnOneConversations;
+    public void setShouldShowAvatarInOneOnOneConversations(boolean shouldShowAvatarInOneOnOneConversations) {
+        this.mShouldShowAvatarInOneOnOneConversations = shouldShowAvatarInOneOnOneConversations;
     }
 
 
