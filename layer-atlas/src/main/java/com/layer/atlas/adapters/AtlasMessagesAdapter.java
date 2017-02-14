@@ -180,6 +180,14 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
         return mFooterView;
     }
 
+    public boolean getShouldShowAvatarInOneOnOneConversations() {
+        return mShouldShowAvatarInOneOnOneConversations;
+    }
+
+    public void setShouldShowAvatarInOneOnOneConversations(boolean shouldShowAvatarInOneOnOneConversations) {
+        this.mShouldShowAvatarInOneOnOneConversations = shouldShowAvatarInOneOnOneConversations;
+    }
+
     /**
      * Set whether or not the conversation supports read receipts. This determines if the read
      * receipts should be shown in the view holders.
@@ -461,19 +469,6 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
         if (!(viewHolder instanceof CellViewHolder)) return null;
         return ((CellViewHolder) viewHolder).mMessage;
     }
-
-    //==============================================================================================
-    // Getters and setters
-    //==============================================================================================
-
-    public boolean getShouldShowAvatarInOneOnOneConversations() {
-        return mShouldShowAvatarInOneOnOneConversations;
-    }
-
-    public void setShouldShowAvatarInOneOnOneConversations(boolean shouldShowAvatarInOneOnOneConversations) {
-        this.mShouldShowAvatarInOneOnOneConversations = shouldShowAvatarInOneOnOneConversations;
-    }
-
 
     //==============================================================================================
     // Clustering
