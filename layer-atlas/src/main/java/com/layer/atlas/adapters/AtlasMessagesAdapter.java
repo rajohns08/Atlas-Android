@@ -180,10 +180,19 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
         return mFooterView;
     }
 
+    /**
+     * @return If the Avatar for the other participant in a one on one conversation  will be shown
+     * or not
+     */
     public boolean getShouldShowAvatarInOneOnOneConversations() {
         return mShouldShowAvatarInOneOnOneConversations;
     }
 
+    /**
+     * @param shouldShowAvatarInOneOnOneConversations Whether the Avatar for the other participant
+     *                                                in a one on one conversation should be shown
+     *                                                or not
+     */
     public void setShouldShowAvatarInOneOnOneConversations(boolean shouldShowAvatarInOneOnOneConversations) {
         this.mShouldShowAvatarInOneOnOneConversations = shouldShowAvatarInOneOnOneConversations;
     }
