@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.layer.atlas.R;
-import com.layer.atlas.adapters.AtlasBaseAdapter;
+import com.layer.atlas.adapters.BaseAdapter;
 import com.layer.sdk.query.Queryable;
 
 
@@ -56,7 +56,7 @@ public class SwipeableItem extends FrameLayout {
         final float DELETE_RATIO = 0.5f;
         final float MIN_ALPHA = 0f;
         final float MAX_ALPHA = 1f;
-        private AtlasBaseAdapter<Tquery> mAdapter;
+        private BaseAdapter<Tquery> mAdapter;
 
         public OnSwipeListener() {
             super(0, ItemTouchHelper.RIGHT);
@@ -136,7 +136,7 @@ public class SwipeableItem extends FrameLayout {
             }
         }
 
-        public void setBaseAdapter(AtlasBaseAdapter<Tquery> adapter) {
+        public void setBaseAdapter(BaseAdapter<Tquery> adapter) {
             mAdapter = adapter;
         }
     }

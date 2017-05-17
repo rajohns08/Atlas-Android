@@ -24,7 +24,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.layer.atlas.adapters.AtlasMessagesAdapter;
+import com.layer.atlas.adapters.MessagesAdapter;
 import com.layer.atlas.messagetypes.AtlasCellFactory;
 import com.layer.atlas.messagetypes.MessageStyle;
 import com.layer.atlas.util.itemanimators.NoChangeAnimator;
@@ -38,7 +38,7 @@ import com.layer.sdk.query.SortDescriptor;
 import com.squareup.picasso.Picasso;
 
 public class AtlasMessagesRecyclerView extends RecyclerView {
-    private AtlasMessagesAdapter mAdapter;
+    private MessagesAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ItemTouchHelper mSwipeItemTouchHelper;
     private boolean mShouldShowAvatarsInOneOnOneConversations;
@@ -64,11 +64,11 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
         setLayoutManager(mLayoutManager);
 
         // Create an adapter that auto-scrolls if we're already at the bottom
-        mAdapter = new AtlasMessagesAdapter(getContext(), layerClient, picasso)
+        mAdapter = new MessagesAdapter(getContext(), layerClient, picasso)
                 .setRecyclerView(this)
-                .setOnMessageAppendListener(new AtlasMessagesAdapter.OnMessageAppendListener() {
+                .setOnMessageAppendListener(new MessagesAdapter.OnMessageAppendListener() {
                     @Override
-                    public void onMessageAppend(AtlasMessagesAdapter adapter, Message message) {
+                    public void onMessageAppend(MessagesAdapter adapter, Message message) {
                         autoScroll();
                     }
                 });
@@ -121,7 +121,7 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
     }
 
     /**
-     * Updates the underlying AtlasMessagesAdapter with a Query for Messages in the given
+     * Updates the underlying MessagesAdapter with a Query for Messages in the given
      * Conversation.
      *
      * @param conversation Conversation to display Messages for.
@@ -145,7 +145,7 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
         if (listener == null) {
             mSwipeItemTouchHelper = null;
         } else {
-            listener.setBaseAdapter((AtlasMessagesAdapter) getAdapter());
+            listener.setBaseAdapter((MessagesAdapter) getAdapter());
             mSwipeItemTouchHelper = new ItemTouchHelper(listener);
             mSwipeItemTouchHelper.attachToRecyclerView(this);
         }
@@ -153,9 +153,9 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
     }
 
     /**
-     * Convenience pass-through to this list's AtlasMessagesAdapter.
+     * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see AtlasMessagesAdapter#addCellFactories(AtlasCellFactory...)
+     * @see MessagesAdapter#addCellFactories(AtlasCellFactory...)
      */
     public AtlasMessagesRecyclerView addCellFactories(AtlasCellFactory... cellFactories) {
         mAdapter.addCellFactories(cellFactories);
@@ -178,9 +178,9 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
     }
 
     /**
-     * Convenience pass-through to this list's AtlasMessagesAdapter.
+     * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see AtlasMessagesAdapter#setFooterView(View)
+     * @see MessagesAdapter#setFooterView(View)
      */
     public AtlasMessagesRecyclerView setFooterView(View footerView) {
         mAdapter.setFooterView(footerView);
@@ -189,27 +189,27 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
     }
 
     /**
-     * Convenience pass-through to this list's AtlasMessagesAdapter.
+     * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see AtlasMessagesAdapter#getFooterView()
+     * @see MessagesAdapter#getFooterView()
      */
     public View getFooterView() {
         return mAdapter.getFooterView();
     }
 
     /**
-     * Convenience pass-through to this list's AtlasMessagesAdapter.
+     * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see AtlasMessagesAdapter#getShouldShowAvatarInOneOnOneConversations()
+     * @see MessagesAdapter#getShouldShowAvatarInOneOnOneConversations()
      */
     public boolean getShouldShowAvatarInOneOnOneConversations() {
         return mAdapter.getShouldShowAvatarInOneOnOneConversations();
     }
 
     /**
-     * Convenience pass-through to this list's AtlasMessagesAdapter.
+     * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see AtlasMessagesAdapter#setShouldShowAvatarInOneOnOneConversations(boolean)
+     * @see MessagesAdapter#setShouldShowAvatarInOneOnOneConversations(boolean)
      */
     public AtlasMessagesRecyclerView setShouldShowAvatarInOneOnOneConversations(boolean shouldShowAvatarInOneOnOneConversations) {
         mAdapter.setShouldShowAvatarInOneOnOneConversations(shouldShowAvatarInOneOnOneConversations);
@@ -217,18 +217,18 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
     }
 
     /**
-     * Convenience pass-through to this list's AtlasMessagesAdapter.
+     * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see AtlasMessagesAdapter#getShouldShowAvatarPresence()
+     * @see MessagesAdapter#getShouldShowAvatarPresence()
      */
     public boolean getShouldShowAvatarPresence() {
         return mAdapter.getShouldShowAvatarPresence();
     }
 
     /**
-     * Convenience pass-through to this list's AtlasMessagesAdapter.
+     * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see AtlasMessagesAdapter#setShouldShowAvatarPresence(boolean)
+     * @see MessagesAdapter#setShouldShowAvatarPresence(boolean)
      */
     public AtlasMessagesRecyclerView setShouldShowAvatarPresence(boolean shouldShowAvatarPresence) {
         mAdapter.setShouldShowAvatarPresence(shouldShowAvatarPresence);

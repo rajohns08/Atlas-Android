@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.layer.sdk.query.Queryable;
 
-public interface AtlasBaseAdapter<Tquery extends Queryable> {
+public interface BaseAdapter<Tquery extends Queryable> {
 
     Integer getPosition(Tquery item);
 

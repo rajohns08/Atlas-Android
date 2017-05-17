@@ -37,7 +37,9 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConversationsAdapter.ViewHolder> implements AtlasBaseAdapter<Conversation>, RecyclerViewController.Callback {
+public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdapter.ViewHolder> implements
+
+        BaseAdapter<Conversation>, RecyclerViewController.Callback {
     protected final LayerClient mLayerClient;
     protected final Picasso mPicasso;
     private final RecyclerViewController<Conversation> mQueryController;
@@ -57,11 +59,11 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
 
     protected ConversationFormatter mConversationFormatter;
 
-    public AtlasConversationsAdapter(Context context, LayerClient client, Picasso picasso, ConversationFormatter conversationFormatter) {
+    public ConversationsAdapter(Context context, LayerClient client, Picasso picasso, ConversationFormatter conversationFormatter) {
         this(context, client, picasso, null, conversationFormatter);
     }
 
-    public AtlasConversationsAdapter(Context context, LayerClient client, Picasso picasso, Collection<String> updateAttributes, ConversationFormatter conversationFormatter) {
+    public ConversationsAdapter(Context context, LayerClient client, Picasso picasso, Collection<String> updateAttributes, ConversationFormatter conversationFormatter) {
         mConversationFormatter = conversationFormatter;
         Query<Conversation> query = Query.builder(Conversation.class)
                 /* Only show conversations we're still a member of */
@@ -85,13 +87,13 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
                     Log.perf("Conversation ViewHolder onClick");
                 }
 
-                mConversationClickListener.onConversationClick(AtlasConversationsAdapter.this, viewHolder.getConversation());
+                mConversationClickListener.onConversationClick(ConversationsAdapter.this, viewHolder.getConversation());
             }
 
             @Override
             public boolean onLongClick(ViewHolder viewHolder) {
                 if (mConversationClickListener == null) return false;
-                return mConversationClickListener.onConversationLongClick(AtlasConversationsAdapter.this, viewHolder.getConversation());
+                return mConversationClickListener.onConversationLongClick(ConversationsAdapter.this, viewHolder.getConversation());
             }
         };
         setHasStableIds(false);
@@ -100,7 +102,7 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
         mLayerClient.registerEventListener(mIdentityEventListener);
     }
 
-    public AtlasConversationsAdapter addCellFactories(AtlasCellFactory... cellFactories) {
+    public ConversationsAdapter addCellFactories(AtlasCellFactory... cellFactories) {
         if (mCellFactories == null) {
             mCellFactories = new LinkedHashSet<AtlasCellFactory>();
         }
@@ -126,7 +128,7 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
     // Initial message history
     //==============================================================================================
 
-    public AtlasConversationsAdapter setInitialHistoricMessagesToFetch(long initialHistory) {
+    public ConversationsAdapter setInitialHistoricMessagesToFetch(long initialHistory) {
         mInitialHistory = initialHistory;
         return this;
     }
@@ -169,7 +171,7 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
     // Listeners
     //==============================================================================================
 
-    public AtlasConversationsAdapter setOnConversationClickListener(OnConversationClickListener conversationClickListener) {
+    public ConversationsAdapter setOnConversationClickListener(OnConversationClickListener conversationClickListener) {
         mConversationClickListener = conversationClickListener;
         return this;
     }
@@ -437,7 +439,7 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
          * @param adapter      The IntegrationConversationsAdapter which had an item clicked.
          * @param conversation The item clicked.
          */
-        void onConversationClick(AtlasConversationsAdapter adapter, Conversation conversation);
+        void onConversationClick(ConversationsAdapter adapter, Conversation conversation);
 
         /**
          * Alerts the listener to long item clicks.
@@ -446,6 +448,6 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
          * @param conversation The item long-clicked.
          * @return true if the long-click was handled, false otherwise.
          */
-        boolean onConversationLongClick(AtlasConversationsAdapter adapter, Conversation conversation);
+        boolean onConversationLongClick(ConversationsAdapter adapter, Conversation conversation);
     }
 }
