@@ -25,7 +25,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.layer.atlas.adapters.AtlasConversationsAdapter;
+import com.layer.atlas.adapters.ConversationsAdapter;
 import com.layer.atlas.messagetypes.AtlasCellFactory;
 import com.layer.atlas.util.AvatarStyle;
 import com.layer.atlas.util.ConversationFormatter;
@@ -37,7 +37,7 @@ import com.layer.sdk.messaging.Conversation;
 import com.squareup.picasso.Picasso;
 
 public class AtlasConversationsRecyclerView extends RecyclerView {
-    AtlasConversationsAdapter mAdapter;
+    ConversationsAdapter mAdapter;
     private ItemTouchHelper mSwipeItemTouchHelper;
 
     private ConversationStyle conversationStyle;
@@ -63,7 +63,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         // Don't flash items when changing content
         setItemAnimator(new NoChangeAnimator());
 
-        mAdapter = new AtlasConversationsAdapter(getContext(), layerClient, picasso, conversationFormatter);
+        mAdapter = new ConversationsAdapter(getContext(), layerClient, picasso, conversationFormatter);
         mAdapter.setStyle(conversationStyle);
         super.setAdapter(mAdapter);
         refresh();
@@ -110,11 +110,11 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
     }
 
     /**
-     * Convenience pass-through to this list's AtlasConversationsAdapter.
+     * Convenience pass-through to this list's ConversationsAdapter.
      *
-     * @see AtlasConversationsAdapter#setOnConversationClickListener(AtlasConversationsAdapter.OnConversationClickListener)
+     * @see ConversationsAdapter#setOnConversationClickListener(ConversationsAdapter.OnConversationClickListener)
      */
-    public AtlasConversationsRecyclerView setOnConversationClickListener(AtlasConversationsAdapter.OnConversationClickListener listener) {
+    public AtlasConversationsRecyclerView setOnConversationClickListener(ConversationsAdapter.OnConversationClickListener listener) {
         mAdapter.setOnConversationClickListener(listener);
         return this;
     }
@@ -126,7 +126,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         if (listener == null) {
             mSwipeItemTouchHelper = null;
         } else {
-            listener.setBaseAdapter((AtlasConversationsAdapter) getAdapter());
+            listener.setBaseAdapter((ConversationsAdapter) getAdapter());
             mSwipeItemTouchHelper = new ItemTouchHelper(listener);
             mSwipeItemTouchHelper.attachToRecyclerView(this);
         }
@@ -134,9 +134,9 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
     }
 
     /**
-     * Convenience pass-through to this list's AtlasConversationsAdapter.
+     * Convenience pass-through to this list's ConversationsAdapter.
      *
-     * @see AtlasConversationsAdapter#setInitialHistoricMessagesToFetch(long)
+     * @see ConversationsAdapter#setInitialHistoricMessagesToFetch(long)
      */
     public AtlasConversationsRecyclerView setInitialHistoricMessagesToFetch(long count) {
         mAdapter.setInitialHistoricMessagesToFetch(count);

@@ -37,21 +37,21 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * AtlasMessagesAdapter drives an AtlasMessagesList.  The AtlasMessagesAdapter itself handles
+ * MessagesAdapter drives an AtlasMessagesList.  The MessagesAdapter itself handles
  * rendering sender names, avatars, dates, left/right alignment, and message clustering, and leaves
  * rendering message content up to registered CellFactories.  Each CellFactory knows which Messages
  * it can render, can create new View hierarchies for its Message types, and can render (bind)
  * Message data with its created View hierarchies.  Typically, CellFactories are segregated by
  * MessagePart MIME types (e.g. "text/plain", "image/jpeg", and "application/vnd.geo+json").
  * <p>
- * Under the hood, the AtlasMessagesAdapter is a RecyclerView.Adapter, which automatically recycles
+ * Under the hood, the MessagesAdapter is a RecyclerView.Adapter, which automatically recycles
  * its list items within view-type "buckets".  Each registered CellFactory actually creates two such
  * view-types: one for cells sent by the authenticated user, and another for cells sent by remote
- * actors.  This allows the AtlasMessagesAdapter to efficiently render images sent by the current
+ * actors.  This allows the MessagesAdapter to efficiently render images sent by the current
  * user aligned on the left, and images sent by others aligned on the right, for example.  In case
  * this sent-by distinction is of value when rendering cells, it provided as the `isMe` argument.
  * <p>
- * When rendering Messages, the AtlasMessagesAdapter first determines which CellFactory to handle
+ * When rendering Messages, the MessagesAdapter first determines which CellFactory to handle
  * the Message with calling CellFactory.isBindable() on each of its registered CellFactories. The
  * first CellFactory to return `true` is used for that Message.  Then, the adapter checks for
  * available CellHolders of that type.  If none are found, a new one is created with a call to
@@ -60,7 +60,8 @@ import java.util.Set;
  *
  * @see AtlasCellFactory
  */
-public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdapter.ViewHolder> implements AtlasBaseAdapter<Message>, RecyclerViewController.Callback {
+public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> implements
+        BaseAdapter<Message>, RecyclerViewController.Callback {
     private final static int VIEW_TYPE_FOOTER = 0;
 
     protected final LayerClient mLayerClient;
@@ -98,7 +99,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
     protected boolean mShouldShowAvatarInOneOnOneConversations;
     protected boolean mShouldShowAvatarPresence = true;
 
-    public AtlasMessagesAdapter(Context context, LayerClient layerClient, Picasso picasso) {
+    public MessagesAdapter(Context context, LayerClient layerClient, Picasso picasso) {
         mLayerClient = layerClient;
         mPicasso = picasso;
         mLayoutInflater = LayoutInflater.from(context);
@@ -127,12 +128,12 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
     }
 
     /**
-     * Sets this AtlasMessagesAdapter's Message Query.
+     * Sets this MessagesAdapter's Message Query.
      *
-     * @param query Query drive this AtlasMessagesAdapter.
-     * @return This AtlasMessagesAdapter.
+     * @param query Query drive this MessagesAdapter.
+     * @return This MessagesAdapter.
      */
-    public AtlasMessagesAdapter setQuery(Query<Message> query) {
+    public MessagesAdapter setQuery(Query<Message> query) {
         mQueryController.setQuery(query);
         return this;
     }
@@ -151,7 +152,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
         mLayerClient.unregisterEventListener(mIdentityEventListener);
     }
 
-    public AtlasMessagesAdapter setRecyclerView(RecyclerView recyclerView) {
+    public MessagesAdapter setRecyclerView(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
         return this;
     }
@@ -210,7 +211,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
      * @param shouldShowPresence Whether the Avatar for the other participant in a one on one
      *                           conversation should be shown or not. Default is `true`.
      */
-    public AtlasMessagesAdapter setShouldShowAvatarPresence(boolean shouldShowPresence) {
+    public MessagesAdapter setShouldShowAvatarPresence(boolean shouldShowPresence) {
         mShouldShowAvatarPresence = shouldShowPresence;
         return this;
     }
@@ -238,7 +239,7 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
      * @param listener The OnAppendListener to notify about appended items.
      * @return This AtlasQueryAdapter.
      */
-    public AtlasMessagesAdapter setOnMessageAppendListener(OnMessageAppendListener listener) {
+    public MessagesAdapter setOnMessageAppendListener(OnMessageAppendListener listener) {
         mAppendListener = listener;
         return this;
     }
@@ -249,13 +250,13 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
     //==============================================================================================
 
     /**
-     * Registers one or more CellFactories for the AtlasMessagesAdapter to manage.  CellFactories
+     * Registers one or more CellFactories for the MessagesAdapter to manage.  CellFactories
      * know which Messages they can render, and handle View caching, creation, and binding.
      *
      * @param cellFactories Cells to register.
-     * @return This AtlasMessagesAdapter.
+     * @return This MessagesAdapter.
      */
-    public AtlasMessagesAdapter addCellFactories(AtlasCellFactory... cellFactories) {
+    public MessagesAdapter addCellFactories(AtlasCellFactory... cellFactories) {
         for (AtlasCellFactory cellFactory : cellFactories) {
             cellFactory.setStyle(mMessageStyle);
             mCellFactories.add(cellFactory);
@@ -820,6 +821,6 @@ public class AtlasMessagesAdapter extends RecyclerView.Adapter<AtlasMessagesAdap
          * @param adapter The AtlasQueryAdapter which had an item appended.
          * @param message The item appended to the AtlasQueryAdapter.
          */
-        void onMessageAppend(AtlasMessagesAdapter adapter, Message message);
+        void onMessageAppend(MessagesAdapter adapter, Message message);
     }
 }

@@ -10,7 +10,7 @@ import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 
 /**
- * CellFactories manage one or more types ot Messages for display within an AtlasMessagesAdapter.
+ * CellFactories manage one or more types ot Messages for display within an MessagesAdapter.
  * Factories know what types of Messages they can render, generate ViewHolders for rendering their
  * Messages, can pre-parse Message content relevant to rendering them, and bind with ViewHolders for
  * display.
