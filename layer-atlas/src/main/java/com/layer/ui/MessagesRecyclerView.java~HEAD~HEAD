@@ -29,6 +29,7 @@ import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.MessageStyle;
 import com.layer.ui.util.itemanimators.NoChangeAnimator;
 import com.layer.ui.util.views.SwipeableItem;
+
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Message;
@@ -156,11 +157,7 @@ public class MessagesRecyclerView extends RecyclerView {
     /**
      * Convenience pass-through to this list's MessagesAdapter.
      *
-<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/MessagesRecyclerView.java
      * @see MessagesAdapter#addCellFactories(CellFactory...)
-=======
-     * @see MessagesAdapter#addCellFactories(AtlasCellFactory...)
->>>>>>> Rename Adapter:layer-atlas/src/main/java/com/layer/atlas/AtlasMessagesRecyclerView.java
      */
     public MessagesRecyclerView addCellFactories(CellFactory... cellFactories) {
         mAdapter.addCellFactories(cellFactories);
