@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.layer.atlas.Avatar;
-import com.layer.atlas.AtlasTypingIndicator;
+import com.layer.atlas.TypingIndicatorLayout;
 import com.layer.atlas.R;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
 import com.layer.sdk.messaging.Identity;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class AvatarTypingIndicatorFactory implements AtlasTypingIndicator.TypingIndicatorFactory<LinearLayout> {
+public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.TypingIndicatorFactory<LinearLayout> {
     private static final String TAG = AvatarTypingIndicatorFactory.class.getSimpleName();
 
     private static final int DOT_RES_ID = R.drawable.atlas_typing_indicator_dot;
@@ -50,7 +50,7 @@ public class AvatarTypingIndicatorFactory implements AtlasTypingIndicator.Typing
         LinearLayout l = new LinearLayout(context);
         l.setGravity(Gravity.CENTER);
         l.setOrientation(LinearLayout.HORIZONTAL);
-        l.setLayoutParams(new AtlasTypingIndicator.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        l.setLayoutParams(new TypingIndicatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         ImageView v;
         LinearLayout.LayoutParams vp;

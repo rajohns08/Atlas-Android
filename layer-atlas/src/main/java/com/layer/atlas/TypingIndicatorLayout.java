@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * maintains a set of typists for the given Conversation, providing callbacks when UI updates are
  * needed.  AtlasTypingIndicator can provide a default UI updater if desired.
  */
-public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndicatorListener.Weak {
+public class TypingIndicatorLayout extends FrameLayout implements LayerTypingIndicatorListener.Weak {
     private final ConcurrentHashMap<Identity, TypingIndicator> mTypists = new ConcurrentHashMap<>();
 
     private volatile Conversation mConversation;
@@ -43,15 +43,15 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
     private volatile boolean mActive = false;
     private volatile View mIndicatorView;
 
-    public AtlasTypingIndicator(Context context) {
+    public TypingIndicatorLayout(Context context) {
         super(context);
     }
 
-    public AtlasTypingIndicator(Context context, AttributeSet attrs) {
+    public TypingIndicatorLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AtlasTypingIndicator(Context context, AttributeSet attrs, int defStyle) {
+    public TypingIndicatorLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -60,7 +60,7 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
      *
      * @return This AtlasTypingIndicator for chaining.
      */
-    public AtlasTypingIndicator init(LayerClient layerClient) {
+    public TypingIndicatorLayout init(LayerClient layerClient) {
         if (layerClient == null) throw new IllegalArgumentException("LayerClient cannot be null");
         layerClient.registerTypingIndicator(this);
         return this;
@@ -72,7 +72,7 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
      * @param conversation Conversation to listen for typing on
      * @return This AtlasTypingIndicator for chaining.
      */
-    public AtlasTypingIndicator setConversation(Conversation conversation) {
+    public TypingIndicatorLayout setConversation(Conversation conversation) {
         mConversation = conversation;
         return this;
     }
@@ -82,9 +82,9 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
      *
      * @param factory TypingIndicatorFactory used to generate the TypingIndicator View.
      * @return This AtlasTypingIndicator.
-     * @see com.layer.atlas.AtlasTypingIndicator.TypingIndicatorFactory
+     * @see com.layer.atlas.TypingIndicatorLayout.TypingIndicatorFactory
      */
-    public AtlasTypingIndicator setTypingIndicatorFactory(TypingIndicatorFactory factory) {
+    public TypingIndicatorLayout setTypingIndicatorFactory(TypingIndicatorFactory factory) {
         mTypingIndicatorFactory = factory;
         removeAllViews();
         if (factory != null) {
@@ -102,7 +102,7 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
      * @param listener TypingActivityListener for receiving TypingIndicator activity state changes.
      * @return This AtlasTypingIndicator.
      */
-    public AtlasTypingIndicator setTypingActivityListener(TypingActivityListener listener) {
+    public TypingIndicatorLayout setTypingActivityListener(TypingActivityListener listener) {
         mActivityListener = listener;
         return this;
     }
@@ -112,7 +112,7 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
      *
      * @return This AtlasTypingIndicator for chaining.
      */
-    public AtlasTypingIndicator clear() {
+    public TypingIndicatorLayout clear() {
         mTypists.clear();
         refresh();
         return this;
@@ -123,7 +123,7 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
      *
      * @return This AtlasTypingIndicator for chaining.
      */
-    private AtlasTypingIndicator refresh() {
+    private TypingIndicatorLayout refresh() {
         if (mTypingIndicatorFactory == null) return this;
         mTypingIndicatorFactory.onBindView(mIndicatorView, mTypists);
         return this;
@@ -196,6 +196,6 @@ public class AtlasTypingIndicator extends FrameLayout implements LayerTypingIndi
          * @param typingIndicator AtlasTypingIndicator notifying this listener.
          * @param active          `true` if typists are now active, or `false` if inactive.
          */
-        void onTypingActivityChange(AtlasTypingIndicator typingIndicator, boolean active);
+        void onTypingActivityChange(TypingIndicatorLayout typingIndicator, boolean active);
     }
 }

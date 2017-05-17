@@ -11,7 +11,7 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.layer.atlas.AtlasTypingIndicator;
+import com.layer.atlas.TypingIndicatorLayout;
 import com.layer.atlas.R;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
 import com.layer.sdk.messaging.Identity;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BubbleTypingIndicatorFactory implements AtlasTypingIndicator.TypingIndicatorFactory<LinearLayout> {
+public class BubbleTypingIndicatorFactory implements TypingIndicatorLayout.TypingIndicatorFactory<LinearLayout> {
     private static final String TAG = BubbleTypingIndicatorFactory.class.getSimpleName();
 
     private static final int DOT_RES_ID = R.drawable.atlas_typing_indicator_dot;
@@ -42,7 +42,7 @@ public class BubbleTypingIndicatorFactory implements AtlasTypingIndicator.Typing
         l.setMinimumHeight(minHeight);
         l.setGravity(Gravity.CENTER);
         l.setOrientation(LinearLayout.HORIZONTAL);
-        l.setLayoutParams(new AtlasTypingIndicator.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        l.setLayoutParams(new TypingIndicatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         l.setBackgroundDrawable(r.getDrawable(R.drawable.atlas_message_item_cell_them));
 
         ImageView v;

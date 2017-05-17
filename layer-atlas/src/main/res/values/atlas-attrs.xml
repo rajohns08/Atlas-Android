@@ -87,7 +87,7 @@
         <attr name="avatarTextStyle" />
     </declare-styleable>
 
-    <declare-styleable name="AtlasTypingIndicator"></declare-styleable>
+    <declare-styleable name="TypingIndicatorLayout"></declare-styleable>
 
 
     <!-- ####################### -->
