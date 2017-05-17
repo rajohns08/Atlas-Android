@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
-import com.layer.atlas.AtlasAvatar;
+import com.layer.atlas.Avatar;
 import com.layer.atlas.R;
 import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.messagetypes.MessageStyle;
@@ -709,7 +709,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         protected TextView mTimeGroupDay;
         protected TextView mTimeGroupTime;
         protected Space mClusterSpaceGap;
-        protected AtlasAvatar mAvatar;
+        protected Avatar mAvatar;
         protected ViewGroup mCell;
         protected TextView mReceipt;
 
@@ -727,7 +727,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             mCell = (ViewGroup) itemView.findViewById(R.id.cell);
             mReceipt = (TextView) itemView.findViewById(R.id.receipt);
 
-            mAvatar = ((AtlasAvatar) itemView.findViewById(R.id.avatar));
+            mAvatar = ((Avatar) itemView.findViewById(R.id.avatar));
             if (mAvatar != null)  {
                 mAvatar.init(picasso);
                 mAvatar.setShouldShowPresence(shouldShowAvatarPresence);

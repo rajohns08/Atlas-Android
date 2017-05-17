@@ -37,8 +37,8 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * AtlasAvatar uses Picasso to render the avatar image. So, you need to init
  */
-public class AtlasAvatar extends View {
-    public static final String TAG = AtlasAvatar.class.getSimpleName();
+public class Avatar extends View {
+    public static final String TAG = Avatar.class.getSimpleName();
 
     private final static CircleTransform SINGLE_TRANSFORM = new CircleTransform(TAG + ".single");
     private final static CircleTransform MULTI_TRANSFORM = new CircleTransform(TAG + ".multi");
@@ -91,19 +91,19 @@ public class AtlasAvatar extends View {
     private Rect mRect = new Rect();
     private RectF mContentRect = new RectF();
 
-    public AtlasAvatar(Context context) {
+    public Avatar(Context context) {
         super(context);
     }
 
-    public AtlasAvatar(Context context, AttributeSet attrs) {
+    public Avatar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AtlasAvatar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Avatar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public AtlasAvatar init(Picasso picasso) {
+    public Avatar init(Picasso picasso) {
         mPicasso = picasso;
 
         mPaintInitials.setAntiAlias(true);
@@ -118,7 +118,7 @@ public class AtlasAvatar extends View {
         return this;
     }
 
-    public AtlasAvatar setStyle(AvatarStyle avatarStyle) {
+    public Avatar setStyle(AvatarStyle avatarStyle) {
         mPaintBackground.setColor(avatarStyle.getAvatarBackgroundColor());
         mPaintBorder.setColor(avatarStyle.getAvatarBorderColor());
         mPaintInitials.setColor(avatarStyle.getAvatarTextColor());
@@ -126,7 +126,7 @@ public class AtlasAvatar extends View {
         return this;
     }
 
-    public AtlasAvatar setParticipants(Identity... participants) {
+    public Avatar setParticipants(Identity... participants) {
         mParticipants.clear();
         mParticipants.addAll(Arrays.asList(participants));
         update();
@@ -142,7 +142,7 @@ public class AtlasAvatar extends View {
      * @param shouldShowPresence set to `true` to show presence, `false` otherwise.
      * @return
      */
-    public AtlasAvatar setShouldShowPresence(boolean shouldShowPresence) {
+    public Avatar setShouldShowPresence(boolean shouldShowPresence) {
         mShouldShowPresence = shouldShowPresence;
         return this;
     }
@@ -161,7 +161,7 @@ public class AtlasAvatar extends View {
     /**
      * Should be called from UI thread.
      */
-    public AtlasAvatar setParticipants(Set<Identity> participants) {
+    public Avatar setParticipants(Set<Identity> participants) {
         mParticipants.clear();
         mParticipants.addAll(participants);
         update();
@@ -295,7 +295,7 @@ public class AtlasAvatar extends View {
                         targetUrl = null;
                     }
                     mPicasso.load(targetUrl)
-                            .tag(AtlasAvatar.TAG).noPlaceholder().noFade()
+                            .tag(Avatar.TAG).noPlaceholder().noFade()
                             .centerCrop().resize(size, size)
                             .transform((avatarCount > 1) ? MULTI_TRANSFORM : SINGLE_TRANSFORM)
                             .into(imageTarget);
@@ -398,11 +398,11 @@ public class AtlasAvatar extends View {
     private static class ImageTarget implements Target {
         private final static AtomicLong sCounter = new AtomicLong(0);
         private final long mId;
-        private final AtlasAvatar mCluster;
+        private final Avatar mCluster;
         private String mUrl;
         private Bitmap mBitmap;
 
-        public ImageTarget(AtlasAvatar cluster) {
+        public ImageTarget(Avatar cluster) {
             mId = sCounter.incrementAndGet();
             mCluster = cluster;
         }

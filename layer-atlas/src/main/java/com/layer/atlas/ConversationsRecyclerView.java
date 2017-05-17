@@ -36,26 +36,26 @@ import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.squareup.picasso.Picasso;
 
-public class AtlasConversationsRecyclerView extends RecyclerView {
+public class ConversationsRecyclerView extends RecyclerView {
     ConversationsAdapter mAdapter;
     private ItemTouchHelper mSwipeItemTouchHelper;
 
     private ConversationStyle conversationStyle;
 
-    public AtlasConversationsRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public ConversationsRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         parseStyle(context, attrs, defStyle);
     }
 
-    public AtlasConversationsRecyclerView(Context context, AttributeSet attrs) {
+    public ConversationsRecyclerView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AtlasConversationsRecyclerView(Context context) {
+    public ConversationsRecyclerView(Context context) {
         super(context);
     }
 
-    public AtlasConversationsRecyclerView init(LayerClient layerClient, Picasso picasso, ConversationFormatter conversationFormatter) {
+    public ConversationsRecyclerView init(LayerClient layerClient, Picasso picasso, ConversationFormatter conversationFormatter) {
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         manager.setStackFromEnd(false);
         setLayoutManager(manager);
@@ -71,7 +71,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         return this;
     }
 
-    public AtlasConversationsRecyclerView init(LayerClient layerClient, Picasso picasso) {
+    public ConversationsRecyclerView init(LayerClient layerClient, Picasso picasso) {
         return init(layerClient, picasso, new ConversationFormatter());
     }
 
@@ -80,7 +80,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         throw new RuntimeException("AtlasConversationsRecyclerView sets its own Adapter");
     }
 
-    public AtlasConversationsRecyclerView addCellFactories (CellFactory... cellFactories) {
+    public ConversationsRecyclerView addCellFactories (CellFactory... cellFactories) {
         mAdapter.addCellFactories(cellFactories);
         return this;
     }
@@ -104,7 +104,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         refresh();
     }
 
-    public AtlasConversationsRecyclerView refresh() {
+    public ConversationsRecyclerView refresh() {
         if (mAdapter != null) mAdapter.refresh();
         return this;
     }
@@ -114,12 +114,12 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
      *
      * @see ConversationsAdapter#setOnConversationClickListener(ConversationsAdapter.OnConversationClickListener)
      */
-    public AtlasConversationsRecyclerView setOnConversationClickListener(ConversationsAdapter.OnConversationClickListener listener) {
+    public ConversationsRecyclerView setOnConversationClickListener(ConversationsAdapter.OnConversationClickListener listener) {
         mAdapter.setOnConversationClickListener(listener);
         return this;
     }
 
-    public AtlasConversationsRecyclerView setOnConversationSwipeListener(SwipeableItem.OnSwipeListener<Conversation> listener) {
+    public ConversationsRecyclerView setOnConversationSwipeListener(SwipeableItem.OnSwipeListener<Conversation> listener) {
         if (mSwipeItemTouchHelper != null) {
             mSwipeItemTouchHelper.attachToRecyclerView(null);
         }
@@ -138,12 +138,12 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
      *
      * @see ConversationsAdapter#setInitialHistoricMessagesToFetch(long)
      */
-    public AtlasConversationsRecyclerView setInitialHistoricMessagesToFetch(long count) {
+    public ConversationsRecyclerView setInitialHistoricMessagesToFetch(long count) {
         mAdapter.setInitialHistoricMessagesToFetch(count);
         return this;
     }
 
-    public AtlasConversationsRecyclerView setTypeface(Typeface titleTypeface, Typeface titleUnreadTypeface, Typeface subtitleTypeface, Typeface subtitleUnreadTypeface, Typeface dateTypeface) {
+    public ConversationsRecyclerView setTypeface(Typeface titleTypeface, Typeface titleUnreadTypeface, Typeface subtitleTypeface, Typeface subtitleUnreadTypeface, Typeface dateTypeface) {
         conversationStyle.setTitleTextTypeface(titleTypeface);
         conversationStyle.setTitleUnreadTextTypeface(titleUnreadTypeface);
         conversationStyle.setSubtitleTextTypeface(subtitleTypeface);
@@ -154,39 +154,39 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyle) {
         ConversationStyle.Builder styleBuilder = new ConversationStyle.Builder();
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AtlasConversationsRecyclerView, R.attr.AtlasConversationsRecyclerView, defStyle);
-        styleBuilder.titleTextColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_cellTitleTextColor, context.getResources().getColor(R.color.atlas_text_gray)));
-        int titleTextStyle = ta.getInt(R.styleable.AtlasConversationsRecyclerView_cellTitleTextStyle, Typeface.NORMAL);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ConversationsRecyclerView, R.attr.AtlasConversationsRecyclerView, defStyle);
+        styleBuilder.titleTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellTitleTextColor, context.getResources().getColor(R.color.atlas_text_gray)));
+        int titleTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellTitleTextStyle, Typeface.NORMAL);
         styleBuilder.titleTextStyle(titleTextStyle);
-        String titleTextTypefaceName = ta.getString(R.styleable.AtlasConversationsRecyclerView_cellTitleTextTypeface);
+        String titleTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellTitleTextTypeface);
         styleBuilder.titleTextTypeface(titleTextTypefaceName != null ? Typeface.create(titleTextTypefaceName, titleTextStyle) : null);
 
-        styleBuilder.titleUnreadTextColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_cellTitleUnreadTextColor, context.getResources().getColor(R.color.atlas_text_black)));
-        int titleUnreadTextStyle = ta.getInt(R.styleable.AtlasConversationsRecyclerView_cellTitleUnreadTextStyle, Typeface.BOLD);
+        styleBuilder.titleUnreadTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellTitleUnreadTextColor, context.getResources().getColor(R.color.atlas_text_black)));
+        int titleUnreadTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellTitleUnreadTextStyle, Typeface.BOLD);
         styleBuilder.titleUnreadTextStyle(titleUnreadTextStyle);
-        String titleUnreadTextTypefaceName = ta.getString(R.styleable.AtlasConversationsRecyclerView_cellTitleUnreadTextTypeface);
+        String titleUnreadTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellTitleUnreadTextTypeface);
         styleBuilder.titleUnreadTextTypeface(titleUnreadTextTypefaceName != null ? Typeface.create(titleUnreadTextTypefaceName, titleUnreadTextStyle) : null);
 
-        styleBuilder.subtitleTextColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_cellSubtitleTextColor, context.getResources().getColor(R.color.atlas_text_gray)));
-        int subtitleTextStyle = ta.getInt(R.styleable.AtlasConversationsRecyclerView_cellSubtitleTextStyle, Typeface.NORMAL);
+        styleBuilder.subtitleTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellSubtitleTextColor, context.getResources().getColor(R.color.atlas_text_gray)));
+        int subtitleTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellSubtitleTextStyle, Typeface.NORMAL);
         styleBuilder.subtitleTextStyle(subtitleTextStyle);
-        String subtitleTextTypefaceName = ta.getString(R.styleable.AtlasConversationsRecyclerView_cellSubtitleTextTypeface);
+        String subtitleTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellSubtitleTextTypeface);
         styleBuilder.subtitleTextTypeface(subtitleTextTypefaceName != null ? Typeface.create(subtitleTextTypefaceName, subtitleTextStyle) : null);
 
-        styleBuilder.subtitleUnreadTextColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_cellSubtitleUnreadTextColor, context.getResources().getColor(R.color.atlas_text_black)));
-        int subtitleUnreadTextStyle = ta.getInt(R.styleable.AtlasConversationsRecyclerView_cellSubtitleUnreadTextStyle, Typeface.NORMAL);
+        styleBuilder.subtitleUnreadTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellSubtitleUnreadTextColor, context.getResources().getColor(R.color.atlas_text_black)));
+        int subtitleUnreadTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellSubtitleUnreadTextStyle, Typeface.NORMAL);
         styleBuilder.subtitleUnreadTextStyle(subtitleUnreadTextStyle);
-        String subtitleUnreadTextTypefaceName = ta.getString(R.styleable.AtlasConversationsRecyclerView_cellSubtitleUnreadTextTypeface);
+        String subtitleUnreadTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellSubtitleUnreadTextTypeface);
         styleBuilder.subtitleUnreadTextTypeface(subtitleUnreadTextTypefaceName != null ? Typeface.create(subtitleUnreadTextTypefaceName, subtitleUnreadTextStyle) : null);
 
-        styleBuilder.cellBackgroundColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_cellBackgroundColor, Color.TRANSPARENT));
-        styleBuilder.cellUnreadBackgroundColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_cellUnreadBackgroundColor, Color.TRANSPARENT));
-        styleBuilder.dateTextColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_dateTextColor, context.getResources().getColor(R.color.atlas_color_primary_blue)));
+        styleBuilder.cellBackgroundColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellBackgroundColor, Color.TRANSPARENT));
+        styleBuilder.cellUnreadBackgroundColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellUnreadBackgroundColor, Color.TRANSPARENT));
+        styleBuilder.dateTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_dateTextColor, context.getResources().getColor(R.color.atlas_color_primary_blue)));
 
         AvatarStyle.Builder avatarStyleBuilder = new AvatarStyle.Builder();
-        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_avatarTextColor, context.getResources().getColor(R.color.atlas_avatar_text)));
-        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_avatarBackgroundColor, context.getResources().getColor(R.color.atlas_avatar_background)));
-        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.AtlasConversationsRecyclerView_avatarBorderColor, context.getResources().getColor(R.color.atlas_avatar_border)));
+        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarTextColor, context.getResources().getColor(R.color.atlas_avatar_text)));
+        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarBackgroundColor, context.getResources().getColor(R.color.atlas_avatar_background)));
+        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarBorderColor, context.getResources().getColor(R.color.atlas_avatar_border)));
         styleBuilder.avatarStyle(avatarStyleBuilder.build());
         ta.recycle();
         conversationStyle = styleBuilder.build();

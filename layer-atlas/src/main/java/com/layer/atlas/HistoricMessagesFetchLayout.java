@@ -11,20 +11,20 @@ import com.layer.sdk.changes.LayerChangeEvent;
 import com.layer.sdk.listeners.LayerChangeEventListener;
 import com.layer.sdk.messaging.Conversation;
 
-public class AtlasHistoricMessagesFetchLayout extends SwipeRefreshLayout implements LayerChangeEventListener.BackgroundThread.Weak {
+public class HistoricMessagesFetchLayout extends SwipeRefreshLayout implements LayerChangeEventListener.BackgroundThread.Weak {
     private LayerClient mLayerClient;
     private Conversation mConversation;
     private int mSyncAmount = 25;
 
-    public AtlasHistoricMessagesFetchLayout(Context context) {
+    public HistoricMessagesFetchLayout(Context context) {
         super(context);
     }
 
-    public AtlasHistoricMessagesFetchLayout(Context context, AttributeSet attrs) {
+    public HistoricMessagesFetchLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AtlasHistoricMessagesFetchLayout init(LayerClient layerClient) {
+    public HistoricMessagesFetchLayout init(LayerClient layerClient) {
         mLayerClient = layerClient;
         setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -54,7 +54,7 @@ public class AtlasHistoricMessagesFetchLayout extends SwipeRefreshLayout impleme
      * @param conversation The `Conversation` to synchronize historic `Messages` for.
      * @return This `AtlasMessagesSwipeSyncLayout`.
      */
-    public AtlasHistoricMessagesFetchLayout setConversation(Conversation conversation) {
+    public HistoricMessagesFetchLayout setConversation(Conversation conversation) {
         mConversation = conversation;
         mLayerClient.registerEventListener(this);
         refresh();
@@ -68,7 +68,7 @@ public class AtlasHistoricMessagesFetchLayout extends SwipeRefreshLayout impleme
      * @param syncAmount Number of historic Messages to synchronize.
      * @return This `AtlasMessagesSwipeSyncLayout`.
      */
-    public AtlasHistoricMessagesFetchLayout setHistoricMessagesPerFetch(int syncAmount) {
+    public HistoricMessagesFetchLayout setHistoricMessagesPerFetch(int syncAmount) {
         mSyncAmount = syncAmount;
         return this;
     }
@@ -78,7 +78,7 @@ public class AtlasHistoricMessagesFetchLayout extends SwipeRefreshLayout impleme
      *
      * @return This `AtlasMessagesSwipeSyncLayout`.
      */
-    private AtlasHistoricMessagesFetchLayout refresh() {
+    private HistoricMessagesFetchLayout refresh() {
         post(new Runnable() {
             @Override
             public void run() {

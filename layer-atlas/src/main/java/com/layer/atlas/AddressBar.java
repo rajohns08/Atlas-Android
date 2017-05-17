@@ -47,7 +47,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AtlasAddressBar extends LinearLayout {
+public class AddressBar extends LinearLayout {
     public static final int MAX_PARTICIPANTS = 25;
 
     private LayerClient mLayerClient;
@@ -82,11 +82,11 @@ public class AtlasAddressBar extends LinearLayout {
     private int mChipStyle;
     private AvatarStyle mAvatarStyle;
 
-    public AtlasAddressBar(Context context, AttributeSet attrs) {
+    public AddressBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AtlasAddressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AddressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         parseStyle(context, attrs, defStyleAttr);
 
@@ -100,7 +100,7 @@ public class AtlasAddressBar extends LinearLayout {
         setOrientation(VERTICAL);
     }
 
-    public AtlasAddressBar init(LayerClient layerClient, Picasso picasso) {
+    public AddressBar init(LayerClient layerClient, Picasso picasso) {
         mLayerClient = layerClient;
         mPicasso = picasso;
 
@@ -145,42 +145,42 @@ public class AtlasAddressBar extends LinearLayout {
         return this;
     }
 
-    public AtlasAddressBar addTextChangedListener(TextWatcher textWatcher) {
+    public AddressBar addTextChangedListener(TextWatcher textWatcher) {
         mFilter.addTextChangedListener(textWatcher);
         return this;
     }
 
-    public AtlasAddressBar removeTextChangedListener(TextWatcher textWatcher) {
+    public AddressBar removeTextChangedListener(TextWatcher textWatcher) {
         mFilter.removeTextChangedListener(textWatcher);
         return this;
     }
 
-    public AtlasAddressBar setOnEditorActionListener(TextView.OnEditorActionListener listener) {
+    public AddressBar setOnEditorActionListener(TextView.OnEditorActionListener listener) {
         mFilter.setOnEditorActionListener(listener);
         return this;
     }
 
-    public AtlasAddressBar setOnConversationClickListener(OnConversationClickListener onConversationClickListener) {
+    public AddressBar setOnConversationClickListener(OnConversationClickListener onConversationClickListener) {
         mOnConversationClickListener = onConversationClickListener;
         return this;
     }
 
-    public AtlasAddressBar setOnParticipantSelectionChangeListener(OnParticipantSelectionChangeListener onParticipantSelectionChangeListener) {
+    public AddressBar setOnParticipantSelectionChangeListener(OnParticipantSelectionChangeListener onParticipantSelectionChangeListener) {
         mOnParticipantSelectionChangeListener = onParticipantSelectionChangeListener;
         return this;
     }
 
-    public AtlasAddressBar setOnParticipantSelectionFailedListener(OnParticipantSelectionFailedListener onParticipantSelectionFailedListener) {
+    public AddressBar setOnParticipantSelectionFailedListener(OnParticipantSelectionFailedListener onParticipantSelectionFailedListener) {
         this.mOnParticipantSelectionFailedListener = onParticipantSelectionFailedListener;
         return this;
     }
 
-    public AtlasAddressBar setSuggestionsVisibility(int visibility) {
+    public AddressBar setSuggestionsVisibility(int visibility) {
         mParticipantList.setVisibility(visibility);
         return this;
     }
 
-    public AtlasAddressBar setTypeface(Typeface inputTextTypeface, Typeface listTextTypeface,
+    public AddressBar setTypeface(Typeface inputTextTypeface, Typeface listTextTypeface,
                                        Typeface avatarTextTypeface, Typeface chipTypeface) {
         this.mInputTextTypeface = inputTextTypeface;
         this.mListTextTypeface = listTextTypeface;
@@ -194,18 +194,18 @@ public class AtlasAddressBar extends LinearLayout {
         return new LinkedHashSet<>(mSelectedParticipants);
     }
 
-    public AtlasAddressBar refresh() {
+    public AddressBar refresh() {
         if (mAvailableConversationAdapter == null) return this;
         mAvailableConversationAdapter.refresh(getSearchFilter(), mSelectedParticipants);
         return this;
     }
 
-    public AtlasAddressBar setShowConversations(boolean showConversations) {
+    public AddressBar setShowConversations(boolean showConversations) {
         this.mShowConversations = showConversations;
         return this;
     }
 
-    public AtlasAddressBar setSelectedParticipants(Set<Identity> selectedParticipants) {
+    public AddressBar setSelectedParticipants(Set<Identity> selectedParticipants) {
         mSelectedParticipants.addAll(selectedParticipants);
         return this;
     }
@@ -271,32 +271,32 @@ public class AtlasAddressBar extends LinearLayout {
     }
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyle) {
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AtlasAddressBar, R.attr.AtlasAddressBar, defStyle);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AddressBar, R.attr.AtlasAddressBar, defStyle);
         Resources resources = context.getResources();
-        this.mInputTextSize = ta.getDimensionPixelSize(R.styleable.AtlasAddressBar_inputTextSize, resources.getDimensionPixelSize(R.dimen.atlas_text_size_input));
-        this.mInputTextColor = ta.getColor(R.styleable.AtlasAddressBar_inputTextColor, resources.getColor(R.color.atlas_text_black));
-        this.mInputTextStyle = ta.getInt(R.styleable.AtlasAddressBar_inputTextStyle, Typeface.NORMAL);
-        String inputTextTypefaceName = ta.getString(R.styleable.AtlasAddressBar_inputTextTypeface);
+        this.mInputTextSize = ta.getDimensionPixelSize(R.styleable.AddressBar_inputTextSize, resources.getDimensionPixelSize(R.dimen.atlas_text_size_input));
+        this.mInputTextColor = ta.getColor(R.styleable.AddressBar_inputTextColor, resources.getColor(R.color.atlas_text_black));
+        this.mInputTextStyle = ta.getInt(R.styleable.AddressBar_inputTextStyle, Typeface.NORMAL);
+        String inputTextTypefaceName = ta.getString(R.styleable.AddressBar_inputTextTypeface);
         this.mInputTextTypeface = inputTextTypefaceName != null ? Typeface.create(inputTextTypefaceName, mInputTextStyle) : null;
-        this.mInputCursorColor = ta.getColor(R.styleable.AtlasAddressBar_inputCursorColor, resources.getColor(R.color.atlas_color_primary_blue));
-        this.mInputUnderlineColor = ta.getColor(R.styleable.AtlasAddressBar_inputUnderlineColor, resources.getColor(R.color.atlas_color_primary_blue));
+        this.mInputCursorColor = ta.getColor(R.styleable.AddressBar_inputCursorColor, resources.getColor(R.color.atlas_color_primary_blue));
+        this.mInputUnderlineColor = ta.getColor(R.styleable.AddressBar_inputUnderlineColor, resources.getColor(R.color.atlas_color_primary_blue));
 
-        this.mListTextSize = ta.getDimensionPixelSize(R.styleable.AtlasAddressBar_listTextSize, resources.getDimensionPixelSize(R.dimen.atlas_text_size_secondary_item));
-        this.mListTextColor = ta.getColor(R.styleable.AtlasAddressBar_listTextColor, resources.getColor(R.color.atlas_text_black));
-        this.mListTextStyle = ta.getInt(R.styleable.AtlasAddressBar_listTextStyle, Typeface.NORMAL);
-        String listTextTypefaceName = ta.getString(R.styleable.AtlasAddressBar_listTextTypeface);
+        this.mListTextSize = ta.getDimensionPixelSize(R.styleable.AddressBar_listTextSize, resources.getDimensionPixelSize(R.dimen.atlas_text_size_secondary_item));
+        this.mListTextColor = ta.getColor(R.styleable.AddressBar_listTextColor, resources.getColor(R.color.atlas_text_black));
+        this.mListTextStyle = ta.getInt(R.styleable.AddressBar_listTextStyle, Typeface.NORMAL);
+        String listTextTypefaceName = ta.getString(R.styleable.AddressBar_listTextTypeface);
         this.mListTextTypeface = listTextTypefaceName != null ? Typeface.create(listTextTypefaceName, mInputTextStyle) : null;
 
-        this.mChipStyle = ta.getInt(R.styleable.AtlasAddressBar_chipStyle, Typeface.NORMAL);
-        String chipTypefaceName = ta.getString(R.styleable.AtlasAddressBar_chipTypeface);
+        this.mChipStyle = ta.getInt(R.styleable.AddressBar_chipStyle, Typeface.NORMAL);
+        String chipTypefaceName = ta.getString(R.styleable.AddressBar_chipTypeface);
         this.mChipTypeface = chipTypefaceName != null ? Typeface.create(chipTypefaceName, mChipStyle) : null;
 
         AvatarStyle.Builder avatarStyleBuilder = new AvatarStyle.Builder();
-        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.AtlasAddressBar_avatarBackgroundColor, resources.getColor(R.color.atlas_avatar_background)));
-        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.AtlasAddressBar_avatarTextColor, resources.getColor(R.color.atlas_avatar_text)));
-        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.AtlasAddressBar_avatarBorderColor, resources.getColor(R.color.atlas_avatar_border)));
-        int avatarTextStyle = ta.getInt(R.styleable.AtlasAddressBar_avatarTextStyle, Typeface.NORMAL);
-        String avatarTextTypefaceName = ta.getString(R.styleable.AtlasAddressBar_avatarTextTypeface);
+        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.AddressBar_avatarBackgroundColor, resources.getColor(R.color.atlas_avatar_background)));
+        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.AddressBar_avatarTextColor, resources.getColor(R.color.atlas_avatar_text)));
+        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.AddressBar_avatarBorderColor, resources.getColor(R.color.atlas_avatar_border)));
+        int avatarTextStyle = ta.getInt(R.styleable.AddressBar_avatarTextStyle, Typeface.NORMAL);
+        String avatarTextTypefaceName = ta.getString(R.styleable.AddressBar_avatarTextTypeface);
         avatarStyleBuilder.avatarTextTypeface(inputTextTypefaceName != null ? Typeface.create(avatarTextTypefaceName, avatarTextStyle) : null);
         this.mAvatarStyle = avatarStyleBuilder.build();
 
@@ -425,7 +425,7 @@ public class AtlasAddressBar extends LinearLayout {
     private class ParticipantChip extends LinearLayout {
         private Identity mParticipant;
 
-        private AtlasAvatar mAvatar;
+        private Avatar mAvatar;
         private TextView mName;
         private ImageView mRemove;
 
@@ -437,7 +437,7 @@ public class AtlasAddressBar extends LinearLayout {
 
             // Inflate and cache views
             inflater.inflate(R.layout.atlas_participant_chip, this, true);
-            mAvatar = (AtlasAvatar) findViewById(R.id.avatar);
+            mAvatar = (Avatar) findViewById(R.id.avatar);
             mName = (TextView) findViewById(R.id.name);
             mRemove = (ImageView) findViewById(R.id.remove);
 
@@ -649,7 +649,7 @@ public class AtlasAddressBar extends LinearLayout {
                             @Override
                             public void onClick(View v) {
                                 if (mOnConversationClickListener == null) return;
-                                mOnConversationClickListener.onConversationClick(AtlasAddressBar.this, (Conversation) v.getTag());
+                                mOnConversationClickListener.onConversationClick(AddressBar.this, (Conversation) v.getTag());
                             }
                         });
                         viewHolder.mAvatar.setParticipants(participants);
@@ -740,12 +740,12 @@ public class AtlasAddressBar extends LinearLayout {
         //==============================================================================================
 
         protected class ViewHolder extends RecyclerView.ViewHolder {
-            private AtlasAvatar mAvatar;
+            private Avatar mAvatar;
             private TextView mTitle;
 
             public ViewHolder(ViewGroup parent) {
                 super(LayoutInflater.from(parent.getContext()).inflate(R.layout.atlas_address_bar_item, parent, false));
-                mAvatar = (AtlasAvatar) itemView.findViewById(R.id.avatar);
+                mAvatar = (Avatar) itemView.findViewById(R.id.avatar);
                 mTitle = (TextView) itemView.findViewById(R.id.title);
                 mTitle.setTextColor(mListTextColor);
                 mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mListTextSize);
@@ -756,11 +756,11 @@ public class AtlasAddressBar extends LinearLayout {
 
 
     public interface OnConversationClickListener {
-        void onConversationClick(AtlasAddressBar conversationLauncher, Conversation conversation);
+        void onConversationClick(AddressBar conversationLauncher, Conversation conversation);
     }
 
     public interface OnParticipantSelectionChangeListener {
-        void onParticipantSelectionChanged(AtlasAddressBar conversationLauncher, List<Identity> participants);
+        void onParticipantSelectionChanged(AddressBar conversationLauncher, List<Identity> participants);
     }
 
     public interface OnParticipantSelectionFailedListener {
