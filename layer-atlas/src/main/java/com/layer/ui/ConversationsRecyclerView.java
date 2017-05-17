@@ -25,6 +25,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/ConversationsRecyclerView.java
 import com.layer.ui.adapters.ConversationsAdapter;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.util.AvatarStyle;
@@ -33,6 +34,15 @@ import com.layer.ui.util.ConversationStyle;
 import com.layer.ui.util.itemanimators.NoChangeAnimator;
 import com.layer.ui.util.views.SwipeableItem;
 
+=======
+import com.layer.atlas.adapters.ConversationsAdapter;
+import com.layer.atlas.messagetypes.CellFactory;
+import com.layer.atlas.util.AvatarStyle;
+import com.layer.atlas.util.ConversationFormatter;
+import com.layer.atlas.util.ConversationStyle;
+import com.layer.atlas.util.itemanimators.NoChangeAnimator;
+import com.layer.atlas.util.views.SwipeableItem;
+>>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/AtlasConversationsRecyclerView.java
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.squareup.picasso.Picasso;
@@ -81,7 +91,11 @@ public class ConversationsRecyclerView extends RecyclerView {
         throw new RuntimeException("ConversationsRecyclerView sets its own Adapter");
     }
 
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/ConversationsRecyclerView.java
     public ConversationsRecyclerView addCellFactories (CellFactory... cellFactories) {
+=======
+    public AtlasConversationsRecyclerView addCellFactories (CellFactory... cellFactories) {
+>>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/AtlasConversationsRecyclerView.java
         mAdapter.addCellFactories(cellFactories);
         return this;
     }
