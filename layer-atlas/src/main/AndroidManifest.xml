@@ -19,7 +19,6 @@
 
     <application>
         <activity android:name="com.layer.ui.util.imagepopup.ImagePopupActivity"/>
-
     </application>
 
 </manifest>
