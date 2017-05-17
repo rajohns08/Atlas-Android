@@ -32,7 +32,6 @@ import com.layer.ui.util.ConversationFormatter;
 import com.layer.ui.util.ConversationStyle;
 import com.layer.ui.util.itemanimators.NoChangeAnimator;
 import com.layer.ui.util.views.SwipeableItem;
-
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.squareup.picasso.Picasso;
