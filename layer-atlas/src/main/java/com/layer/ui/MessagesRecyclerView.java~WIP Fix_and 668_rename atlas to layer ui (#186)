@@ -24,12 +24,20 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/MessagesRecyclerView.java
 import com.layer.ui.adapters.MessagesAdapter;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.MessageStyle;
 import com.layer.ui.util.itemanimators.NoChangeAnimator;
 import com.layer.ui.util.views.SwipeableItem;
 
+=======
+import com.layer.atlas.adapters.MessagesAdapter;
+import com.layer.atlas.messagetypes.CellFactory;
+import com.layer.atlas.messagetypes.MessageStyle;
+import com.layer.atlas.util.itemanimators.NoChangeAnimator;
+import com.layer.atlas.util.views.SwipeableItem;
+>>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/AtlasMessagesRecyclerView.java
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Message;
@@ -158,7 +166,11 @@ public class MessagesRecyclerView extends RecyclerView {
      *
      * @see MessagesAdapter#addCellFactories(CellFactory...)
      */
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/MessagesRecyclerView.java
     public MessagesRecyclerView addCellFactories(CellFactory... cellFactories) {
+=======
+    public AtlasMessagesRecyclerView addCellFactories(CellFactory... cellFactories) {
+>>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/AtlasMessagesRecyclerView.java
         mAdapter.addCellFactories(cellFactories);
         return this;
     }
