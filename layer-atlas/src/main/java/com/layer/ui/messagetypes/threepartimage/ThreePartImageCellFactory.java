@@ -28,7 +28,7 @@ import com.layer.atlas.R;
 import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.util.Log;
 import com.layer.atlas.util.Util;
-import com.layer.atlas.util.imagepopup.AtlasImagePopupActivity;
+import com.layer.atlas.util.imagepopup.ImagePopupActivity;
 import com.layer.atlas.util.picasso.transformations.RoundedTransform;
 >>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/messagetypes/threepartimage/ThreePartImageCellFactory.java
 import com.layer.sdk.LayerClient;
