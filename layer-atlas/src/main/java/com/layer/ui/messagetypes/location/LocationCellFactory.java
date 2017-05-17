@@ -15,6 +15,7 @@ import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.util.Log;
 import com.layer.ui.util.Util;
 import com.layer.ui.util.picasso.transformations.RoundedTransform;
+
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 import com.squareup.picasso.Callback;

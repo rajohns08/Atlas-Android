@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.layer.atlas.AtlasAvatar;
 import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.messagetypes.MessageStyle;
 import com.layer.atlas.util.IdentityRecyclerViewEventListener;
 import com.layer.atlas.util.Log;
@@ -58,7 +58,7 @@ import java.util.Set;
  * CellFactory.createCellHolder().  After creating a new CellHolder (or reusing an available one),
  * the CellHolder is rendered in the UI with Message data via CellFactory.bindCellHolder().
  *
- * @see AtlasCellFactory
+ * @see CellFactory
  */
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHolder> implements
         BaseAdapter<Message>, RecyclerViewController.Callback {
@@ -75,10 +75,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     // Cells
     protected int mViewTypeCount = VIEW_TYPE_FOOTER;
-    protected final Set<AtlasCellFactory> mCellFactories = new LinkedHashSet<AtlasCellFactory>();
+    protected final Set<CellFactory> mCellFactories = new LinkedHashSet<CellFactory>();
     protected final Map<Integer, CellType> mCellTypesByViewType = new HashMap<Integer, CellType>();
-    protected final Map<AtlasCellFactory, Integer> mMyViewTypesByCell = new HashMap<AtlasCellFactory, Integer>();
-    protected final Map<AtlasCellFactory, Integer> mTheirViewTypesByCell = new HashMap<AtlasCellFactory, Integer>();
+    protected final Map<CellFactory, Integer> mMyViewTypesByCell = new HashMap<CellFactory, Integer>();
+    protected final Map<CellFactory, Integer> mTheirViewTypesByCell = new HashMap<CellFactory, Integer>();
 
     // Dates and Clustering
     private final Map<Uri, Cluster> mClusterCache = new HashMap<Uri, Cluster>();
@@ -112,7 +112,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         mQueryController.setPreProcessCallback(new ListViewController.PreProcessCallback<Message>() {
             @Override
             public void onCache(ListViewController listViewController, Message message) {
-                for (AtlasCellFactory factory : mCellFactories) {
+                for (CellFactory factory : mCellFactories) {
                     if (factory.isBindable(message)) {
                         factory.getParsedContent(mLayerClient, message);
                         break;
@@ -256,8 +256,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
      * @param cellFactories Cells to register.
      * @return This MessagesAdapter.
      */
-    public MessagesAdapter addCellFactories(AtlasCellFactory... cellFactories) {
-        for (AtlasCellFactory cellFactory : cellFactories) {
+    public MessagesAdapter addCellFactories(CellFactory... cellFactories) {
+        for (CellFactory cellFactory : cellFactories) {
             cellFactory.setStyle(mMessageStyle);
             mCellFactories.add(cellFactory);
 
@@ -274,7 +274,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         return this;
     }
 
-    public Set<AtlasCellFactory> getCellFactories() {
+    public Set<CellFactory> getCellFactories() {
         return mCellFactories;
     }
 
@@ -284,7 +284,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         Message message = getItem(position);
         Identity authenticatedUser = mLayerClient.getAuthenticatedUser();
         boolean isMe = authenticatedUser != null && authenticatedUser.equals(message.getSender());
-        for (AtlasCellFactory factory : mCellFactories) {
+        for (CellFactory factory : mCellFactories) {
             if (!factory.isBindable(message)) continue;
             return isMe ? mMyViewTypesByCell.get(factory) : mTheirViewTypesByCell.get(factory);
         }
@@ -301,7 +301,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         int rootResId = cellType.mMe ? CellViewHolder.RESOURCE_ID_ME : CellViewHolder.RESOURCE_ID_THEM;
         CellViewHolder rootViewHolder = new CellViewHolder(mLayoutInflater.inflate(rootResId, parent, false), mPicasso, mShouldShowAvatarPresence);
         rootViewHolder.mCellHolder = cellType.mCellFactory.createCellHolder(rootViewHolder.mCell, cellType.mMe, mLayoutInflater);
-        rootViewHolder.mCellHolderSpecs = new AtlasCellFactory.CellHolderSpecs();
+        rootViewHolder.mCellHolderSpecs = new CellFactory.CellHolderSpecs();
         return rootViewHolder;
     }
 
@@ -403,7 +403,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         }
 
         // CellHolder
-        AtlasCellFactory.CellHolder cellHolder = viewHolder.mCellHolder;
+        CellFactory.CellHolder cellHolder = viewHolder.mCellHolder;
         cellHolder.setMessage(message);
 
         // Cell dimensions
@@ -718,8 +718,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         protected TextView mReceipt;
 
         // Cell
-        protected AtlasCellFactory.CellHolder mCellHolder;
-        protected AtlasCellFactory.CellHolderSpecs mCellHolderSpecs;
+        protected CellFactory.CellHolder mCellHolder;
+        protected CellFactory.CellHolderSpecs mCellHolderSpecs;
 
         public CellViewHolder(View itemView, Picasso picasso, boolean shouldShowAvatarPresence) {
             super(itemView);
@@ -783,9 +783,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     private static class CellType {
         protected final boolean mMe;
-        protected final AtlasCellFactory mCellFactory;
+        protected final CellFactory mCellFactory;
 
-        public CellType(boolean me, AtlasCellFactory CellFactory) {
+        public CellType(boolean me, CellFactory CellFactory) {
             mMe = me;
             mCellFactory = CellFactory;
         }
