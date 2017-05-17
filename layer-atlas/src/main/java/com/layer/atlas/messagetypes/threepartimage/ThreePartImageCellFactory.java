@@ -20,7 +20,7 @@ import com.layer.atlas.R;
 import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.util.Log;
 import com.layer.atlas.util.Util;
-import com.layer.atlas.util.imagepopup.AtlasImagePopupActivity;
+import com.layer.atlas.util.imagepopup.ImagePopupActivity;
 import com.layer.atlas.util.picasso.transformations.RoundedTransform;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
@@ -147,11 +147,11 @@ public class ThreePartImageCellFactory extends
 
     @Override
     public void onClick(View v) {
-        AtlasImagePopupActivity.init(mLayerClient);
+        ImagePopupActivity.init(mLayerClient);
         Context context = v.getContext();
         if (context == null) return;
         Info info = (Info) v.getTag();
-        Intent intent = new Intent(context, AtlasImagePopupActivity.class);
+        Intent intent = new Intent(context, ImagePopupActivity.class);
         intent.putExtra("previewId", info.previewPartId);
         intent.putExtra("fullId", info.fullPartId);
         intent.putExtra("info", info);

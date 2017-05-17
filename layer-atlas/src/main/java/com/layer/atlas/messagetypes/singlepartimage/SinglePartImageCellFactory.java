@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 import com.layer.atlas.R;
 import com.layer.atlas.messagetypes.CellFactory;
-import com.layer.atlas.util.imagepopup.AtlasImagePopupActivity;
+import com.layer.atlas.util.imagepopup.ImagePopupActivity;
 import com.layer.atlas.util.picasso.transformations.RoundedTransform;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
@@ -79,10 +79,10 @@ public class SinglePartImageCellFactory extends
 
     @Override
     public void onClick(View v) {
-        AtlasImagePopupActivity.init(mLayerClient);
+        ImagePopupActivity.init(mLayerClient);
         Context context = v.getContext();
         if (context == null) return;
-        Intent intent = new Intent(context, AtlasImagePopupActivity.class);
+        Intent intent = new Intent(context, ImagePopupActivity.class);
         intent.putExtra("fullId", ((PartId) v.getTag()).mId);
 
         if (Build.VERSION.SDK_INT >= 21 && context instanceof Activity) {
