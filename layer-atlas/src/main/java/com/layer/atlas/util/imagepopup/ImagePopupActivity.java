@@ -17,10 +17,10 @@ import com.layer.sdk.listeners.LayerProgressListener;
 import com.layer.sdk.messaging.MessagePart;
 
 /**
- * AtlasImagePopupActivity implements a ful resolution image viewer Activity.  This Activity
+ * ImagePopupActivity implements a ful resolution image viewer Activity.  This Activity
  * registers with the LayerClient as a LayerProgressListener to monitor progress.
  */
-public class AtlasImagePopupActivity extends Activity implements LayerProgressListener.BackgroundThread.Weak, SubsamplingScaleImageView.OnImageEventListener {
+public class ImagePopupActivity extends Activity implements LayerProgressListener.BackgroundThread.Weak, SubsamplingScaleImageView.OnImageEventListener {
     private static LayerClient sLayerClient;
 
     private SubsamplingScaleImageView mImageView;
