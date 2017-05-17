@@ -336,16 +336,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         if (cluster.mClusterWithPrevious == null) {
             // No previous message, so no gap
             viewHolder.mClusterSpaceGap.setVisibility(View.GONE);
-            viewHolder.mTimeGroup.setVisibility(View.GONE);
+            bindDateTimeForMessage(viewHolder, message);
         } else if (cluster.mDateBoundaryWithPrevious || cluster.mClusterWithPrevious == ClusterType.MORE_THAN_HOUR) {
             // Crossed into a new day, or > 1hr lull in conversation
-            Date receivedAt = message.getReceivedAt();
-            if (receivedAt == null) receivedAt = new Date();
-            String timeBarDayText = Util.formatTimeDay(viewHolder.mCell.getContext(), receivedAt);
-            viewHolder.mTimeGroupDay.setText(timeBarDayText);
-            String timeBarTimeText = mTimeFormat.format(receivedAt.getTime());
-            viewHolder.mTimeGroupTime.setText(" " + timeBarTimeText);
-            viewHolder.mTimeGroup.setVisibility(View.VISIBLE);
+            bindDateTimeForMessage(viewHolder, message);
             viewHolder.mClusterSpaceGap.setVisibility(View.GONE);
         } else if (cluster.mClusterWithPrevious == ClusterType.LESS_THAN_MINUTE) {
             // Same sender with < 1m gap
@@ -469,6 +463,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         } else {
             viewHolder.mReceipt.setVisibility(View.GONE);
         }
+    }
+
+    private void bindDateTimeForMessage(CellViewHolder viewHolder, Message message) {
+        Date receivedAt = message.getReceivedAt();
+        if (receivedAt == null) receivedAt = new Date();
+        String timeBarDayText = Util.formatTimeDay(viewHolder.mCell.getContext(), receivedAt);
+        viewHolder.mTimeGroupDay.setText(timeBarDayText);
+        String timeBarTimeText = mTimeFormat.format(receivedAt.getTime());
+        viewHolder.mTimeGroupTime.setText(" " + timeBarTimeText);
+        viewHolder.mTimeGroup.setVisibility(View.VISIBLE);
     }
 
     @Override
