@@ -247,24 +247,24 @@ public class MessagesRecyclerView extends RecyclerView {
     }
 
     public void parseStyle(Context context, AttributeSet attrs, int defStyle) {
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MessagesRecyclerView, R.attr.MessagesRecyclerView, defStyle);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MessagesRecyclerView, R.attr.AtlasMessagesRecyclerView, defStyle);
         MessageStyle.Builder messageStyleBuilder = new MessageStyle.Builder();
-        messageStyleBuilder.myTextColor(ta.getColor(R.styleable.MessagesRecyclerView_myTextColor, context.getResources().getColor(R.color.layer_ui_text_black)));
+        messageStyleBuilder.myTextColor(ta.getColor(R.styleable.MessagesRecyclerView_myTextColor, context.getResources().getColor(R.color.atlas_text_black)));
         int myTextStyle = ta.getInt(R.styleable.MessagesRecyclerView_myTextStyle, Typeface.NORMAL);
         messageStyleBuilder.myTextStyle(myTextStyle);
         String myTextTypefaceName = ta.getString(R.styleable.MessagesRecyclerView_myTextTypeface);
         messageStyleBuilder.myTextTypeface(myTextTypefaceName != null ? Typeface.create(myTextTypefaceName, myTextStyle) : null);
-        messageStyleBuilder.myTextSize(ta.getDimensionPixelSize(R.styleable.MessagesRecyclerView_myTextSize, context.getResources().getDimensionPixelSize(R.dimen.layer_ui_text_size_message_item)));
+        messageStyleBuilder.myTextSize(ta.getDimensionPixelSize(R.styleable.MessagesRecyclerView_myTextSize, context.getResources().getDimensionPixelSize(R.dimen.atlas_text_size_message_item)));
 
-        messageStyleBuilder.otherTextColor(ta.getColor(R.styleable.MessagesRecyclerView_theirTextColor, context.getResources().getColor(R.color.layer_ui_color_primary_blue)));
+        messageStyleBuilder.otherTextColor(ta.getColor(R.styleable.MessagesRecyclerView_theirTextColor, context.getResources().getColor(R.color.atlas_color_primary_blue)));
         int otherTextStyle = ta.getInt(R.styleable.MessagesRecyclerView_theirTextStyle, Typeface.NORMAL);
         messageStyleBuilder.otherTextStyle(otherTextStyle);
         String otherTextTypefaceName = ta.getString(R.styleable.MessagesRecyclerView_theirTextTypeface);
         messageStyleBuilder.otherTextTypeface(otherTextTypefaceName != null ? Typeface.create(otherTextTypefaceName, otherTextStyle) : null);
-        messageStyleBuilder.otherTextSize(ta.getDimensionPixelSize(R.styleable.MessagesRecyclerView_theirTextSize, context.getResources().getDimensionPixelSize(R.dimen.layer_ui_text_size_message_item)));
+        messageStyleBuilder.otherTextSize(ta.getDimensionPixelSize(R.styleable.MessagesRecyclerView_theirTextSize, context.getResources().getDimensionPixelSize(R.dimen.atlas_text_size_message_item)));
 
-        messageStyleBuilder.myBubbleColor(ta.getColor(R.styleable.MessagesRecyclerView_myBubbleColor, context.getResources().getColor(R.color.layer_ui_color_primary_blue)));
-        messageStyleBuilder.otherBubbleColor(ta.getColor(R.styleable.MessagesRecyclerView_theirBubbleColor, context.getResources().getColor(R.color.layer_ui_color_primary_gray)));
+        messageStyleBuilder.myBubbleColor(ta.getColor(R.styleable.MessagesRecyclerView_myBubbleColor, context.getResources().getColor(R.color.atlas_color_primary_blue)));
+        messageStyleBuilder.otherBubbleColor(ta.getColor(R.styleable.MessagesRecyclerView_theirBubbleColor, context.getResources().getColor(R.color.atlas_color_primary_gray)));
 
         mShouldShowAvatarsInOneOnOneConversations = ta.getBoolean(R.styleable.MessagesRecyclerView_shouldShowAvatarsInOneOnOneConversations, false);
         ta.recycle();
