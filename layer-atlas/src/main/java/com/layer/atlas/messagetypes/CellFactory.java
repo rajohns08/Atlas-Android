@@ -15,17 +15,17 @@ import com.layer.sdk.messaging.Message;
  * Messages, can pre-parse Message content relevant to rendering them, and bind with ViewHolders for
  * display.
  */
-public abstract class AtlasCellFactory<Tholder extends AtlasCellFactory.CellHolder, Tcache extends AtlasCellFactory.ParsedContent> {
+public abstract class CellFactory<Tholder extends CellFactory.CellHolder, Tcache extends CellFactory.ParsedContent> {
     private LruCache<String, Tcache> mCache;
     private final int mCacheBytes;
     protected MessageStyle mMessageStyle;
 
     /**
-     * Constructs an AtlasCellFactory with a parsed content cache of `cacheBytes` size.
+     * Constructs an CellFactory with a parsed content cache of `cacheBytes` size.
      *
      * @param cacheBytes Maximum bytes of parsed content to maintain in an LRU cache.
      */
-    public AtlasCellFactory(int cacheBytes) {
+    public CellFactory(int cacheBytes) {
         this.mCacheBytes = cacheBytes;
     }
 
@@ -53,7 +53,7 @@ public abstract class AtlasCellFactory<Tholder extends AtlasCellFactory.CellHold
     public abstract Tholder createCellHolder(ViewGroup cellView, boolean isMe, LayoutInflater layoutInflater);
 
     /**
-     * Provides an opportunity to parse this AtlasCellFactory Message data in a background thread.
+     * Provides an opportunity to parse this CellFactory Message data in a background thread.
      * A best effort is made to pre-parse on a background thread before binding, but this method
      * may still get called on the main thread just prior to binding under heavy load.
      *

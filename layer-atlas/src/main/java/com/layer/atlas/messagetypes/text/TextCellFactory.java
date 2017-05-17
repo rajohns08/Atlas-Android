@@ -6,19 +6,19 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.textservice.TextInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.util.Util;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Identity;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessagePart;
 
-public class TextCellFactory extends AtlasCellFactory<TextCellFactory.CellHolder, TextCellFactory.TextInfo> implements View.OnLongClickListener {
+public class TextCellFactory extends
+        CellFactory<TextCellFactory.CellHolder, TextCellFactory.TextInfo> implements View.OnLongClickListener {
     public final static String MIME_TYPE = "text/plain";
 
     public TextCellFactory() {
@@ -93,7 +93,7 @@ public class TextCellFactory extends AtlasCellFactory<TextCellFactory.CellHolder
         return true;
     }
 
-    public static class CellHolder extends AtlasCellFactory.CellHolder {
+    public static class CellHolder extends CellFactory.CellHolder {
         TextView mTextView;
 
         public CellHolder(View view) {
@@ -101,7 +101,7 @@ public class TextCellFactory extends AtlasCellFactory<TextCellFactory.CellHolder
         }
     }
 
-    public static class TextInfo implements AtlasCellFactory.ParsedContent {
+    public static class TextInfo implements CellFactory.ParsedContent {
         private final String mString;
         private final String mClipboardPrefix;
         private final int mSize;
