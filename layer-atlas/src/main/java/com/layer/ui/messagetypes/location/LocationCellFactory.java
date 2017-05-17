@@ -10,11 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/messagetypes/location/LocationCellFactory.java
 import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.util.Log;
 import com.layer.ui.util.Util;
 import com.layer.ui.util.picasso.transformations.RoundedTransform;
+=======
+import com.layer.atlas.R;
+import com.layer.atlas.messagetypes.CellFactory;
+import com.layer.atlas.util.Log;
+import com.layer.atlas.util.Util;
+import com.layer.atlas.util.picasso.transformations.RoundedTransform;
+>>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/messagetypes/location/LocationCellFactory.java
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 import com.squareup.picasso.Callback;

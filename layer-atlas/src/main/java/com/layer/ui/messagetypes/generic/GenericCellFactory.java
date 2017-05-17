@@ -6,8 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/messagetypes/generic/GenericCellFactory.java
 import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
+=======
+import com.layer.atlas.R;
+import com.layer.atlas.messagetypes.CellFactory;
+>>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/messagetypes/generic/GenericCellFactory.java
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessagePart;

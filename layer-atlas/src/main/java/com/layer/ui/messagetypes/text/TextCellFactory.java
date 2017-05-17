@@ -9,9 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/messagetypes/text/TextCellFactory.java
 import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.util.Util;
+=======
+import com.layer.atlas.R;
+import com.layer.atlas.messagetypes.CellFactory;
+import com.layer.atlas.util.Util;
+>>>>>>> Renamed CellFactory:layer-atlas/src/main/java/com/layer/atlas/messagetypes/text/TextCellFactory.java
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Identity;
 import com.layer.sdk.messaging.Message;
