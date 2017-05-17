@@ -17,7 +17,7 @@ import com.layer.ui.TypingIndicatorLayout;
 import com.layer.ui.R;
 =======
 import com.layer.atlas.Avatar;
-import com.layer.atlas.AtlasTypingIndicator;
+import com.layer.atlas.TypingIndicatorLayout;
 import com.layer.atlas.R;
 >>>>>>> Rename AtlasRecyclerview:layer-atlas/src/main/java/com/layer/atlas/typingindicators/AvatarTypingIndicatorFactory.java
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
