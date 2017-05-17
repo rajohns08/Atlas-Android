@@ -11,7 +11,7 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.layer.atlas.AtlasAvatar;
+import com.layer.atlas.Avatar;
 import com.layer.atlas.AtlasTypingIndicator;
 import com.layer.atlas.R;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
@@ -91,9 +91,9 @@ public class AvatarTypingIndicatorFactory implements AtlasTypingIndicator.Typing
         int avatarDim = l.getResources().getDimensionPixelSize(R.dimen.atlas_message_avatar_item_single);
 
         // Iterate over existing typists and remove non-typists
-        List<AtlasAvatar> newlyFinished = new ArrayList<AtlasAvatar>();
+        List<Avatar> newlyFinished = new ArrayList<Avatar>();
         Set<Identity> newlyActives = new HashSet<>(typingUserIds.keySet());
-        for (AtlasAvatar avatar : tag.mActives) {
+        for (Avatar avatar : tag.mActives) {
             Identity existingTypist = avatar.getParticipants().iterator().next();
             if (!typingUserIds.containsKey(existingTypist) || (typingUserIds.get(existingTypist) == LayerTypingIndicatorListener.TypingIndicator.FINISHED)) {
                 // Newly finished
@@ -104,7 +104,7 @@ public class AvatarTypingIndicatorFactory implements AtlasTypingIndicator.Typing
                 newlyActives.remove(existingTypist);
             }
         }
-        for (AtlasAvatar avatar : newlyFinished) {
+        for (Avatar avatar : newlyFinished) {
             tag.mActives.remove(avatar);
             tag.mPassives.add(avatar);
             l.removeView(avatar);
@@ -112,10 +112,10 @@ public class AvatarTypingIndicatorFactory implements AtlasTypingIndicator.Typing
 
         // Add new typists
         for (Identity typist : newlyActives) {
-            AtlasAvatar avatar = tag.mPassives.poll();
+            Avatar avatar = tag.mPassives.poll();
             if (avatar == null) {
                 // TODO: allow styling
-                avatar = new AtlasAvatar(l.getContext()).init(mPicasso);
+                avatar = new Avatar(l.getContext()).init(mPicasso);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(avatarDim, avatarDim);
                 params.setMargins(0, 0, avatarSpace, 0);
                 avatar.setLayoutParams(params);
@@ -219,7 +219,7 @@ public class AvatarTypingIndicatorFactory implements AtlasTypingIndicator.Typing
 
     private static class Tag {
         public final ArrayList<View> mDots = new ArrayList<View>(3);
-        public final LinkedList<AtlasAvatar> mActives = new LinkedList<AtlasAvatar>();
-        public final LinkedList<AtlasAvatar> mPassives = new LinkedList<AtlasAvatar>();
+        public final LinkedList<Avatar> mActives = new LinkedList<Avatar>();
+        public final LinkedList<Avatar> mPassives = new LinkedList<Avatar>();
     }
 }

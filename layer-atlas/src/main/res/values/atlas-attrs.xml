@@ -20,7 +20,7 @@
     <!-- Styleable Atlas Component Attributes -->
     <!-- #################################### -->
 
-    <declare-styleable name="AtlasConversationsRecyclerView">
+    <declare-styleable name="ConversationsRecyclerView">
         <attr name="cellTitleTextColor" />
         <attr name="cellTitleTextTypeface" />
         <attr name="cellTitleTextStyle" />
@@ -42,7 +42,7 @@
         <attr name="avatarBorderColor" />
     </declare-styleable>
 
-    <declare-styleable name="AtlasMessageComposer">
+    <declare-styleable name="MessageComposer">
         <attr name="inputTextColor" />
         <attr name="inputTextSize" />
         <attr name="inputTextTypeface" />
@@ -53,7 +53,7 @@
         <attr name="attachmentSendersBackground" format="color|reference" />
     </declare-styleable>
 
-    <declare-styleable name="AtlasMessagesRecyclerView">
+    <declare-styleable name="MessagesRecyclerView">
         <attr name="myBubbleColor" />
         <attr name="myTextColor" />
         <attr name="myTextSize" />
@@ -67,7 +67,7 @@
         <attr name="shouldShowAvatarsInOneOnOneConversations" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="AtlasAddressBar">
+    <declare-styleable name="AddressBar">
         <attr name="inputTextColor" />
         <attr name="inputTextTypeface" />
         <attr name="inputTextStyle" />

@@ -52,7 +52,7 @@ import com.layer.sdk.messaging.Conversation;
 
 import java.util.ArrayList;
 
-public class AtlasMessageComposer extends FrameLayout {
+public class MessageComposer extends FrameLayout {
     private EditText mMessageEditText;
     private Button mSendButton;
     private ImageView mAttachButton;
@@ -76,16 +76,16 @@ public class AtlasMessageComposer extends FrameLayout {
     private int mCursorColor;
     private Drawable mAttachmentSendersBackground;
 
-    public AtlasMessageComposer(Context context) {
+    public MessageComposer(Context context) {
         super(context);
         initAttachmentMenu(context, null, 0);
     }
 
-    public AtlasMessageComposer(Context context, AttributeSet attrs) {
+    public MessageComposer(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public AtlasMessageComposer(Context context, AttributeSet attrs, int defStyle) {
+    public MessageComposer(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         parseStyle(context, attrs, defStyle);
         initAttachmentMenu(context, attrs, defStyle);
@@ -96,7 +96,7 @@ public class AtlasMessageComposer extends FrameLayout {
      *
      * @return this AtlasMessageComposer.
      */
-    public AtlasMessageComposer init(LayerClient layerClient) {
+    public MessageComposer init(LayerClient layerClient) {
         LayoutInflater.from(getContext()).inflate(R.layout.atlas_message_composer, this);
 
         mLayerClient = layerClient;
@@ -151,7 +151,7 @@ public class AtlasMessageComposer extends FrameLayout {
      * @param conversation the Conversation used for sending Messages.
      * @return This AtlasMessageComposer.
      */
-    public AtlasMessageComposer setConversation(Conversation conversation) {
+    public MessageComposer setConversation(Conversation conversation) {
         mConversation = conversation;
         if (mTextSender != null) mTextSender.setConversation(conversation);
         for (AttachmentSender sender : mAttachmentSenders) {
@@ -166,7 +166,7 @@ public class AtlasMessageComposer extends FrameLayout {
      * @param listener Listener for receiving the message EditText focus change callbacks.
      * @return This AtlasMessageComposer.
      */
-    public AtlasMessageComposer setOnMessageEditTextFocusChangeListener(OnFocusChangeListener listener) {
+    public MessageComposer setOnMessageEditTextFocusChangeListener(OnFocusChangeListener listener) {
         mMessageEditText.setOnFocusChangeListener(listener);
         return this;
     }
@@ -177,7 +177,7 @@ public class AtlasMessageComposer extends FrameLayout {
      * @param textSender TextSender used for sending composed text messages.
      * @return This AtlasMessageComposer.
      */
-    public AtlasMessageComposer setTextSender(TextSender textSender) {
+    public MessageComposer setTextSender(TextSender textSender) {
         mTextSender = textSender;
         mTextSender.init(this.getContext().getApplicationContext(), mLayerClient);
         mTextSender.setConversation(mConversation);
@@ -191,7 +191,7 @@ public class AtlasMessageComposer extends FrameLayout {
      * @param senders AttachmentSenders to add to this AtlasMessageComposer's attachment menu.
      * @return This AtlasMessageComposer.
      */
-    public AtlasMessageComposer addAttachmentSenders(AttachmentSender... senders) {
+    public MessageComposer addAttachmentSenders(AttachmentSender... senders) {
         for (AttachmentSender sender : senders) {
             if (sender.getTitle() == null && sender.getIcon() == null) {
                 throw new NullPointerException("Attachment handlers must have at least a title or icon specified.");
@@ -213,7 +213,7 @@ public class AtlasMessageComposer extends FrameLayout {
      * @param callback Callback to receive MessageSender events.
      * @return This AtlasMessageComposer.
      */
-    public AtlasMessageComposer setMessageSenderCallback(MessageSender.Callback callback) {
+    public MessageComposer setMessageSenderCallback(MessageSender.Callback callback) {
         mMessageSenderCallback = callback;
         if (mMessageSenderCallback == null) return this;
         if (mTextSender != null) mTextSender.setCallback(callback);
@@ -223,7 +223,7 @@ public class AtlasMessageComposer extends FrameLayout {
         return this;
     }
 
-    public AtlasMessageComposer setTypeface(Typeface typeface) {
+    public MessageComposer setTypeface(Typeface typeface) {
         this.mTypeFace = typeface;
         applyTypeface();
         return this;
@@ -239,7 +239,7 @@ public class AtlasMessageComposer extends FrameLayout {
      * @param data        Intent data from the Activity's onActivityResult.
      * @return this AtlasMessageComposer.
      */
-    public AtlasMessageComposer onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+    public MessageComposer onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
         for (AttachmentSender sender : mAttachmentSenders) {
             sender.onActivityResult(activity, requestCode, resultCode, data);
         }
@@ -271,16 +271,16 @@ public class AtlasMessageComposer extends FrameLayout {
     }
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyle) {
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AtlasMessageComposer, R.attr.AtlasMessageComposer, defStyle);
-        mEnabled = ta.getBoolean(R.styleable.AtlasMessageComposer_android_enabled, true);
-        this.mTextColor = ta.getColor(R.styleable.AtlasMessageComposer_inputTextColor, context.getResources().getColor(R.color.atlas_text_black));
-        this.mTextSize = ta.getDimensionPixelSize(R.styleable.AtlasMessageComposer_inputTextSize, context.getResources().getDimensionPixelSize(R.dimen.atlas_text_size_input));
-        this.mTextStyle = ta.getInt(R.styleable.AtlasMessageComposer_inputTextStyle, Typeface.NORMAL);
-        String typeFaceName = ta.getString(R.styleable.AtlasMessageComposer_inputTextTypeface);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MessageComposer, R.attr.AtlasMessageComposer, defStyle);
+        mEnabled = ta.getBoolean(R.styleable.MessageComposer_android_enabled, true);
+        this.mTextColor = ta.getColor(R.styleable.MessageComposer_inputTextColor, context.getResources().getColor(R.color.atlas_text_black));
+        this.mTextSize = ta.getDimensionPixelSize(R.styleable.MessageComposer_inputTextSize, context.getResources().getDimensionPixelSize(R.dimen.atlas_text_size_input));
+        this.mTextStyle = ta.getInt(R.styleable.MessageComposer_inputTextStyle, Typeface.NORMAL);
+        String typeFaceName = ta.getString(R.styleable.MessageComposer_inputTextTypeface);
         this.mTypeFace = typeFaceName != null ? Typeface.create(typeFaceName, mTextStyle) : null;
-        this.mUnderlineColor = ta.getColor(R.styleable.AtlasMessageComposer_inputUnderlineColor, context.getResources().getColor(R.color.atlas_color_primary_blue));
-        this.mCursorColor = ta.getColor(R.styleable.AtlasMessageComposer_inputCursorColor, context.getResources().getColor(R.color.atlas_color_primary_blue));
-        this.mAttachmentSendersBackground = ta.getDrawable(R.styleable.AtlasMessageComposer_attachmentSendersBackground);
+        this.mUnderlineColor = ta.getColor(R.styleable.MessageComposer_inputUnderlineColor, context.getResources().getColor(R.color.atlas_color_primary_blue));
+        this.mCursorColor = ta.getColor(R.styleable.MessageComposer_inputCursorColor, context.getResources().getColor(R.color.atlas_color_primary_blue));
+        this.mAttachmentSendersBackground = ta.getDrawable(R.styleable.MessageComposer_attachmentSendersBackground);
         if (mAttachmentSendersBackground == null) {
             mAttachmentSendersBackground = ContextCompat.getDrawable(context, R.drawable.atlas_popup_background);
         }

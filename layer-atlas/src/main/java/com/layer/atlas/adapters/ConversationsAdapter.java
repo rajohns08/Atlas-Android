@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.layer.atlas.AtlasAvatar;
+import com.layer.atlas.Avatar;
 import com.layer.atlas.R;
 import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.messagetypes.generic.GenericCellFactory;
@@ -367,7 +367,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
 
         // View cache
         protected TextView mTitleView;
-        protected AtlasAvatar mAvatarCluster;
+        protected Avatar mAvatarCluster;
         protected TextView mMessageView;
         protected TextView mTimeView;
 
@@ -381,7 +381,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
             itemView.setOnLongClickListener(this);
             this.conversationStyle = conversationStyle;
 
-            mAvatarCluster = (AtlasAvatar) itemView.findViewById(R.id.avatar);
+            mAvatarCluster = (Avatar) itemView.findViewById(R.id.avatar);
             mTitleView = (TextView) itemView.findViewById(R.id.title);
             mMessageView = (TextView) itemView.findViewById(R.id.last_message);
             mTimeView = (TextView) itemView.findViewById(R.id.time);
