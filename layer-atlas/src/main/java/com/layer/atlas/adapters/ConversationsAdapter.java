@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.layer.atlas.AtlasAvatar;
 import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.messagetypes.generic.GenericCellFactory;
 import com.layer.atlas.messagetypes.location.LocationCellFactory;
 import com.layer.atlas.messagetypes.singlepartimage.SinglePartImageCellFactory;
@@ -54,8 +54,8 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
     private ConversationStyle conversationStyle;
     private final IdentityRecyclerViewEventListener mIdentityEventListener;
 
-    protected Set<AtlasCellFactory> mCellFactories;
-    private Set<AtlasCellFactory> mDefaultCellFactories;
+    protected Set<CellFactory> mCellFactories;
+    private Set<CellFactory> mDefaultCellFactories;
 
     protected ConversationFormatter mConversationFormatter;
 
@@ -102,9 +102,9 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
         mLayerClient.registerEventListener(mIdentityEventListener);
     }
 
-    public ConversationsAdapter addCellFactories(AtlasCellFactory... cellFactories) {
+    public ConversationsAdapter addCellFactories(CellFactory... cellFactories) {
         if (mCellFactories == null) {
-            mCellFactories = new LinkedHashSet<AtlasCellFactory>();
+            mCellFactories = new LinkedHashSet<CellFactory>();
         }
         Collections.addAll(mCellFactories, cellFactories);
         return this;
@@ -252,9 +252,9 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
     //==============================================================================================
 
     private String getLastMessageString(Context context, Message message) {
-        Set<AtlasCellFactory> cellFactories = (mCellFactories == null || mCellFactories.isEmpty()) ? getDefaultCellFactories() : mCellFactories;
+        Set<CellFactory> cellFactories = (mCellFactories == null || mCellFactories.isEmpty()) ? getDefaultCellFactories() : mCellFactories;
 
-        for (AtlasCellFactory cellFactory : cellFactories) {
+        for (CellFactory cellFactory : cellFactories) {
             if (cellFactory.isType(message)) {
                 return cellFactory.getPreviewText(context, message);
             }
@@ -263,7 +263,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
         return GenericCellFactory.getPreview(context, message);
     }
 
-    private Set<AtlasCellFactory> getDefaultCellFactories() {
+    private Set<CellFactory> getDefaultCellFactories() {
         if (mDefaultCellFactories == null) {
             mDefaultCellFactories = new LinkedHashSet<>();
         }

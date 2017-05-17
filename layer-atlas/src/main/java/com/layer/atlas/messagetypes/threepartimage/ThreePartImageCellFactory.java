@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.util.Log;
 import com.layer.atlas.util.Util;
 import com.layer.atlas.util.imagepopup.AtlasImagePopupActivity;
@@ -40,7 +40,8 @@ import java.util.List;
  * image metadata.  The image metadata contains full image dimensions and rotation information used
  * for sizing and rotating images efficiently.
  */
-public class ThreePartImageCellFactory extends AtlasCellFactory<ThreePartImageCellFactory.CellHolder, ThreePartImageCellFactory.Info> implements View.OnClickListener {
+public class ThreePartImageCellFactory extends
+        CellFactory<ThreePartImageCellFactory.CellHolder, ThreePartImageCellFactory.Info> implements View.OnClickListener {
     private static final String PICASSO_TAG = ThreePartImageCellFactory.class.getSimpleName();
 
     private static final int PLACEHOLDER = R.drawable.atlas_message_item_cell_placeholder;
@@ -233,7 +234,7 @@ public class ThreePartImageCellFactory extends AtlasCellFactory<ThreePartImageCe
     // Inner classes
     //==============================================================================================
 
-    public static class Info implements AtlasCellFactory.ParsedContent, Parcelable {
+    public static class Info implements CellFactory.ParsedContent, Parcelable {
         public int orientation;
         public int width;
         public int height;
@@ -273,7 +274,7 @@ public class ThreePartImageCellFactory extends AtlasCellFactory<ThreePartImageCe
         };
     }
 
-    static class CellHolder extends AtlasCellFactory.CellHolder {
+    static class CellHolder extends CellFactory.CellHolder {
         ImageView mImageView;
         ContentLoadingProgressBar mProgressBar;
 

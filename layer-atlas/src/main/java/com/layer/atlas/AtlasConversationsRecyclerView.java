@@ -26,7 +26,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.layer.atlas.adapters.ConversationsAdapter;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.util.AvatarStyle;
 import com.layer.atlas.util.ConversationFormatter;
 import com.layer.atlas.util.ConversationStyle;
@@ -80,7 +80,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         throw new RuntimeException("AtlasConversationsRecyclerView sets its own Adapter");
     }
 
-    public AtlasConversationsRecyclerView addCellFactories (AtlasCellFactory... cellFactories) {
+    public AtlasConversationsRecyclerView addCellFactories (CellFactory... cellFactories) {
         mAdapter.addCellFactories(cellFactories);
         return this;
     }

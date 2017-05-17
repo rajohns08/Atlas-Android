@@ -25,7 +25,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.layer.atlas.adapters.MessagesAdapter;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.messagetypes.MessageStyle;
 import com.layer.atlas.util.itemanimators.NoChangeAnimator;
 import com.layer.atlas.util.views.SwipeableItem;
@@ -81,7 +81,7 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
         addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                for (AtlasCellFactory factory : mAdapter.getCellFactories()) {
+                for (CellFactory factory : mAdapter.getCellFactories()) {
                     factory.onScrollStateChanged(newState);
                 }
             }
@@ -155,9 +155,9 @@ public class AtlasMessagesRecyclerView extends RecyclerView {
     /**
      * Convenience pass-through to this list's MessagesAdapter.
      *
-     * @see MessagesAdapter#addCellFactories(AtlasCellFactory...)
+     * @see MessagesAdapter#addCellFactories(CellFactory...)
      */
-    public AtlasMessagesRecyclerView addCellFactories(AtlasCellFactory... cellFactories) {
+    public AtlasMessagesRecyclerView addCellFactories(CellFactory... cellFactories) {
         mAdapter.addCellFactories(cellFactories);
         return this;
     }

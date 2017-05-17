@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.util.imagepopup.AtlasImagePopupActivity;
 import com.layer.atlas.util.picasso.transformations.RoundedTransform;
 import com.layer.sdk.LayerClient;
@@ -27,7 +27,8 @@ import com.squareup.picasso.Transformation;
 /**
  * BasicImage handles non-ThreePartImage images.  It relies on the ThreePartImage RequestHandler and does not handle image rotation.
  */
-public class SinglePartImageCellFactory extends AtlasCellFactory<SinglePartImageCellFactory.CellHolder, SinglePartImageCellFactory.PartId> implements View.OnClickListener {
+public class SinglePartImageCellFactory extends
+        CellFactory<SinglePartImageCellFactory.CellHolder, SinglePartImageCellFactory.PartId> implements View.OnClickListener {
     private static final String PICASSO_TAG = SinglePartImageCellFactory.class.getSimpleName();
     private static final int PLACEHOLDER = com.layer.atlas.R.drawable.atlas_message_item_cell_placeholder;
     private static final int CACHE_SIZE_BYTES = 256 * 1024;
@@ -145,7 +146,7 @@ public class SinglePartImageCellFactory extends AtlasCellFactory<SinglePartImage
     // Inner classes
     //==============================================================================================
 
-    public static class CellHolder extends AtlasCellFactory.CellHolder {
+    public static class CellHolder extends CellFactory.CellHolder {
         ImageView mImageView;
         ContentLoadingProgressBar mProgressBar;
 
@@ -155,7 +156,7 @@ public class SinglePartImageCellFactory extends AtlasCellFactory<SinglePartImage
         }
     }
 
-    public static class PartId implements AtlasCellFactory.ParsedContent {
+    public static class PartId implements CellFactory.ParsedContent {
         public final Uri mId;
 
         public PartId(Uri id) {

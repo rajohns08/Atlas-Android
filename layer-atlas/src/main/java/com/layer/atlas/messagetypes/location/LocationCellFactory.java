@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.atlas.util.Log;
 import com.layer.atlas.util.Util;
 import com.layer.atlas.util.picasso.transformations.RoundedTransform;
@@ -26,7 +26,8 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 
-public class LocationCellFactory extends AtlasCellFactory<LocationCellFactory.CellHolder, LocationCellFactory.Location> implements View.OnClickListener {
+public class LocationCellFactory extends
+        CellFactory<LocationCellFactory.CellHolder, LocationCellFactory.Location> implements View.OnClickListener {
     private static final String PICASSO_TAG = LocationCellFactory.class.getSimpleName();
     public static final String MIME_TYPE = "location/coordinate";
     public static final String KEY_LATITUDE = "lat";
@@ -156,7 +157,7 @@ public class LocationCellFactory extends AtlasCellFactory<LocationCellFactory.Ce
         return mTransform;
     }
 
-    static class Location implements AtlasCellFactory.ParsedContent {
+    static class Location implements CellFactory.ParsedContent {
         double mLatitude;
         double mLongitude;
         String mLabel;
@@ -167,7 +168,7 @@ public class LocationCellFactory extends AtlasCellFactory<LocationCellFactory.Ce
         }
     }
 
-    static class CellHolder extends AtlasCellFactory.CellHolder {
+    static class CellHolder extends CellFactory.CellHolder {
         ImageView mImageView;
         ContentLoadingProgressBar mProgressBar;
 

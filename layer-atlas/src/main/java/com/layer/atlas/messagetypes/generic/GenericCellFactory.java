@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.AtlasCellFactory;
+import com.layer.atlas.messagetypes.CellFactory;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessagePart;
@@ -15,7 +15,8 @@ import com.layer.sdk.messaging.MessagePart;
 /**
  * Mime handles all MIME Types by simply displaying all MessagePart MIME Types as text.
  */
-public class GenericCellFactory extends AtlasCellFactory<GenericCellFactory.CellHolder, GenericCellFactory.ParsedContent> {
+public class GenericCellFactory extends
+        CellFactory<GenericCellFactory.CellHolder, GenericCellFactory.ParsedContent> {
     public GenericCellFactory() {
         super(256 * 1024);
     }
@@ -79,7 +80,7 @@ public class GenericCellFactory extends AtlasCellFactory<GenericCellFactory.Cell
         cellHolder.mTextView.setText(string.toString());
     }
 
-    public class CellHolder extends AtlasCellFactory.CellHolder {
+    public class CellHolder extends CellFactory.CellHolder {
         TextView mTextView;
 
         public CellHolder(View view) {
@@ -87,7 +88,7 @@ public class GenericCellFactory extends AtlasCellFactory<GenericCellFactory.Cell
         }
     }
 
-    public static class ParsedContent implements AtlasCellFactory.ParsedContent {
+    public static class ParsedContent implements CellFactory.ParsedContent {
         private final String mString;
         private final int mSize;
 
