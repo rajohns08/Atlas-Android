@@ -1,4 +1,4 @@
-package com.layer.atlas;
+package com.layer.ui;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -22,13 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.layer.atlas.util.AvatarStyle;
-import com.layer.atlas.util.EditTextUtil;
-import com.layer.atlas.util.IdentityDisplayNameComparator;
-import com.layer.atlas.util.Util;
-import com.layer.atlas.util.views.EmptyDelEditText;
-import com.layer.atlas.util.views.FlowLayout;
-import com.layer.atlas.util.views.MaxHeightScrollView;
+import com.layer.ui.util.AvatarStyle;
+import com.layer.ui.util.EditTextUtil;
+import com.layer.ui.util.IdentityDisplayNameComparator;
+import com.layer.ui.util.Util;
+import com.layer.ui.util.views.EmptyDelEditText;
+import com.layer.ui.util.views.FlowLayout;
+import com.layer.ui.util.views.MaxHeightScrollView;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Identity;

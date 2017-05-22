@@ -336,10 +336,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         if (cluster.mClusterWithPrevious == null) {
             // No previous message, so no gap
             viewHolder.mClusterSpaceGap.setVisibility(View.GONE);
-            bindDateTimeForMessage(viewHolder, message);
+            viewHolder.mTimeGroup.setVisibility(View.GONE);
         } else if (cluster.mDateBoundaryWithPrevious || cluster.mClusterWithPrevious == ClusterType.MORE_THAN_HOUR) {
             // Crossed into a new day, or > 1hr lull in conversation
-            bindDateTimeForMessage(viewHolder, message);
+            Date receivedAt = message.getReceivedAt();
+            if (receivedAt == null) receivedAt = new Date();
+            String timeBarDayText = Util.formatTimeDay(viewHolder.mCell.getContext(), receivedAt);
+            viewHolder.mTimeGroupDay.setText(timeBarDayText);
+            String timeBarTimeText = mTimeFormat.format(receivedAt.getTime());
+            viewHolder.mTimeGroupTime.setText(" " + timeBarTimeText);
+            viewHolder.mTimeGroup.setVisibility(View.VISIBLE);
             viewHolder.mClusterSpaceGap.setVisibility(View.GONE);
         } else if (cluster.mClusterWithPrevious == ClusterType.LESS_THAN_MINUTE) {
             // Same sender with < 1m gap
@@ -371,7 +377,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 if (sender != null) {
                     viewHolder.mUserName.setText(Util.getDisplayName(sender));
                 } else {
-                    viewHolder.mUserName.setText(R.string.layer_ui_message_item_unknown_user);
+                    viewHolder.mUserName.setText(R.string.atlas_message_item_unknown_user);
                 }
                 viewHolder.mUserName.setVisibility(View.VISIBLE);
 
@@ -449,30 +455,20 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 // Use 2 to include one other participant plus the current user
                 if (statuses.size() > 2) {
                     String quantityString = viewHolder.mReceipt.getResources()
-                            .getQuantityString(R.plurals.layer_ui_message_item_read_muliple_participants, readCount, readCount);
+                            .getQuantityString(R.plurals.atlas_message_item_read_muliple_participants, readCount, readCount);
                     viewHolder.mReceipt.setText(quantityString);
                 } else {
-                    viewHolder.mReceipt.setText(R.string.layer_ui_message_item_read);
+                    viewHolder.mReceipt.setText(R.string.atlas_message_item_read);
                 }
             } else if (delivered) {
                 viewHolder.mReceipt.setVisibility(View.VISIBLE);
-                viewHolder.mReceipt.setText(R.string.layer_ui_message_item_delivered);
+                viewHolder.mReceipt.setText(R.string.atlas_message_item_delivered);
             } else {
                 viewHolder.mReceipt.setVisibility(View.GONE);
             }
         } else {
             viewHolder.mReceipt.setVisibility(View.GONE);
         }
-    }
-
-    private void bindDateTimeForMessage(CellViewHolder viewHolder, Message message) {
-        Date receivedAt = message.getReceivedAt();
-        if (receivedAt == null) receivedAt = new Date();
-        String timeBarDayText = Util.formatTimeDay(viewHolder.mCell.getContext(), receivedAt);
-        viewHolder.mTimeGroupDay.setText(timeBarDayText);
-        String timeBarTimeText = mTimeFormat.format(receivedAt.getTime());
-        viewHolder.mTimeGroupTime.setText(" " + timeBarTimeText);
-        viewHolder.mTimeGroup.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -690,7 +686,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     //==============================================================================================
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final static int RESOURCE_ID_FOOTER = R.layout.ui_message_item_footer;
+        public final static int RESOURCE_ID_FOOTER = R.layout.atlas_message_item_footer;
 
         // View cache
         protected ViewGroup mRoot;
@@ -702,8 +698,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     static class CellViewHolder extends ViewHolder {
-        public final static int RESOURCE_ID_ME = R.layout.ui_message_item_me;
-        public final static int RESOURCE_ID_THEM = R.layout.ui_message_item_them;
+        public final static int RESOURCE_ID_ME = R.layout.atlas_message_item_me;
+        public final static int RESOURCE_ID_THEM = R.layout.atlas_message_item_them;
 
         protected Message mMessage;
 

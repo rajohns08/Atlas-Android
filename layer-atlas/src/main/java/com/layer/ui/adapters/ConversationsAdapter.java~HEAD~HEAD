@@ -1,4 +1,4 @@
-package com.layer.atlas.adapters;
+package com.layer.ui.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,19 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.layer.atlas.Avatar;
-import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.CellFactory;
-import com.layer.atlas.messagetypes.generic.GenericCellFactory;
-import com.layer.atlas.messagetypes.location.LocationCellFactory;
-import com.layer.atlas.messagetypes.singlepartimage.SinglePartImageCellFactory;
-import com.layer.atlas.messagetypes.text.TextCellFactory;
-import com.layer.atlas.messagetypes.threepartimage.ThreePartImageCellFactory;
-import com.layer.atlas.util.ConversationFormatter;
-import com.layer.atlas.util.ConversationStyle;
-import com.layer.atlas.util.IdentityRecyclerViewEventListener;
-import com.layer.atlas.util.Log;
-import com.layer.atlas.util.Util;
+import com.layer.ui.Avatar;
+import com.layer.ui.R;
+import com.layer.ui.messagetypes.CellFactory;
+import com.layer.ui.messagetypes.generic.GenericCellFactory;
+import com.layer.ui.messagetypes.location.LocationCellFactory;
+import com.layer.ui.messagetypes.singlepartimage.SinglePartImageCellFactory;
+import com.layer.ui.messagetypes.text.TextCellFactory;
+import com.layer.ui.messagetypes.threepartimage.ThreePartImageCellFactory;
+import com.layer.ui.util.ConversationFormatter;
+import com.layer.ui.util.ConversationStyle;
+import com.layer.ui.util.IdentityRecyclerViewEventListener;
+import com.layer.ui.util.Log;
+import com.layer.ui.util.Util;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Identity;

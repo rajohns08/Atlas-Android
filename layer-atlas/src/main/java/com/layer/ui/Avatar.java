@@ -111,9 +111,9 @@ public class Avatar extends View {
         mPaintBorder.setAntiAlias(true);
         mPaintBackground.setAntiAlias(true);
 
-        mPaintBackground.setColor(getResources().getColor(R.color.layer_ui_avatar_background));
-        mPaintBorder.setColor(getResources().getColor(R.color.layer_ui_avatar_border));
-        mPaintInitials.setColor(getResources().getColor(R.color.layer_ui_avatar_text));
+        mPaintBackground.setColor(getResources().getColor(R.color.atlas_avatar_background));
+        mPaintBorder.setColor(getResources().getColor(R.color.atlas_avatar_border));
+        mPaintInitials.setColor(getResources().getColor(R.color.atlas_avatar_text));
 
         return this;
     }

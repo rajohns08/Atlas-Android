@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.layer.atlas;
+package com.layer.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -24,11 +24,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.layer.atlas.adapters.MessagesAdapter;
-import com.layer.atlas.messagetypes.CellFactory;
-import com.layer.atlas.messagetypes.MessageStyle;
-import com.layer.atlas.util.itemanimators.NoChangeAnimator;
-import com.layer.atlas.util.views.SwipeableItem;
+import com.layer.ui.adapters.MessagesAdapter;
+import com.layer.ui.messagetypes.CellFactory;
+import com.layer.ui.messagetypes.MessageStyle;
+import com.layer.ui.util.itemanimators.NoChangeAnimator;
+import com.layer.ui.util.views.SwipeableItem;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Message;
