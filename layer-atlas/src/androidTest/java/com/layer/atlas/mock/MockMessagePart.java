@@ -13,18 +13,22 @@ import java.io.InputStream;
  * Created by archit on 5/22/17.
  */
 
-public class MockTextMessagePart extends MessagePart {
+public class MockMessagePart extends MessagePart {
+    private static int sInstanceCount = 0;
+    private final byte[] mContent;
+    private final String mMimeType;
+    private final Uri mId;
 
-    private final static String MIME_TYPE = "text/plain";
-    private String mContent;
-
-    public MockTextMessagePart(String content) {
+    public MockMessagePart(byte[] content, String mimeType) {
+        sInstanceCount++;
+        mId = Uri.parse("mockmessagepart:///" + sInstanceCount);
         mContent = content;
+        mMimeType = mimeType;
     }
 
     @Override
     public Uri getId() {
-        return Uri.parse("some uri value");
+        return mId;
     }
 
     @Override
@@ -34,12 +38,12 @@ public class MockTextMessagePart extends MessagePart {
 
     @Override
     public String getMimeType() {
-        return MIME_TYPE;
+        return mMimeType;
     }
 
     @Override
     public byte[] getData() {
-        return mContent.getBytes();
+        return mContent;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class MockTextMessagePart extends MessagePart {
 
     @Override
     public long getSize() {
-        return mContent.length();
+        return mContent.length;
     }
 
     @Override
@@ -59,7 +63,7 @@ public class MockTextMessagePart extends MessagePart {
 
     @Override
     public void download(LayerProgressListener layerProgressListener) {
-
+        layerProgressListener.onProgressComplete(this, LayerProgressListener.Operation.DOWNLOAD);
     }
 
     @Override
