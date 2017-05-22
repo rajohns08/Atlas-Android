@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.util.imagepopup.ImagePopupActivity;
 import com.layer.ui.util.picasso.transformations.RoundedTransform;
@@ -30,7 +30,7 @@ import com.squareup.picasso.Transformation;
 public class SinglePartImageCellFactory extends
         CellFactory<SinglePartImageCellFactory.CellHolder, SinglePartImageCellFactory.PartId> implements View.OnClickListener {
     private static final String PICASSO_TAG = SinglePartImageCellFactory.class.getSimpleName();
-    private static final int PLACEHOLDER = com.layer.atlas.R.drawable.atlas_message_item_cell_placeholder;
+    private static final int PLACEHOLDER = com.layer.ui.R.drawable.atlas_message_item_cell_placeholder;
     private static final int CACHE_SIZE_BYTES = 256 * 1024;
 
     private final LayerClient mLayerClient;
@@ -135,7 +135,7 @@ public class SinglePartImageCellFactory extends
 
     private Transformation getTransform(Context context) {
         if (mTransform == null) {
-            float radius = context.getResources().getDimension(com.layer.atlas.R.dimen.atlas_message_item_cell_radius);
+            float radius = context.getResources().getDimension(com.layer.ui.R.dimen.atlas_message_item_cell_radius);
             mTransform = new RoundedTransform(radius);
         }
 

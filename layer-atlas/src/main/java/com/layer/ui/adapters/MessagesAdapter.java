@@ -14,7 +14,7 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import com.layer.ui.Avatar;
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.MessageStyle;
 import com.layer.ui.util.IdentityRecyclerViewEventListener;

@@ -1,6 +1,6 @@
 package com.layer.ui.messagetypes.text;
 
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.MessageSender;
 import com.layer.ui.util.Log;
 import com.layer.ui.util.Util;

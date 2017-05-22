@@ -8,7 +8,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.threepartimage.ThreePartImageCellFactory;
 import com.layer.ui.messagetypes.threepartimage.ThreePartImageUtils;
 import com.layer.ui.util.Log;
