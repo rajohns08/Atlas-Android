@@ -336,16 +336,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         if (cluster.mClusterWithPrevious == null) {
             // No previous message, so no gap
             viewHolder.mClusterSpaceGap.setVisibility(View.GONE);
-            viewHolder.mTimeGroup.setVisibility(View.GONE);
+            bindDateTimeForMessage(viewHolder, message);
         } else if (cluster.mDateBoundaryWithPrevious || cluster.mClusterWithPrevious == ClusterType.MORE_THAN_HOUR) {
             // Crossed into a new day, or > 1hr lull in conversation
-            Date receivedAt = message.getReceivedAt();
-            if (receivedAt == null) receivedAt = new Date();
-            String timeBarDayText = Util.formatTimeDay(viewHolder.mCell.getContext(), receivedAt);
-            viewHolder.mTimeGroupDay.setText(timeBarDayText);
-            String timeBarTimeText = mTimeFormat.format(receivedAt.getTime());
-            viewHolder.mTimeGroupTime.setText(" " + timeBarTimeText);
-            viewHolder.mTimeGroup.setVisibility(View.VISIBLE);
+            bindDateTimeForMessage(viewHolder, message);
             viewHolder.mClusterSpaceGap.setVisibility(View.GONE);
         } else if (cluster.mClusterWithPrevious == ClusterType.LESS_THAN_MINUTE) {
             // Same sender with < 1m gap
@@ -469,6 +463,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         } else {
             viewHolder.mReceipt.setVisibility(View.GONE);
         }
+    }
+
+    private void bindDateTimeForMessage(CellViewHolder viewHolder, Message message) {
+        Date receivedAt = message.getReceivedAt();
+        if (receivedAt == null) receivedAt = new Date();
+        String timeBarDayText = Util.formatTimeDay(viewHolder.mCell.getContext(), receivedAt);
+        viewHolder.mTimeGroupDay.setText(timeBarDayText);
+        String timeBarTimeText = mTimeFormat.format(receivedAt.getTime());
+        viewHolder.mTimeGroupTime.setText(" " + timeBarTimeText);
+        viewHolder.mTimeGroup.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -686,7 +690,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     //==============================================================================================
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final static int RESOURCE_ID_FOOTER = R.layout.ui_message_item_footer;
+        public final static int RESOURCE_ID_FOOTER = R.layout.atlas_message_item_footer;
 
         // View cache
         protected ViewGroup mRoot;
@@ -698,8 +702,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     static class CellViewHolder extends ViewHolder {
-        public final static int RESOURCE_ID_ME = R.layout.ui_message_item_me;
-        public final static int RESOURCE_ID_THEM = R.layout.ui_message_item_them;
+        public final static int RESOURCE_ID_ME = R.layout.atlas_message_item_me;
+        public final static int RESOURCE_ID_THEM = R.layout.atlas_message_item_them;
 
         protected Message mMessage;
 

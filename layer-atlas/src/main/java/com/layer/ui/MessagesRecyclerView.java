@@ -29,7 +29,6 @@ import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.MessageStyle;
 import com.layer.ui.util.itemanimators.NoChangeAnimator;
 import com.layer.ui.util.views.SwipeableItem;
-
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Message;
@@ -39,7 +38,6 @@ import com.layer.sdk.query.SortDescriptor;
 import com.squareup.picasso.Picasso;
 
 public class MessagesRecyclerView extends RecyclerView {
-
     private MessagesAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private ItemTouchHelper mSwipeItemTouchHelper;
