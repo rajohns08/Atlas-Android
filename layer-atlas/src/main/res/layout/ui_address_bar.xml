@@ -22,8 +22,8 @@
                 android:minWidth="@dimen/atlas_participant_filter_min_width"
                 android:singleLine="true"
                 android:textSize="@dimen/atlas_text_size_input"
-                android:background="@drawable/atlas_edit_text_background"
-                android:textCursorDrawable="@drawable/atlas_edit_text_cursor"
+                android:background="@drawable/ui_edit_text_background"
+                android:textCursorDrawable="@drawable/ui_edit_text_cursor"
                 />
 
         </com.layer.ui.util.views.FlowLayout>

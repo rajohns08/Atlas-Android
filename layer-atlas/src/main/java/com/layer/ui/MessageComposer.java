@@ -97,7 +97,7 @@ public class MessageComposer extends FrameLayout {
      * @return this AtlasMessageComposer.
      */
     public MessageComposer init(LayerClient layerClient) {
-        LayoutInflater.from(getContext()).inflate(R.layout.atlas_message_composer, this);
+        LayoutInflater.from(getContext()).inflate(R.layout.ui_message_composer, this);
 
         mLayerClient = layerClient;
 
@@ -282,7 +282,7 @@ public class MessageComposer extends FrameLayout {
         this.mCursorColor = ta.getColor(R.styleable.MessageComposer_inputCursorColor, context.getResources().getColor(R.color.atlas_color_primary_blue));
         this.mAttachmentSendersBackground = ta.getDrawable(R.styleable.MessageComposer_attachmentSendersBackground);
         if (mAttachmentSendersBackground == null) {
-            mAttachmentSendersBackground = ContextCompat.getDrawable(context, R.drawable.atlas_popup_background);
+            mAttachmentSendersBackground = ContextCompat.getDrawable(context, R.drawable.ui_popup_background);
         }
         ta.recycle();
     }
@@ -296,7 +296,7 @@ public class MessageComposer extends FrameLayout {
         EditTextUtil.setUnderlineColor(mMessageEditText, mUnderlineColor);
         applyTypeface();
 
-        ColorStateList list = getResources().getColorStateList(R.color.atlas_message_composer_attach_button);
+        ColorStateList list = getResources().getColorStateList(R.color.ui_message_composer_attach_button);
         Drawable d = DrawableCompat.wrap(mAttachButton.getDrawable().mutate());
         DrawableCompat.setTintList(d, list);
         mAttachButton.setImageDrawable(d);
@@ -310,7 +310,7 @@ public class MessageComposer extends FrameLayout {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         LinearLayout menuLayout = (LinearLayout) mAttachmentMenu.getContentView();
 
-        View menuItem = inflater.inflate(R.layout.atlas_message_composer_attachment_menu_item, menuLayout, false);
+        View menuItem = inflater.inflate(R.layout.ui_message_composer_attachment_menu_item, menuLayout, false);
         ((TextView) menuItem.findViewById(R.id.title)).setText(sender.getTitle());
         menuItem.setTag(sender);
         menuItem.setOnClickListener(new OnClickListener() {
@@ -337,7 +337,7 @@ public class MessageComposer extends FrameLayout {
         } else {
             mAttachmentMenu = new PopupWindow(context, attrs, defStyle);
         }
-        mAttachmentMenu.setContentView(LayoutInflater.from(context).inflate(R.layout.atlas_message_composer_attachment_menu, null));
+        mAttachmentMenu.setContentView(LayoutInflater.from(context).inflate(R.layout.ui_message_composer_attachment_menu, null));
         mAttachmentMenu.setWindowLayoutMode(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mAttachmentMenu.setOutsideTouchable(true);
         mAttachmentMenu.setBackgroundDrawable(mAttachmentSendersBackground);

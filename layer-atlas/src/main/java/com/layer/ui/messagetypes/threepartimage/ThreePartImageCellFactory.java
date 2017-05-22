@@ -44,7 +44,7 @@ public class ThreePartImageCellFactory extends
         CellFactory<ThreePartImageCellFactory.CellHolder, ThreePartImageCellFactory.Info> implements View.OnClickListener {
     private static final String PICASSO_TAG = ThreePartImageCellFactory.class.getSimpleName();
 
-    private static final int PLACEHOLDER = R.drawable.atlas_message_item_cell_placeholder;
+    private static final int PLACEHOLDER = R.drawable.ui_message_item_cell_placeholder;
     private static final int CACHE_SIZE_BYTES = 256 * 1024;
 
     private final LayerClient mLayerClient;
@@ -74,7 +74,7 @@ public class ThreePartImageCellFactory extends
 
     @Override
     public CellHolder createCellHolder(ViewGroup cellView, boolean isMe, LayoutInflater layoutInflater) {
-        return new CellHolder(layoutInflater.inflate(R.layout.atlas_message_item_cell_image, cellView, true));
+        return new CellHolder(layoutInflater.inflate(R.layout.ui_message_item_cell_image, cellView, true));
     }
 
     @Override

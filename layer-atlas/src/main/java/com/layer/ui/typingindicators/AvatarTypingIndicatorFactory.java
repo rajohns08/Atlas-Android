@@ -28,7 +28,7 @@ import java.util.Set;
 public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.TypingIndicatorFactory<LinearLayout> {
     private static final String TAG = AvatarTypingIndicatorFactory.class.getSimpleName();
 
-    private static final int DOT_RES_ID = R.drawable.atlas_typing_indicator_dot;
+    private static final int DOT_RES_ID = R.drawable.ui_typing_indicator_dot;
     private static final float DOT_ON_ALPHA = 0.31f;
     private static final long ANIMATION_PERIOD = 600;
     private static final long ANIMATION_OFFSET = ANIMATION_PERIOD / 3;

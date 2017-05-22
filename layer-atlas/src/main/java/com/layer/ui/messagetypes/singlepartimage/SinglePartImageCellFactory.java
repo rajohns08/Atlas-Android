@@ -30,7 +30,7 @@ import com.squareup.picasso.Transformation;
 public class SinglePartImageCellFactory extends
         CellFactory<SinglePartImageCellFactory.CellHolder, SinglePartImageCellFactory.PartId> implements View.OnClickListener {
     private static final String PICASSO_TAG = SinglePartImageCellFactory.class.getSimpleName();
-    private static final int PLACEHOLDER = com.layer.ui.R.drawable.atlas_message_item_cell_placeholder;
+    private static final int PLACEHOLDER = com.layer.ui.R.drawable.ui_message_item_cell_placeholder;
     private static final int CACHE_SIZE_BYTES = 256 * 1024;
 
     private final LayerClient mLayerClient;
@@ -54,7 +54,7 @@ public class SinglePartImageCellFactory extends
 
     @Override
     public CellHolder createCellHolder(ViewGroup cellView, boolean isMe, LayoutInflater layoutInflater) {
-        return new CellHolder(layoutInflater.inflate(R.layout.atlas_message_item_cell_image, cellView, true));
+        return new CellHolder(layoutInflater.inflate(R.layout.ui_message_item_cell_image, cellView, true));
     }
 
     @Override

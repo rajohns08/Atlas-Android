@@ -686,7 +686,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     //==============================================================================================
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final static int RESOURCE_ID_FOOTER = R.layout.atlas_message_item_footer;
+        public final static int RESOURCE_ID_FOOTER = R.layout.ui_message_item_footer;
 
         // View cache
         protected ViewGroup mRoot;
@@ -698,8 +698,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     static class CellViewHolder extends ViewHolder {
-        public final static int RESOURCE_ID_ME = R.layout.atlas_message_item_me;
-        public final static int RESOURCE_ID_THEM = R.layout.atlas_message_item_them;
+        public final static int RESOURCE_ID_ME = R.layout.ui_message_item_me;
+        public final static int RESOURCE_ID_THEM = R.layout.ui_message_item_them;
 
         protected Message mMessage;
 
