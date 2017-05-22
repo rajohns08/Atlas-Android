@@ -10,7 +10,7 @@
     <application>
 
         <!-- Not SDK, only for tests -->
-        <activity android:name="activity.CellFactoryTestActivity"
+        <activity android:name="com.layer.atlas.activity.CellFactoryTestActivity"
             />
     </application>
 

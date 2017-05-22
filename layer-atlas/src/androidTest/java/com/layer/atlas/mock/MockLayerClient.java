@@ -1,4 +1,4 @@
-package mock;
+package com.layer.atlas.mock;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -35,7 +35,7 @@ import java.util.Set;
  * Created by archit on 5/16/17.
  */
 
-public class MockLayerClient extends LayerClient{
+public class MockLayerClient extends LayerClient {
 
     @Override
     public boolean isClosed() {
@@ -84,7 +84,7 @@ public class MockLayerClient extends LayerClient{
 
     @Override
     public Message newMessage(MessageOptions messageOptions, List<MessagePart> list) {
-        return null;
+        return new MockMessageImpl(list);
     }
 
     @Override
