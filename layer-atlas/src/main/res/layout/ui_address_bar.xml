@@ -21,7 +21,11 @@
                 android:imeOptions="actionDone"
                 android:minWidth="@dimen/layer_ui_participant_filter_min_width"
                 android:singleLine="true"
+<<<<<<< HEAD:layer-atlas/src/main/res/layout/ui_address_bar.xml
                 android:textSize="@dimen/layer_ui_text_size_input"
+=======
+                android:textSize="@dimen/atlas_text_size_input"
+>>>>>>> Rename resource files:layer-atlas/src/main/res/layout/ui_address_bar.xml
                 android:background="@drawable/ui_edit_text_background"
                 android:textCursorDrawable="@drawable/ui_edit_text_cursor"
                 />

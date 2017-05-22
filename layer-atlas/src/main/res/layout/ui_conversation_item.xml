@@ -16,7 +16,11 @@
 <com.layer.ui.util.views.SwipeableItem
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+<<<<<<< HEAD:layer-atlas/src/main/res/layout/ui_conversation_item.xml
     android:layout_height="@dimen/layer_ui_primary_item_height"
+=======
+    android:layout_height="@dimen/atlas_primary_item_height"
+>>>>>>> Rename resource files:layer-atlas/src/main/res/layout/ui_conversation_item.xml
     android:background="@drawable/ui_swipeable_item_background_selector">
 
     <LinearLayout
