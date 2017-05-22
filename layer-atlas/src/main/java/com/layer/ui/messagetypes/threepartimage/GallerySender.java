@@ -8,7 +8,11 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 
+<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/messagetypes/threepartimage/GallerySender.java
 import com.layer.ui.R;
+=======
+import com.layer.atlas.R;
+>>>>>>> Rename package from atlas to ui:layer-atlas/src/main/java/com/layer/ui/messagetypes/threepartimage/GallerySender.java
 import com.layer.ui.messagetypes.AttachmentSender;
 import com.layer.ui.util.Log;
 import com.layer.ui.util.Util;

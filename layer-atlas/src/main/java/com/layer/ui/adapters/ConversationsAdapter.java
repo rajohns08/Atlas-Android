@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.layer.ui.Avatar;
-import com.layer.ui.R;
+import com.layer.atlas.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.generic.GenericCellFactory;
 import com.layer.ui.messagetypes.location.LocationCellFactory;
@@ -363,7 +363,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
 
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         // Layout to inflate
-        public final static int RESOURCE_ID = R.layout.ui_conversation_item;
+        public final static int RESOURCE_ID = R.layout.atlas_conversation_item;
 
         // View cache
         protected TextView mTitleView;

@@ -8,7 +8,7 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
-import com.layer.ui.R;
+import com.layer.atlas.R;
 import com.layer.ui.messagetypes.threepartimage.ThreePartImageCellFactory;
 import com.layer.ui.messagetypes.threepartimage.ThreePartImageUtils;
 import com.layer.ui.util.Log;
@@ -32,7 +32,7 @@ public class ImagePopupActivity extends Activity implements LayerProgressListene
         super.onCreate(savedInstanceState);
 
         getWindow().setBackgroundDrawableResource(R.color.atlas_image_popup_background);
-        setContentView(R.layout.ui_image_popup);
+        setContentView(R.layout.atlas_image_popup);
         mImageView = (SubsamplingScaleImageView) findViewById(R.id.image_popup);
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.image_popup_progress);
 

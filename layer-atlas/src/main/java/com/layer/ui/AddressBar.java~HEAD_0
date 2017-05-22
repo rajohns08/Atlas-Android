@@ -1,4 +1,4 @@
-package com.layer.atlas;
+package com.layer.ui;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -22,13 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.layer.atlas.util.AvatarStyle;
-import com.layer.atlas.util.EditTextUtil;
-import com.layer.atlas.util.IdentityDisplayNameComparator;
-import com.layer.atlas.util.Util;
-import com.layer.atlas.util.views.EmptyDelEditText;
-import com.layer.atlas.util.views.FlowLayout;
-import com.layer.atlas.util.views.MaxHeightScrollView;
+import com.layer.ui.util.AvatarStyle;
+import com.layer.ui.util.EditTextUtil;
+import com.layer.ui.util.IdentityDisplayNameComparator;
+import com.layer.ui.util.Util;
+import com.layer.ui.util.views.EmptyDelEditText;
+import com.layer.ui.util.views.FlowLayout;
+import com.layer.ui.util.views.MaxHeightScrollView;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.layer.sdk.messaging.Identity;
@@ -91,7 +91,7 @@ public class AddressBar extends LinearLayout {
         parseStyle(context, attrs, defStyleAttr);
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        inflater.inflate(R.layout.atlas_address_bar, this, true);
+        inflater.inflate(R.layout.ui_address_bar, this, true);
         mSelectedParticipantLayout = (FlowLayout) findViewById(R.id.selected_participant_group);
         mFilter = (EmptyDelEditText) findViewById(R.id.filter);
         mSelectedParticipantLayout.setStretchChild(mFilter);
@@ -436,7 +436,7 @@ public class AddressBar extends LinearLayout {
             mParticipant = participant;
 
             // Inflate and cache views
-            inflater.inflate(R.layout.atlas_participant_chip, this, true);
+            inflater.inflate(R.layout.ui_participant_chip, this, true);
             mAvatar = (Avatar) findViewById(R.id.avatar);
             mName = (TextView) findViewById(R.id.name);
             mRemove = (ImageView) findViewById(R.id.remove);
@@ -451,7 +451,7 @@ public class AddressBar extends LinearLayout {
             p.setMargins(margin, margin, margin, margin);
             setLayoutParams(p);
             setOrientation(HORIZONTAL);
-            setBackgroundDrawable(r.getDrawable(R.drawable.atlas_participant_chip_background));
+            setBackgroundDrawable(r.getDrawable(R.drawable.ui_participant_chip_background));
 
             // Initialize participant data
             mName.setText(Util.getDisplayName(participant));
@@ -744,7 +744,7 @@ public class AddressBar extends LinearLayout {
             private TextView mTitle;
 
             public ViewHolder(ViewGroup parent) {
-                super(LayoutInflater.from(parent.getContext()).inflate(R.layout.atlas_address_bar_item, parent, false));
+                super(LayoutInflater.from(parent.getContext()).inflate(R.layout.ui_address_bar_item, parent, false));
                 mAvatar = (Avatar) itemView.findViewById(R.id.avatar);
                 mTitle = (TextView) itemView.findViewById(R.id.title);
                 mTitle.setTextColor(mListTextColor);
