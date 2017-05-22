@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.    
 -->
-<com.layer.atlas.util.views.SwipeableItem
+<com.layer.ui.util.views.SwipeableItem
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
             android:orientation="horizontal"
             >
 
-            <com.layer.atlas.Avatar
+            <com.layer.ui.Avatar
                 android:id="@+id/avatar"
                 android:layout_width="@dimen/atlas_message_avatar_item_single"
                 android:layout_height="@dimen/atlas_message_avatar_item_single"
@@ -120,4 +120,4 @@
         </LinearLayout>
 
     </LinearLayout>
-</com.layer.atlas.util.views.SwipeableItem>
+</com.layer.ui.util.views.SwipeableItem>
