@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.util.Log;
 import com.layer.ui.util.Util;
@@ -63,7 +63,7 @@ public class ThreePartImageCellFactory extends
     @Deprecated
     public ThreePartImageCellFactory(Activity activity, LayerClient layerClient, Picasso picasso) {
         this(layerClient, picasso);
-        float radius = activity.getResources().getDimension(com.layer.atlas.R.dimen.atlas_message_item_cell_radius);
+        float radius = activity.getResources().getDimension(com.layer.ui.R.dimen.atlas_message_item_cell_radius);
         mTransform = new RoundedTransform(radius);
     }
 
@@ -182,7 +182,7 @@ public class ThreePartImageCellFactory extends
 
     private Transformation getTransform(Context context) {
         if (mTransform == null) {
-            float radius = context.getResources().getDimension(com.layer.atlas.R.dimen.atlas_message_item_cell_radius);
+            float radius = context.getResources().getDimension(com.layer.ui.R.dimen.atlas_message_item_cell_radius);
             mTransform = new RoundedTransform(radius);
         }
 

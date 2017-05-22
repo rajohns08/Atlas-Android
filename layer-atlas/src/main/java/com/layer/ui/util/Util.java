@@ -22,8 +22,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.layer.atlas.BuildConfig;
-import com.layer.atlas.R;
+import com.layer.ui.BuildConfig;
+import com.layer.ui.R;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.exceptions.LayerException;
 import com.layer.sdk.listeners.LayerAuthenticationListener;

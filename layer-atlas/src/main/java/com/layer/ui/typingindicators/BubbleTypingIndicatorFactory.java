@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.layer.ui.TypingIndicatorLayout;
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
 import com.layer.sdk.messaging.Identity;
 

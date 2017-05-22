@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.adapters.BaseAdapter;
 import com.layer.sdk.query.Queryable;
 

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;

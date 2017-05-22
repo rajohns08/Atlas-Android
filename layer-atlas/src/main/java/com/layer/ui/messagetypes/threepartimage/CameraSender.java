@@ -14,7 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.AttachmentSender;
 import com.layer.ui.util.Log;
 import com.layer.ui.util.Util;

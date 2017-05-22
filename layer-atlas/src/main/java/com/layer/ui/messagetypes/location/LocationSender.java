@@ -16,7 +16,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.layer.atlas.R;
+import com.layer.ui.R;
 import com.layer.ui.messagetypes.AttachmentSender;
 import com.layer.ui.util.Log;
 import com.layer.ui.util.Util;
