@@ -11,13 +11,9 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/typingindicators/BubbleTypingIndicatorFactory.java
 import com.layer.ui.TypingIndicatorLayout;
 import com.layer.ui.R;
-=======
-import com.layer.atlas.TypingIndicatorLayout;
-import com.layer.atlas.R;
->>>>>>> Rename AtlasTypingIndicator:layer-atlas/src/main/java/com/layer/atlas/typingindicators/BubbleTypingIndicatorFactory.java
+import com.layer.ui.TypingIndicatorLayout;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
 import com.layer.sdk.messaging.Identity;
 
@@ -48,12 +44,7 @@ public class BubbleTypingIndicatorFactory implements TypingIndicatorLayout.Typin
         l.setGravity(Gravity.CENTER);
         l.setOrientation(LinearLayout.HORIZONTAL);
         l.setLayoutParams(new TypingIndicatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-<<<<<<< HEAD:layer-atlas/src/main/java/com/layer/ui/typingindicators/BubbleTypingIndicatorFactory.java
         l.setBackgroundDrawable(r.getDrawable(R.drawable.ui_message_item_cell_them));
-=======
-        l.setBackgroundDrawable(r.getDrawable(R.drawable.atlas_message_item_cell_them));
->>>>>>> Rename AtlasTypingIndicator:layer-atlas/src/main/java/com/layer/atlas/typingindicators/BubbleTypingIndicatorFactory.java
-
         ImageView v;
         LinearLayout.LayoutParams vp;
 

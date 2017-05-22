@@ -14,7 +14,7 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import com.layer.ui.Avatar;
-import com.layer.ui.R;
+import com.layer.atlas.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.MessageStyle;
 import com.layer.ui.util.IdentityRecyclerViewEventListener;
@@ -92,6 +92,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
     //Style
     private MessageStyle mMessageStyle;
+
     private RecyclerView mRecyclerView;
     private boolean mReadReceiptsEnabled = true;
 
@@ -106,6 +107,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         mDateFormat = android.text.format.DateFormat.getDateFormat(context);
         mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
         mDisplayMetrics = context.getResources().getDisplayMetrics();
+
         mQueryController = layerClient.newRecyclerViewController(null, null, this);
         mQueryController.setPreProcessCallback(new ListViewController.PreProcessCallback<Message>() {
             @Override
@@ -369,7 +371,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 if (sender != null) {
                     viewHolder.mUserName.setText(Util.getDisplayName(sender));
                 } else {
-                    viewHolder.mUserName.setText(R.string.layer_ui_message_item_unknown_user);
+                    viewHolder.mUserName.setText(R.string.atlas_message_item_unknown_user);
                 }
                 viewHolder.mUserName.setVisibility(View.VISIBLE);
 
@@ -413,7 +415,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             maxWidth -= avatarParams.width + avatarParams.rightMargin + avatarParams.leftMargin;
         }
         // TODO: subtract spacing rather than multiply by 0.8 to handle screen sizes more cleanly
-        int maxHeight = (int) viewHolder.mRoot.getContext().getResources().getDimension(R.dimen.atlas_messages_max_cell_height);
+        int maxHeight = (int) Math.round(0.8 * mRecyclerView.getHeight());
 
         viewHolder.mCellHolderSpecs.isMe = cellType.mMe;
         viewHolder.mCellHolderSpecs.position = position;
@@ -447,14 +449,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
                 // Use 2 to include one other participant plus the current user
                 if (statuses.size() > 2) {
                     String quantityString = viewHolder.mReceipt.getResources()
-                            .getQuantityString(R.plurals.layer_ui_message_item_read_muliple_participants, readCount, readCount);
+                            .getQuantityString(R.plurals.atlas_message_item_read_muliple_participants, readCount, readCount);
                     viewHolder.mReceipt.setText(quantityString);
                 } else {
-                    viewHolder.mReceipt.setText(R.string.layer_ui_message_item_read);
+                    viewHolder.mReceipt.setText(R.string.atlas_message_item_read);
                 }
             } else if (delivered) {
                 viewHolder.mReceipt.setVisibility(View.VISIBLE);
-                viewHolder.mReceipt.setText(R.string.layer_ui_message_item_delivered);
+                viewHolder.mReceipt.setText(R.string.atlas_message_item_delivered);
             } else {
                 viewHolder.mReceipt.setVisibility(View.GONE);
             }
@@ -688,7 +690,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     //==============================================================================================
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final static int RESOURCE_ID_FOOTER = R.layout.ui_message_item_footer;
+        public final static int RESOURCE_ID_FOOTER = R.layout.atlas_message_item_footer;
 
         // View cache
         protected ViewGroup mRoot;
@@ -700,8 +702,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     }
 
     static class CellViewHolder extends ViewHolder {
-        public final static int RESOURCE_ID_ME = R.layout.ui_message_item_me;
-        public final static int RESOURCE_ID_THEM = R.layout.ui_message_item_them;
+        public final static int RESOURCE_ID_ME = R.layout.atlas_message_item_me;
+        public final static int RESOURCE_ID_THEM = R.layout.atlas_message_item_them;
 
         protected Message mMessage;
 

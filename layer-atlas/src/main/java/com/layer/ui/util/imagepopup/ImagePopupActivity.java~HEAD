@@ -1,4 +1,4 @@
-package com.layer.atlas.util.imagepopup;
+package com.layer.ui.util.imagepopup;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,10 +8,10 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
-import com.layer.atlas.R;
-import com.layer.atlas.messagetypes.threepartimage.ThreePartImageCellFactory;
-import com.layer.atlas.messagetypes.threepartimage.ThreePartImageUtils;
-import com.layer.atlas.util.Log;
+import com.layer.ui.R;
+import com.layer.ui.messagetypes.threepartimage.ThreePartImageCellFactory;
+import com.layer.ui.messagetypes.threepartimage.ThreePartImageUtils;
+import com.layer.ui.util.Log;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.listeners.LayerProgressListener;
 import com.layer.sdk.messaging.MessagePart;
@@ -31,8 +31,8 @@ public class ImagePopupActivity extends Activity implements LayerProgressListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setBackgroundDrawableResource(R.color.atlas_image_popup_background);
-        setContentView(R.layout.atlas_image_popup);
+        getWindow().setBackgroundDrawableResource(R.color.layer_ui_image_popup_background);
+        setContentView(R.layout.ui_image_popup);
         mImageView = (SubsamplingScaleImageView) findViewById(R.id.image_popup);
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.image_popup_progress);
 
