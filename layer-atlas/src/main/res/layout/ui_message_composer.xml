@@ -38,13 +38,8 @@
         android:layout_weight="1"
         android:hint="@string/layer_ui_message_composer_hint"
         android:maxLines="3"
-<<<<<<< HEAD:layer-atlas/src/main/res/layout/ui_message_composer.xml
         android:minHeight="@dimen/layer_ui_input_height"
         android:textSize="@dimen/layer_ui_text_size_input"
-=======
-        android:minHeight="@dimen/atlas_input_height"
-        android:textSize="@dimen/atlas_text_size_input"
->>>>>>> Rename resource files:layer-atlas/src/main/res/layout/ui_message_composer.xml
         android:background="@drawable/ui_edit_text_background"
         android:textCursorDrawable="@drawable/ui_edit_text_cursor"
         />
