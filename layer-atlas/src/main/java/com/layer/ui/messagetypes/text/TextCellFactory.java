@@ -32,8 +32,8 @@ public class TextCellFactory extends
 
     @Override
     public CellHolder createCellHolder(ViewGroup cellView, boolean isMe, LayoutInflater layoutInflater) {
-        View v = layoutInflater.inflate(R.layout.atlas_message_item_cell_text, cellView, true);
-        v.setBackgroundResource(isMe ? R.drawable.atlas_message_item_cell_me : R.drawable.atlas_message_item_cell_them);
+        View v = layoutInflater.inflate(R.layout.ui_message_item_cell_text, cellView, true);
+        v.setBackgroundResource(isMe ? R.drawable.ui_message_item_cell_me : R.drawable.ui_message_item_cell_them);
         ((GradientDrawable) v.getBackground()).setColor(isMe ? mMessageStyle.getMyBubbleColor() : mMessageStyle.getOtherBubbleColor());
 
         TextView t = (TextView) v.findViewById(R.id.cell_text);

@@ -34,7 +34,7 @@ public class LocationCellFactory extends
     public static final String KEY_LONGITUDE = "lon";
     public static final String KEY_LABEL = "label";
 
-    private static final int PLACEHOLDER = R.drawable.atlas_message_item_cell_placeholder;
+    private static final int PLACEHOLDER = R.drawable.ui_message_item_cell_placeholder;
     private static final double GOLDEN_RATIO = (1.0 + Math.sqrt(5.0)) / 2.0;
     private static final int CACHE_SIZE_BYTES = 256 * 1024;
 
@@ -75,7 +75,7 @@ public class LocationCellFactory extends
 
     @Override
     public CellHolder createCellHolder(ViewGroup cellView, boolean isMe, LayoutInflater layoutInflater) {
-        return new CellHolder(layoutInflater.inflate(R.layout.atlas_message_item_cell_image, cellView, true));
+        return new CellHolder(layoutInflater.inflate(R.layout.ui_message_item_cell_image, cellView, true));
     }
 
     @Override
