@@ -39,7 +39,7 @@ public class MockTextMessagePart extends MessagePart {
 
     @Override
     public byte[] getData() {
-        return "MockTextMessagePart".getBytes();
+        return mContent.getBytes();
     }
 
     @Override

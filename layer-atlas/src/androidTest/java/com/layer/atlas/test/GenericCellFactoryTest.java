@@ -27,36 +27,36 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class GenericCellFactoryTest {
 
-    private static List<MessagePart> sTestMessageParts;
-    private static MessagePart sTextMessagePart;
-    private static Message sMessage;
-    private static LayerClient sLayerClient;
+    private List<MessagePart> mTestMessageParts;
+    private MessagePart mTextMessagePart;
+    private Message mMessage;
+    private LayerClient mLayerClient;
 
-    static {
-        sTestMessageParts = new ArrayList<>();
-        sTextMessagePart = new MockTextMessagePart("Mock message");
-        sTestMessageParts.add(sTextMessagePart);
-        sMessage = new MockMessageImpl(sTestMessageParts);
-        sLayerClient = new MockLayerClient();
+    public GenericCellFactoryTest() {
+        mTestMessageParts = new ArrayList<>();
+        mTextMessagePart = new MockTextMessagePart("Mock message");
+        mTestMessageParts.add(mTextMessagePart);
+        mMessage = new MockMessageImpl(mTestMessageParts);
+        mLayerClient = new MockLayerClient();
     }
 
     @Test
     public void testParseContent() {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
-        GenericCellFactory.ParsedContent parsedContent = genericCellFactory.parseContent(sLayerClient, sMessage);
+        GenericCellFactory.ParsedContent parsedContent = genericCellFactory.parseContent(mLayerClient, mMessage);
         assertTrue(!parsedContent.getString().isEmpty());
     }
 
     @Test
     public void testIsType() {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
-        assertTrue(genericCellFactory.isType(sMessage));
+        assertTrue(genericCellFactory.isType(mMessage));
     }
 
     @Test
     public void testIsBindable() {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
-        assertTrue(genericCellFactory.isBindable(sMessage));
+        assertTrue(genericCellFactory.isBindable(mMessage));
     }
 
     @Test
@@ -64,6 +64,6 @@ public class GenericCellFactoryTest {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertTrue(!genericCellFactory.getPreviewText(context, sMessage).isEmpty());
+        assertTrue(!genericCellFactory.getPreviewText(context, mMessage).isEmpty());
     }
 }
