@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.layer.atlas;
+package com.layer.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -25,13 +25,13 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.layer.atlas.adapters.ConversationsAdapter;
-import com.layer.atlas.messagetypes.CellFactory;
-import com.layer.atlas.util.AvatarStyle;
-import com.layer.atlas.util.ConversationFormatter;
-import com.layer.atlas.util.ConversationStyle;
-import com.layer.atlas.util.itemanimators.NoChangeAnimator;
-import com.layer.atlas.util.views.SwipeableItem;
+import com.layer.ui.adapters.ConversationsAdapter;
+import com.layer.ui.messagetypes.CellFactory;
+import com.layer.ui.util.AvatarStyle;
+import com.layer.ui.util.ConversationFormatter;
+import com.layer.ui.util.ConversationStyle;
+import com.layer.ui.util.itemanimators.NoChangeAnimator;
+import com.layer.ui.util.views.SwipeableItem;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Conversation;
 import com.squareup.picasso.Picasso;
@@ -77,7 +77,7 @@ public class ConversationsRecyclerView extends RecyclerView {
 
     @Override
     public void setAdapter(Adapter adapter) {
-        throw new RuntimeException("AtlasConversationsRecyclerView sets its own Adapter");
+        throw new RuntimeException("ConversationsRecyclerView sets its own Adapter");
     }
 
     public ConversationsRecyclerView addCellFactories (CellFactory... cellFactories) {
@@ -154,26 +154,26 @@ public class ConversationsRecyclerView extends RecyclerView {
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyle) {
         ConversationStyle.Builder styleBuilder = new ConversationStyle.Builder();
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ConversationsRecyclerView, R.attr.AtlasConversationsRecyclerView, defStyle);
-        styleBuilder.titleTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellTitleTextColor, context.getResources().getColor(R.color.atlas_text_gray)));
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ConversationsRecyclerView, R.attr.ConversationsRecyclerView, defStyle);
+        styleBuilder.titleTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellTitleTextColor, context.getResources().getColor(R.color.layer_ui_text_gray)));
         int titleTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellTitleTextStyle, Typeface.NORMAL);
         styleBuilder.titleTextStyle(titleTextStyle);
         String titleTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellTitleTextTypeface);
         styleBuilder.titleTextTypeface(titleTextTypefaceName != null ? Typeface.create(titleTextTypefaceName, titleTextStyle) : null);
 
-        styleBuilder.titleUnreadTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellTitleUnreadTextColor, context.getResources().getColor(R.color.atlas_text_black)));
+        styleBuilder.titleUnreadTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellTitleUnreadTextColor, context.getResources().getColor(R.color.layer_ui_text_black)));
         int titleUnreadTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellTitleUnreadTextStyle, Typeface.BOLD);
         styleBuilder.titleUnreadTextStyle(titleUnreadTextStyle);
         String titleUnreadTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellTitleUnreadTextTypeface);
         styleBuilder.titleUnreadTextTypeface(titleUnreadTextTypefaceName != null ? Typeface.create(titleUnreadTextTypefaceName, titleUnreadTextStyle) : null);
 
-        styleBuilder.subtitleTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellSubtitleTextColor, context.getResources().getColor(R.color.atlas_text_gray)));
+        styleBuilder.subtitleTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellSubtitleTextColor, context.getResources().getColor(R.color.layer_ui_text_gray)));
         int subtitleTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellSubtitleTextStyle, Typeface.NORMAL);
         styleBuilder.subtitleTextStyle(subtitleTextStyle);
         String subtitleTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellSubtitleTextTypeface);
         styleBuilder.subtitleTextTypeface(subtitleTextTypefaceName != null ? Typeface.create(subtitleTextTypefaceName, subtitleTextStyle) : null);
 
-        styleBuilder.subtitleUnreadTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellSubtitleUnreadTextColor, context.getResources().getColor(R.color.atlas_text_black)));
+        styleBuilder.subtitleUnreadTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellSubtitleUnreadTextColor, context.getResources().getColor(R.color.layer_ui_text_black)));
         int subtitleUnreadTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellSubtitleUnreadTextStyle, Typeface.NORMAL);
         styleBuilder.subtitleUnreadTextStyle(subtitleUnreadTextStyle);
         String subtitleUnreadTextTypefaceName = ta.getString(R.styleable.ConversationsRecyclerView_cellSubtitleUnreadTextTypeface);
@@ -181,12 +181,12 @@ public class ConversationsRecyclerView extends RecyclerView {
 
         styleBuilder.cellBackgroundColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellBackgroundColor, Color.TRANSPARENT));
         styleBuilder.cellUnreadBackgroundColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellUnreadBackgroundColor, Color.TRANSPARENT));
-        styleBuilder.dateTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_dateTextColor, context.getResources().getColor(R.color.atlas_color_primary_blue)));
+        styleBuilder.dateTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_dateTextColor, context.getResources().getColor(R.color.layer_ui_color_primary_blue)));
 
         AvatarStyle.Builder avatarStyleBuilder = new AvatarStyle.Builder();
-        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarTextColor, context.getResources().getColor(R.color.atlas_avatar_text)));
-        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarBackgroundColor, context.getResources().getColor(R.color.atlas_avatar_background)));
-        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarBorderColor, context.getResources().getColor(R.color.atlas_avatar_border)));
+        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarTextColor, context.getResources().getColor(R.color.layer_ui_avatar_text)));
+        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarBackgroundColor, context.getResources().getColor(R.color.layer_ui_avatar_background)));
+        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.ConversationsRecyclerView_avatarBorderColor, context.getResources().getColor(R.color.layer_ui_avatar_border)));
         styleBuilder.avatarStyle(avatarStyleBuilder.build());
         ta.recycle();
         conversationStyle = styleBuilder.build();
