@@ -19,6 +19,8 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -49,20 +51,21 @@ public class TextCellFactoryTest {
         TextCellFactory textCellFactory = new TextCellFactory();
         TextCellFactory.TextInfo parsedContent = textCellFactory.parseContent(mLayerClient, mMessage);
 
-        assertTrue(!parsedContent.getString().isEmpty());
-        assertTrue(parsedContent.getString().equals(TEST_MESSAGE_TEXT));
+        assertThat(parsedContent.getString().isEmpty(), is(false));
+        assertThat(parsedContent.getString(), is(TEST_MESSAGE_TEXT));
     }
 
     @Test
     public void testIsType() {
         TextCellFactory textCellFactory = new TextCellFactory();
-        assertTrue(textCellFactory.isType(mMessage));
+
+        assertThat(textCellFactory.isType(mMessage), is(true));
     }
 
     @Test
     public void testIsBindable() {
         TextCellFactory textCellFactory = new TextCellFactory();
-        assertTrue(textCellFactory.isBindable(mMessage));
+        assertThat(textCellFactory.isBindable(mMessage), is(true));
     }
 
     @Test
@@ -70,7 +73,7 @@ public class TextCellFactoryTest {
         TextCellFactory textCellFactory = new TextCellFactory();
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertTrue(!textCellFactory.getPreviewText(context, mMessage).isEmpty());
-        assertTrue(textCellFactory.getPreviewText(context, mMessage).equals(TEST_MESSAGE_TEXT));
+        assertThat(textCellFactory.getPreviewText(context, mMessage).isEmpty(), is(false));
+        assertThat(textCellFactory.getPreviewText(context, mMessage), is(TEST_MESSAGE_TEXT));
     }
 }

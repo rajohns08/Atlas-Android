@@ -19,6 +19,8 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -47,19 +49,22 @@ public class GenericCellFactoryTest {
     public void testParseContent() {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
         GenericCellFactory.ParsedContent parsedContent = genericCellFactory.parseContent(mLayerClient, mMessage);
-        assertTrue(!parsedContent.getString().isEmpty());
+
+        assertThat(parsedContent.getString().isEmpty(), is(false));
     }
 
     @Test
     public void testIsType() {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
-        assertTrue(genericCellFactory.isType(mMessage));
+
+        assertThat(genericCellFactory.isType(mMessage), is(true));
     }
 
     @Test
     public void testIsBindable() {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
-        assertTrue(genericCellFactory.isBindable(mMessage));
+
+        assertThat(genericCellFactory.isBindable(mMessage), is(true));
     }
 
     @Test
@@ -67,6 +72,6 @@ public class GenericCellFactoryTest {
         GenericCellFactory genericCellFactory = new GenericCellFactory();
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertTrue(!genericCellFactory.getPreviewText(context, mMessage).isEmpty());
+        assertThat(genericCellFactory.getPreviewText(context, mMessage).isEmpty(), is(false));
     }
 }
