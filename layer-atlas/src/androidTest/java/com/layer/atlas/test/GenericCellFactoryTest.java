@@ -12,6 +12,7 @@ import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessagePart;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,7 +34,8 @@ public class GenericCellFactoryTest {
     private Message mMessage;
     private LayerClient mLayerClient;
 
-    public GenericCellFactoryTest() {
+    @Before
+    public void setup() {
         mTestMessageParts = new ArrayList<>();
         mTextMessagePart = new MockMessagePart("Generic message".getBytes(), MIME_TYPE);
         mTestMessageParts.add(mTextMessagePart);
