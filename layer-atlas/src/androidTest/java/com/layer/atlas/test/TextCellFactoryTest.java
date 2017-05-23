@@ -34,7 +34,7 @@ public class TextCellFactoryTest {
     private LayerClient mLayerClient;
 
     @Before
-    public void setup() {
+    public void setUp() {
         mTestMessageParts = new ArrayList<>();
         mTextMessagePart = new MockMessagePart(TEST_MESSAGE_TEXT.getBytes(), MIME_TYPE);
         mTestMessageParts.add(mTextMessagePart);

@@ -33,7 +33,7 @@ public class GenericCellFactoryTest {
     private LayerClient mLayerClient;
 
     @Before
-    public void setup() {
+    public void setUp() {
         mTestMessageParts = new ArrayList<>();
         mTextMessagePart = new MockMessagePart("Generic message".getBytes(), MIME_TYPE);
         mTestMessageParts.add(mTextMessagePart);
