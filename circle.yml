@@ -1,3 +1,6 @@
+dependencies:
+  pre:
+    - echo y | android update sdk --all --filter build-tools-25.0.2 --no-ui
 test:
   override:
     # start the emulator
@@ -6,5 +9,5 @@ test:
         parallel: true
     # wait for it to have booted
     - circle-android wait-for-boot
-    # run tests  against the emulator.
+    # run all tests against the emulator.
     - ./gradlew test connectedAndroidTest --info
