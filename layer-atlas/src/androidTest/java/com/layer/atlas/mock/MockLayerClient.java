@@ -31,10 +31,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by archit on 5/16/17.
- */
-
 public class MockLayerClient extends LayerClient {
 
     @Override

@@ -9,10 +9,6 @@ import com.layer.sdk.messaging.MessagePart;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-/**
- * Created by archit on 5/22/17.
- */
-
 public class MockMessagePart extends MessagePart {
     private static int sInstanceCount = 0;
     private final byte[] mContent;

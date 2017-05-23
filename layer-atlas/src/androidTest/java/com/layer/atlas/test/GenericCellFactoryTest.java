@@ -23,10 +23,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by archit on 5/16/17.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class GenericCellFactoryTest {
     private final static String MIME_TYPE = "text/plain";

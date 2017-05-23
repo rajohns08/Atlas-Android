@@ -16,10 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by archit on 5/22/17.
- */
-
 public class MockMessageImpl implements Message {
 
     private List<MessagePart> mMessageParts = new ArrayList<>();
