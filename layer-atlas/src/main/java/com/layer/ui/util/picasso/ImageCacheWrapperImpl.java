@@ -3,7 +3,7 @@ package com.layer.ui.util.picasso;
 import android.content.Context;
 
 import com.layer.sdk.LayerClient;
-import com.layer.ui.avatar.AvatarView;
+import com.layer.ui.avatar.Avatar;
 import com.layer.ui.util.picasso.requesthandlers.MessagePartRequestHandler;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -35,7 +35,7 @@ public class ImageCacheWrapperImpl implements ImageCacheWrapper {
         }
 
         mPicasso.load(targetUrl)
-                .tag(AvatarView.TAG).noPlaceholder().noFade()
+                .tag(Avatar.TAG).noPlaceholder().noFade()
                 .centerCrop().resize(size, size)
                 .transform(mImageTransform.getTransformation(flag))
                 .into((Target) imageTarget);
