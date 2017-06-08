@@ -10,26 +10,24 @@ import com.layer.ui.util.picasso.ImageCacheWrapperImpl;
 
 public class Injection {
     private static ImageCacheWrapper sImageCacheWrapper;
-    private static Context sContext;
     private static LayerClient sLayerClient;
 
-    public static AvatarContract.ViewModel provideAvatarViewModel() {
+    public static AvatarContract.ViewModel provideAvatarViewModel(Context context) {
         return sImageCacheWrapper != null ? new AvatarViewModel(sImageCacheWrapper)
-                                     : new AvatarViewModel(provideImageCachingLibrary());
+                                     : new AvatarViewModel(provideImageCachingLibrary(context));
     }
 
-    public static ImageCacheWrapper provideImageCachingLibrary() {
+    public static ImageCacheWrapper provideImageCachingLibrary(Context context) {
         if (sImageCacheWrapper == null) {
-            if (sContext == null || sLayerClient == null) {
+            if (sLayerClient == null) {
                 throw new RuntimeExecutionException(new Throwable("Context or Layer Client is not set"));
             }
-            sImageCacheWrapper = new ImageCacheWrapperImpl(sContext, sLayerClient, new ImageTransformImpl());
+            sImageCacheWrapper = new ImageCacheWrapperImpl(context, sLayerClient, new ImageTransformImpl());
         }
         return sImageCacheWrapper;
     }
 
-    public static void setContextAndLayerClient(Context context, LayerClient layerClient) {
-        sContext = context;
+    public static void setLayerClient(LayerClient layerClient) {
         sLayerClient = layerClient;
     }
 
