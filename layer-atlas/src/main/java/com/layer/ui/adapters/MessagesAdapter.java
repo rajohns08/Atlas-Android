@@ -729,7 +729,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
             mAvatar = ((Avatar) itemView.findViewById(R.id.avatar));
             if (mAvatar != null)  {
-                mAvatar.init(mUserName.getContext().getApplicationContext(), layerClient);
+                mAvatar.init();
                 mAvatar.setShouldShowPresence(shouldShowAvatarPresence);
             }
         }

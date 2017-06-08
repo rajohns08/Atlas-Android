@@ -186,7 +186,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
         ViewHolder viewHolder = new ViewHolder(mInflater.inflate(ViewHolder.RESOURCE_ID, parent, false), conversationStyle);
         viewHolder.setClickListener(mViewHolderClickListener);
         viewHolder.mAvatarCluster
-                .init(viewHolder.mTitleView.getContext().getApplicationContext(), mLayerClient)
+                .init()
                 .setStyle(conversationStyle.getAvatarStyle());
         return viewHolder;
     }
