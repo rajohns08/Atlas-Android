@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.layer.sdk.LayerClient;
 import com.layer.ui.R;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.sdk.messaging.Identity;
@@ -85,9 +84,8 @@ public class Avatar extends View implements AvatarContract.View {
         super(context, attrs, defStyleAttr);
     }
 
-    public Avatar init(Context context, LayerClient layerClient) {
-        Injection.setContextAndLayerClient(context,layerClient);
-        mAvatarViewModel = Injection.provideAvatarViewModel();
+    public Avatar init() {
+        mAvatarViewModel = Injection.provideAvatarViewModel(getContext().getApplicationContext());
         setUpAvatarViewModel();
         mPaintInitials.setAntiAlias(true);
         mPaintInitials.setSubpixelText(true);
