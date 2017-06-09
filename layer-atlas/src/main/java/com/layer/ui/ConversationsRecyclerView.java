@@ -77,7 +77,7 @@ public class ConversationsRecyclerView extends RecyclerView {
 
     @Override
     public void setAdapter(Adapter adapter) {
-        throw new RuntimeException("AtlasConversationsRecyclerView sets its own Adapter");
+        throw new RuntimeException("ConversationsRecyclerView sets its own Adapter");
     }
 
     public ConversationsRecyclerView addCellFactories (CellFactory... cellFactories) {
@@ -154,7 +154,7 @@ public class ConversationsRecyclerView extends RecyclerView {
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyle) {
         ConversationStyle.Builder styleBuilder = new ConversationStyle.Builder();
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ConversationsRecyclerView, R.attr.AtlasConversationsRecyclerView, defStyle);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ConversationsRecyclerView, R.attr.ConversationsRecyclerView, defStyle);
         styleBuilder.titleTextColor(ta.getColor(R.styleable.ConversationsRecyclerView_cellTitleTextColor, context.getResources().getColor(R.color.atlas_text_gray)));
         int titleTextStyle = ta.getInt(R.styleable.ConversationsRecyclerView_cellTitleTextStyle, Typeface.NORMAL);
         styleBuilder.titleTextStyle(titleTextStyle);

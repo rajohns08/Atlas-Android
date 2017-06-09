@@ -4,7 +4,7 @@
     <!-- ###################### -->
     <!-- Atlas Component Styles -->
     <!-- ###################### -->
-    <attr name="AtlasConversationsRecyclerView" format="reference" />
+    <attr name="ConversationsRecyclerView" format="reference" />
     <attr name="AtlasMessageComposer" format="reference" />
     <attr name="AtlasMessagesRecyclerView" format="reference" />
     <attr name="AtlasAddressBar" format="reference" />

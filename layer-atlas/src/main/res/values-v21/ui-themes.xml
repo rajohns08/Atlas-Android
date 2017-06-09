@@ -18,7 +18,7 @@
     <!-- ########### -->
     <!-- Atlas Style -->
     <!-- ########### -->
-    <style name="Theme.Atlas.Light" parent="Theme.Atlas.Base.Light">
+    <style name="Theme.ui.Light" parent="Theme.ui.Base.Light">
         <item name="android:statusBarColor">@color/atlas_status_bar_background</item>
         <item name="android:navigationBarColor">@color/atlas_navigation_bar_background</item>
 
