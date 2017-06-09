@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.layer.ui.avatar.Avatar;
+import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.generic.GenericCellFactory;
@@ -185,7 +185,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = new ViewHolder(mInflater.inflate(ViewHolder.RESOURCE_ID, parent, false), conversationStyle);
         viewHolder.setClickListener(mViewHolderClickListener);
-        viewHolder.mAvatarCluster
+        viewHolder.mAvatarViewCluster
                 .init()
                 .setStyle(conversationStyle.getAvatarStyle());
         return viewHolder;
@@ -205,7 +205,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
         // Add the position to the positions map for Identity updates
         mIdentityEventListener.addIdentityPosition(position, participants);
 
-        viewHolder.mAvatarCluster.setParticipants(participants);
+        viewHolder.mAvatarViewCluster.setParticipants(participants);
         viewHolder.mTitleView.setText(mConversationFormatter.getConversationTitle(mLayerClient, conversation, participants));
         viewHolder.applyStyle(conversation.getTotalUnreadMessageCount() > 0);
 
@@ -367,7 +367,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
 
         // View cache
         protected TextView mTitleView;
-        protected Avatar mAvatarCluster;
+        protected AvatarView mAvatarViewCluster;
         protected TextView mMessageView;
         protected TextView mTimeView;
 
@@ -381,7 +381,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
             itemView.setOnLongClickListener(this);
             this.conversationStyle = conversationStyle;
 
-            mAvatarCluster = (Avatar) itemView.findViewById(R.id.avatar);
+            mAvatarViewCluster = (AvatarView) itemView.findViewById(R.id.avatar);
             mTitleView = (TextView) itemView.findViewById(R.id.title);
             mMessageView = (TextView) itemView.findViewById(R.id.last_message);
             mTimeView = (TextView) itemView.findViewById(R.id.time);

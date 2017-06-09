@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.layer.ui.avatar.Avatar;
+import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.ui.util.EditTextUtil;
 import com.layer.ui.util.IdentityDisplayNameComparator;
@@ -424,7 +424,7 @@ public class AddressBar extends LinearLayout {
     private class ParticipantChip extends LinearLayout {
         private Identity mParticipant;
 
-        private Avatar mAvatar;
+        private AvatarView mAvatarView;
         private TextView mName;
         private ImageView mRemove;
 
@@ -436,7 +436,7 @@ public class AddressBar extends LinearLayout {
 
             // Inflate and cache views
             inflater.inflate(R.layout.ui_participant_chip, this, true);
-            mAvatar = (Avatar) findViewById(R.id.avatar);
+            mAvatarView = (AvatarView) findViewById(R.id.avatar);
             mName = (TextView) findViewById(R.id.name);
             mRemove = (ImageView) findViewById(R.id.remove);
 
@@ -454,7 +454,7 @@ public class AddressBar extends LinearLayout {
 
             // Initialize participant data
             mName.setText(Util.getDisplayName(participant));
-            mAvatar.init()
+            mAvatarView.init()
                     .setStyle(mAvatarStyle)
                     .setParticipants(participant);
 
@@ -607,7 +607,7 @@ public class AddressBar extends LinearLayout {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ViewHolder viewHolder = new ViewHolder(parent);
-            viewHolder.mAvatar
+            viewHolder.mAvatarView
                     .init()
                     .setStyle(mAvatarStyle);
             return viewHolder;
@@ -628,7 +628,7 @@ public class AddressBar extends LinearLayout {
                                 selectParticipant((Identity) v.getTag());
                             }
                         });
-                        viewHolder.mAvatar.setParticipants(participant);
+                        viewHolder.mAvatarView.setParticipants(participant);
                     }
                     break;
 
@@ -651,7 +651,7 @@ public class AddressBar extends LinearLayout {
                                 mOnConversationClickListener.onConversationClick(AddressBar.this, (Conversation) v.getTag());
                             }
                         });
-                        viewHolder.mAvatar.setParticipants(participants);
+                        viewHolder.mAvatarView.setParticipants(participants);
                     }
                     break;
                 }
@@ -739,12 +739,12 @@ public class AddressBar extends LinearLayout {
         //==============================================================================================
 
         protected class ViewHolder extends RecyclerView.ViewHolder {
-            private Avatar mAvatar;
+            private AvatarView mAvatarView;
             private TextView mTitle;
 
             public ViewHolder(ViewGroup parent) {
                 super(LayoutInflater.from(parent.getContext()).inflate(R.layout.ui_address_bar_item, parent, false));
-                mAvatar = (Avatar) itemView.findViewById(R.id.avatar);
+                mAvatarView = (AvatarView) itemView.findViewById(R.id.avatar);
                 mTitle = (TextView) itemView.findViewById(R.id.title);
                 mTitle.setTextColor(mListTextColor);
                 mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mListTextSize);

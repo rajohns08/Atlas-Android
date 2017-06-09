@@ -26,8 +26,8 @@ import java.util.Set;
  *
  * AtlasAvatar uses Picasso to render the avatar image. So, you need to init
  */
-public class Avatar extends View implements AvatarContract.View {
-    public static final String TAG = Avatar.class.getSimpleName();
+public class AvatarView extends View implements AvatarContract.View {
+    public static final String TAG = AvatarView.class.getSimpleName();
 
     private static final Paint PAINT_TRANSPARENT = new Paint();
     private static final Paint PAINT_BITMAP = new Paint();
@@ -72,19 +72,19 @@ public class Avatar extends View implements AvatarContract.View {
     private Rect mRect = new Rect();
     private RectF mContentRect = new RectF();
 
-    public Avatar(Context context) {
+    public AvatarView(Context context) {
         super(context);
     }
 
-    public Avatar(Context context, AttributeSet attrs) {
+    public AvatarView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public Avatar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AvatarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public Avatar init() {
+    public AvatarView init() {
         mAvatarViewModel = Injection.provideAvatarViewModel(getContext().getApplicationContext());
         setUpAvatarViewModel();
         mPaintInitials.setAntiAlias(true);
@@ -92,9 +92,9 @@ public class Avatar extends View implements AvatarContract.View {
         mPaintBorder.setAntiAlias(true);
         mPaintBackground.setAntiAlias(true);
 
-        mPaintBackground.setColor(getResources().getColor(R.color.atlas_avatar_background));
-        mPaintBorder.setColor(getResources().getColor(R.color.atlas_avatar_border));
-        mPaintInitials.setColor(getResources().getColor(R.color.atlas_avatar_text));
+        mPaintBackground.setColor(getResources().getColor(R.color.layer_ui_avatar_background));
+        mPaintBorder.setColor(getResources().getColor(R.color.layer_ui_avatar_border));
+        mPaintInitials.setColor(getResources().getColor(R.color.layer_ui_avatar_text));
 
         return this;
     }
@@ -103,7 +103,7 @@ public class Avatar extends View implements AvatarContract.View {
         mAvatarViewModel.setView(this);
     }
 
-    public Avatar setStyle(AvatarStyle avatarStyle) {
+    public AvatarView setStyle(AvatarStyle avatarStyle) {
         mPaintBackground.setColor(avatarStyle.getAvatarBackgroundColor());
         mPaintBorder.setColor(avatarStyle.getAvatarBorderColor());
         mPaintInitials.setColor(avatarStyle.getAvatarTextColor());
@@ -112,7 +112,7 @@ public class Avatar extends View implements AvatarContract.View {
     }
 
     @Override
-    public Avatar setParticipants(Identity... participants) {
+    public AvatarView setParticipants(Identity... participants) {
         mAvatarViewModel.setParticipants(participants);
         mAvatarViewModel.update();
         return this;
@@ -127,7 +127,7 @@ public class Avatar extends View implements AvatarContract.View {
      * @param shouldShowPresence set to `true` to show presence, `false` otherwise.
      * @return
      */
-    public Avatar setShouldShowPresence(boolean shouldShowPresence) {
+    public AvatarView setShouldShowPresence(boolean shouldShowPresence) {
         mShouldShowPresence = shouldShowPresence;
         return this;
     }
@@ -147,7 +147,7 @@ public class Avatar extends View implements AvatarContract.View {
      * Should be called from UI thread.
      */
     @Override
-    public Avatar setParticipants(Set<Identity> participants) {
+    public AvatarView setParticipants(Set<Identity> participants) {
         mAvatarViewModel.setParticipants(participants);
         return this;
     }
@@ -205,7 +205,7 @@ public class Avatar extends View implements AvatarContract.View {
                         targetUrl = null;
                     }
                     //TODO: Turn into builder like partern
-                    mAvatarViewModel.loadImage(targetUrl, Avatar.TAG,null,null,size,size,
+                    mAvatarViewModel.loadImage(targetUrl, AvatarView.TAG,null,null,size,size,
                             (avatarCount > 1),
                             uiImageTarget);
                 }
@@ -275,39 +275,39 @@ public class Avatar extends View implements AvatarContract.View {
     @Override
     public void drawAvailable(Canvas canvas) {
         mPresencePaint.setColor(Color.rgb(0x4F, 0xBF, 0x62));
-        drawPrencence(canvas, false, true);
+        drawPresence(canvas, false, true);
     }
 
     @Override
     public void drawAway(Canvas canvas) {
         mPresencePaint.setColor(Color.rgb(0xF7, 0xCA, 0x40));
-        drawPrencence(canvas, false, true);
+        drawPresence(canvas, false, true);
     }
 
     @Override
     public void drawOffline(Canvas canvas) {
         mPresencePaint.setColor(Color.rgb(0x99, 0x99, 0x9c));
-        drawPrencence(canvas, true, true);
+        drawPresence(canvas, true, true);
     }
 
     @Override
     public void drawInvisible(Canvas canvas) {
         mPresencePaint.setColor(Color.rgb(0x50, 0xC0, 0x62));
-        drawPrencence(canvas, true, true);
+        drawPresence(canvas, true, true);
     }
 
     @Override
     public void drawBusy(Canvas canvas) {
         mPresencePaint.setColor(Color.rgb(0xE6, 0x44, 0x3F));
-        drawPrencence(canvas, false, true);
+        drawPresence(canvas, false, true);
     }
 
     @Override
     public void drawDefault(Canvas canvas) {
-        drawPrencence(canvas, false, false);
+        drawPresence(canvas, false, false);
     }
 
-    private void drawPrencence(Canvas canvas,boolean makeCircleHollow,  boolean drawPresence) {
+    private void drawPresence(Canvas canvas,boolean makeCircleHollow,  boolean drawPresence) {
         if (drawPresence) {
             // Clear background + create border
             mBackgroundPaint.setColor(Color.WHITE);
@@ -331,7 +331,7 @@ public class Avatar extends View implements AvatarContract.View {
     }
 
     @Override
-    public Avatar getAvatar() {
+    public AvatarView getAvatar() {
         return this;
     }
 
