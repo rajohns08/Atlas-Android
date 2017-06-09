@@ -3,8 +3,8 @@
     <!-- ########### -->
     <!-- Atlas Style -->
     <!-- ########### -->
-    <style name="Theme.Atlas.Base.Light" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="AtlasConversationsRecyclerView">@style/AtlasConversationsRecyclerView</item>
+    <style name="Theme.ui.Base.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="ConversationsRecyclerView">@style/ConversationsRecyclerView</item>
         <item name="AtlasMessageComposer">@style/AtlasMessageComposer</item>
         <item name="AtlasMessagesRecyclerView">@style/AtlasMessagesRecyclerView</item>
         <item name="AtlasAddressBar">@style/AtlasAddressBar</item>
@@ -25,7 +25,7 @@
         <item name="android:windowBackground">@color/atlas_window_background</item>
     </style>
 
-    <style name="Theme.Atlas.Light" parent="Theme.Atlas.Base.Light">
+    <style name="Theme.ui.Light" parent="Theme.ui.Base.Light">
         <!-- v21 adds custom items -->
     </style>
 </resources>

@@ -17,7 +17,7 @@
     <!-- ############################## -->
     <!-- Default Atlas Component Styles -->
     <!-- ############################## -->
-    <style name="AtlasConversationsRecyclerView">
+    <style name="ConversationsRecyclerView">
         <item name="cellTitleTextColor">@color/atlas_text_black</item>
         <item name="cellTitleTextTypeface">normal</item>
         <item name="cellTitleTextStyle">normal</item>
