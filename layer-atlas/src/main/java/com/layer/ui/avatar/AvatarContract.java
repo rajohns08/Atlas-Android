@@ -1,6 +1,9 @@
 package com.layer.ui.avatar;
 
+import android.graphics.Canvas;
+
 import com.layer.sdk.messaging.Identity;
+import com.layer.sdk.messaging.Presence;
 import com.layer.ui.util.picasso.ImageCacheWrapper;
 
 import java.util.List;
@@ -32,6 +35,8 @@ public interface AvatarContract {
                 boolean flag, ImageCacheWrapper.ImageTarget imageTarget);
 
         void setView(AvatarContract.View avatar);
+
+        void checkPresence(Presence.PresenceStatus currentStatus, Canvas canvas);
     }
 
     interface View {
@@ -47,6 +52,18 @@ public interface AvatarContract {
         Avatar setParticipants(Set<Identity> participants);
 
         String getInitials(Identity added);
+
+        void drawAvailable(Canvas canvas);
+
+        void drawAway(Canvas canvas);
+
+        void drawOffline(Canvas canvas);
+
+        void drawInvisible(Canvas canvas);
+
+        void drawBusy(Canvas canvas);
+
+        void drawDefault(Canvas canvas);
     }
 
 }
