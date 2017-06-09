@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.layer.sdk.LayerClient;
-import com.layer.ui.avatar.Avatar;
+import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.TypingIndicatorLayout;
 import com.layer.ui.R;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
@@ -91,39 +91,39 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
         int avatarDim = l.getResources().getDimensionPixelSize(R.dimen.layer_ui_message_avatar_item_single);
 
         // Iterate over existing typists and remove non-typists
-        List<Avatar> newlyFinished = new ArrayList<Avatar>();
+        List<AvatarView> newlyFinished = new ArrayList<AvatarView>();
         Set<Identity> newlyActives = new HashSet<>(typingUserIds.keySet());
-        for (Avatar avatar : tag.mActives) {
-            Identity existingTypist = avatar.getParticipants().iterator().next();
+        for (AvatarView avatarView : tag.mActives) {
+            Identity existingTypist = avatarView.getParticipants().iterator().next();
             if (!typingUserIds.containsKey(existingTypist) || (typingUserIds.get(existingTypist) == LayerTypingIndicatorListener.TypingIndicator.FINISHED)) {
                 // Newly finished
-                newlyFinished.add(avatar);
+                newlyFinished.add(avatarView);
             } else {
                 // Existing started or paused
-                avatar.setAlpha(typingUserIds.get(existingTypist) == LayerTypingIndicatorListener.TypingIndicator.STARTED ? 1f : 0.5f);
+                avatarView.setAlpha(typingUserIds.get(existingTypist) == LayerTypingIndicatorListener.TypingIndicator.STARTED ? 1f : 0.5f);
                 newlyActives.remove(existingTypist);
             }
         }
-        for (Avatar avatar : newlyFinished) {
-            tag.mActives.remove(avatar);
-            tag.mPassives.add(avatar);
-            l.removeView(avatar);
+        for (AvatarView avatarView : newlyFinished) {
+            tag.mActives.remove(avatarView);
+            tag.mPassives.add(avatarView);
+            l.removeView(avatarView);
         }
 
         // Add new typists
         for (Identity typist : newlyActives) {
-            Avatar avatar = tag.mPassives.poll();
-            if (avatar == null) {
+            AvatarView avatarView = tag.mPassives.poll();
+            if (avatarView == null) {
                 // TODO: allow styling
-                avatar = new Avatar(l.getContext()).init();
+                avatarView = new AvatarView(l.getContext()).init();
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(avatarDim, avatarDim);
                 params.setMargins(0, 0, avatarSpace, 0);
-                avatar.setLayoutParams(params);
+                avatarView.setLayoutParams(params);
             }
-            avatar.setAlpha(typingUserIds.get(typist) == LayerTypingIndicatorListener.TypingIndicator.STARTED ? 1f : 0.5f);
-            tag.mActives.add(avatar);
-            l.addView(avatar, 0);
-            avatar.setParticipants(typist);
+            avatarView.setAlpha(typingUserIds.get(typist) == LayerTypingIndicatorListener.TypingIndicator.STARTED ? 1f : 0.5f);
+            tag.mActives.add(avatarView);
+            l.addView(avatarView, 0);
+            avatarView.setParticipants(typist);
         }
 
         // Dot animations
@@ -219,7 +219,7 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
 
     private static class Tag {
         public final ArrayList<View> mDots = new ArrayList<View>(3);
-        public final LinkedList<Avatar> mActives = new LinkedList<Avatar>();
-        public final LinkedList<Avatar> mPassives = new LinkedList<Avatar>();
+        public final LinkedList<AvatarView> mActives = new LinkedList<AvatarView>();
+        public final LinkedList<AvatarView> mPassives = new LinkedList<AvatarView>();
     }
 }

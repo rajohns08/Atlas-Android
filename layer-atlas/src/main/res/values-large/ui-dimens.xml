@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layer_ui_avatar_width">32dp</dimen>
+    <dimen name="layer_ui_avatar_height">32dp</dimen>
+    <dimen name="layer_ui_avatar_presence_height">12dp</dimen>
+</resources>
