@@ -16,11 +16,11 @@
 <resources>
 
     <!-- ########### -->
-    <!-- Atlas Style -->
+    <!-- UI Style -->
     <!-- ########### -->
-    <style name="Theme.Atlas.Light" parent="Theme.Atlas.Base.Light">
-        <item name="android:statusBarColor">@color/atlas_status_bar_background</item>
-        <item name="android:navigationBarColor">@color/atlas_navigation_bar_background</item>
+    <style name="Theme.ui.Light" parent="Theme.ui.Base.Light">
+        <item name="android:statusBarColor">@color/layer_ui_status_bar_background</item>
+        <item name="android:navigationBarColor">@color/layer_ui_navigation_bar_background</item>
 
         <item name="android:windowTransitionBackgroundFadeDuration">333</item>
         <item name="android:windowContentTransitions">true</item>
@@ -28,14 +28,14 @@
         <item name="android:windowSharedElementEnterTransition">@transition/bounds</item>
         <item name="android:windowSharedElementExitTransition">@transition/bounds</item>
 
-        <item name="android:timePickerDialogTheme">@style/AtlasAlertDialog</item>
-        <item name="android:datePickerDialogTheme">@style/AtlasAlertDialog</item>
-        <item name="android:alertDialogTheme">@style/AtlasAlertDialog</item>
+        <item name="android:timePickerDialogTheme">@style/AlertDialog</item>
+        <item name="android:datePickerDialogTheme">@style/AlertDialog</item>
+        <item name="android:alertDialogTheme">@style/AlertDialog</item>
     </style>
 
-    <style name="AtlasAlertDialog" parent="android:Theme.Material.Light.Dialog.Alert">
-        <item name="android:colorPrimary">@color/atlas_dialog_primary</item>
-        <item name="android:colorAccent">@color/atlas_dialog_accent</item>
+    <style name="AlertDialog" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorPrimary">@color/layer_ui_dialog_primary</item>
+        <item name="android:colorAccent">@color/layer_ui_dialog_accent</item>
     </style>
 
 </resources>

@@ -2,22 +2,22 @@
 <resources>
 
     <!-- ###################### -->
-    <!-- Atlas Component Styles -->
+    <!-- UI Component Styles -->
     <!-- ###################### -->
-    <attr name="AtlasConversationsRecyclerView" format="reference" />
-    <attr name="AtlasMessageComposer" format="reference" />
-    <attr name="AtlasMessagesRecyclerView" format="reference" />
-    <attr name="AtlasAddressBar" format="reference" />
-    <attr name="AtlasTypingIndicator" format="reference" />
+    <attr name="ConversationsRecyclerView" format="reference" />
+    <attr name="MessageComposer" format="reference" />
+    <attr name="MessagesRecyclerView" format="reference" />
+    <attr name="AddressBar" format="reference" />
+    <attr name="TypingIndicator" format="reference" />
 
 
-    <declare-styleable name="AtlasSwipeableItemState">
+    <declare-styleable name="SwipeableItemState">
         <attr name="state_swiping" format="boolean" />
     </declare-styleable>
 
 
     <!-- #################################### -->
-    <!-- Styleable Atlas Component Attributes -->
+    <!-- Styleable UI Component Attributes -->
     <!-- #################################### -->
 
     <declare-styleable name="ConversationsRecyclerView">
@@ -91,10 +91,10 @@
 
 
     <!-- ####################### -->
-    <!-- Atlas Attribute Formats -->
+    <!-- UI Attribute Formats -->
     <!-- ####################### -->
 
-    <!-- Atlas Conversation Recycler View -->
+    <!-- UI Conversation Recycler View -->
     <attr name="cellTitleTextColor" format="color|reference" />
     <attr name="cellTitleTextTypeface" format="string|reference" />
     <attr name="cellTitleTextStyle">
@@ -139,7 +139,7 @@
         <flag name="italic" value="2" />
     </attr>
 
-    <!-- Atlas Messages Recycler View -->
+    <!-- UI Messages Recycler View -->
     <attr name="myBubbleColor" format="color|reference" />
     <attr name="myTextColor" format="color|reference" />
     <attr name="myTextSize" format="dimension|reference" />
@@ -159,11 +159,11 @@
         <flag name="italic" value="2" />
     </attr>
 
-    <!-- Atlas Message Composer -->
+    <!-- UI Message Composer -->
     <attr name="inputUnderlineColor" format="color|reference" />
     <attr name="inputCursorColor" format="color|reference" />
 
-    <!-- Atlas Address Bar -->
+    <!-- UI Address Bar -->
     <attr name="inputTextSize" format="dimension|reference" />
     <attr name="inputTextColor" format="color|reference" />
     <attr name="inputTextTypeface" format="string|reference" />
