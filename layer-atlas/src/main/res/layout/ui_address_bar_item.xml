@@ -28,7 +28,7 @@
     android:background="@drawable/ui_address_bar_item_background"
     android:orientation="horizontal">
 
-    <com.layer.ui.avatar.Avatar
+    <com.layer.ui.avatar.AvatarView
         android:id="@+id/avatar"
         android:layout_width="@dimen/layer_ui_avatar_item_single"
         android:layout_height="@dimen/layer_ui_avatar_item_single"

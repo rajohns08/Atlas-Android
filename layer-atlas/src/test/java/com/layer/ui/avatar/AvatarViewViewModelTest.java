@@ -4,7 +4,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.graphics.Canvas;
+
 import com.layer.sdk.messaging.Identity;
+import com.layer.sdk.messaging.Presence;
 import com.layer.ui.util.picasso.ImageCacheWrapper;
 
 import org.junit.Before;
@@ -13,7 +16,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class AvatarViewModelTest {
+public class AvatarViewViewModelTest {
     @Mock
     Identity mMockIdentity, mMockIdentity2;
 
@@ -24,6 +27,7 @@ public class AvatarViewModelTest {
 
     @Mock
     ImageCacheWrapper mMockImageCacheWrapper;
+    @Mock Canvas mMockCanvas;
 
 
     @Before
@@ -47,6 +51,12 @@ public class AvatarViewModelTest {
         mAvatarViewModel.setParticipants(identityList);
         verify(mMockView).setClusterSizes(ArgumentMatchers.<Identity, String>anyMap(), ArgumentMatchers.<UiImageTarget>anyList());
         verify(mMockView).revalidateView();
+    }
+
+    @Test
+    public void testIfAvailableIsDrawn() {
+        //mAvatarViewModel.checkPresence(Presence.PresenceStatus.AVAILABLE, mMockCanvas);
+        //verify(mMockView).drawAvailable(mMockCanvas);
     }
 
 }

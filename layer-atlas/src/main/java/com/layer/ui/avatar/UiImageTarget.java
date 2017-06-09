@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UiImageTarget implements Target, ImageCacheWrapper.ImageTarget {
     private final static AtomicLong sCounter = new AtomicLong(0);
     private final long mId;
-    private final Avatar mCluster;
+    private final AvatarView mCluster;
     private String mUrl;
     private Bitmap mBitmap;
 
-    public UiImageTarget(Avatar cluster) {
+    public UiImageTarget(AvatarView cluster) {
         mId = sCounter.incrementAndGet();
         mCluster = cluster;
     }
