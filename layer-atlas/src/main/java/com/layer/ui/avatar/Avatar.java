@@ -269,31 +269,45 @@ public class Avatar extends View implements AvatarContract.View {
         if (currentStatus == null) {
             return;
         }
+        mAvatarViewModel.checkPresence(currentStatus, canvas);
+    }
 
-        boolean drawPresence = true;
-        boolean makeCircleHollow = false;
-        switch (currentStatus) {
-            case AVAILABLE:
-                mPresencePaint.setColor(Color.rgb(0x4F, 0xBF, 0x62));
-                break;
-            case AWAY:
-                mPresencePaint.setColor(Color.rgb(0xF7, 0xCA, 0x40));
-                break;
-            case OFFLINE:
-                mPresencePaint.setColor(Color.rgb(0x99, 0x99, 0x9c));
-                makeCircleHollow = true;
-                break;
-            case INVISIBLE:
-                mPresencePaint.setColor(Color.rgb(0x50, 0xC0, 0x62));
-                makeCircleHollow = true;
-                break;
-            case BUSY:
-                mPresencePaint.setColor(Color.rgb(0xE6, 0x44, 0x3F));
-                break;
-            default:
-                drawPresence = false;
-                break;
-        }
+    @Override
+    public void drawAvailable(Canvas canvas) {
+        mPresencePaint.setColor(Color.rgb(0x4F, 0xBF, 0x62));
+        drawPrencence(canvas, false, true);
+    }
+
+    @Override
+    public void drawAway(Canvas canvas) {
+        mPresencePaint.setColor(Color.rgb(0xF7, 0xCA, 0x40));
+        drawPrencence(canvas, false, true);
+    }
+
+    @Override
+    public void drawOffline(Canvas canvas) {
+        mPresencePaint.setColor(Color.rgb(0x99, 0x99, 0x9c));
+        drawPrencence(canvas, true, true);
+    }
+
+    @Override
+    public void drawInvisible(Canvas canvas) {
+        mPresencePaint.setColor(Color.rgb(0x50, 0xC0, 0x62));
+        drawPrencence(canvas, true, true);
+    }
+
+    @Override
+    public void drawBusy(Canvas canvas) {
+        mPresencePaint.setColor(Color.rgb(0xE6, 0x44, 0x3F));
+        drawPrencence(canvas, false, true);
+    }
+
+    @Override
+    public void drawDefault(Canvas canvas) {
+        drawPrencence(canvas, false, false);
+    }
+
+    private void drawPrencence(Canvas canvas,boolean makeCircleHollow,  boolean drawPresence) {
         if (drawPresence) {
             // Clear background + create border
             mBackgroundPaint.setColor(Color.WHITE);
@@ -309,8 +323,8 @@ public class Avatar extends View implements AvatarContract.View {
                 canvas.drawCircle(mPresenceCenterX, mPresenceCenterY, (mPresenceInnerRadius / 2f), mBackgroundPaint);
             }
         }
-    }
 
+    }
     @Override
     public String getInitials(Identity added) {
         return Util.getInitials(added);
