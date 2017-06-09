@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Space;
 import android.widget.TextView;
 
-import com.layer.ui.avatar.Avatar;
+import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.MessageStyle;
@@ -380,21 +380,21 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             // Avatars
             if (oneOnOne) {
                 if (mShouldShowAvatarInOneOnOneConversations) {
-                    viewHolder.mAvatar.setVisibility(View.VISIBLE);
-                    viewHolder.mAvatar.setParticipants(message.getSender());
+                    viewHolder.mAvatarView.setVisibility(View.VISIBLE);
+                    viewHolder.mAvatarView.setParticipants(message.getSender());
 
                 } else {
-                    viewHolder.mAvatar.setVisibility(View.GONE);
+                    viewHolder.mAvatarView.setVisibility(View.GONE);
                 }
             } else if (cluster.mClusterWithNext == null || cluster.mClusterWithNext != ClusterType.LESS_THAN_MINUTE) {
                 // Last message in cluster
-                viewHolder.mAvatar.setVisibility(View.VISIBLE);
-                viewHolder.mAvatar.setParticipants(message.getSender());
+                viewHolder.mAvatarView.setVisibility(View.VISIBLE);
+                viewHolder.mAvatarView.setParticipants(message.getSender());
                 // Add the position to the positions map for Identity updates
                 mIdentityEventListener.addIdentityPosition(position, Collections.singleton(message.getSender()));
             } else {
                 // Invisible for clustered messages to preserve proper spacing
-                viewHolder.mAvatar.setVisibility(View.INVISIBLE);
+                viewHolder.mAvatarView.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -407,7 +407,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         int maxWidth = mRecyclerView.getWidth() - viewHolder.mRoot.getPaddingLeft() - viewHolder.mRoot.getPaddingRight() - params.leftMargin - params.rightMargin;
         if (!oneOnOne && !cellType.mMe) {
             // Subtract off avatar width if needed
-            ViewGroup.MarginLayoutParams avatarParams = (ViewGroup.MarginLayoutParams) viewHolder.mAvatar.getLayoutParams();
+            ViewGroup.MarginLayoutParams avatarParams = (ViewGroup.MarginLayoutParams) viewHolder.mAvatarView.getLayoutParams();
             maxWidth -= avatarParams.width + avatarParams.rightMargin + avatarParams.leftMargin;
         }
         // TODO: subtract spacing rather than multiply by 0.8 to handle screen sizes more cleanly
@@ -709,7 +709,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         protected TextView mTimeGroupDay;
         protected TextView mTimeGroupTime;
         protected Space mClusterSpaceGap;
-        protected Avatar mAvatar;
+        protected AvatarView mAvatarView;
         protected ViewGroup mCell;
         protected TextView mReceipt;
 
@@ -727,10 +727,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             mCell = (ViewGroup) itemView.findViewById(R.id.cell);
             mReceipt = (TextView) itemView.findViewById(R.id.receipt);
 
-            mAvatar = ((Avatar) itemView.findViewById(R.id.avatar));
-            if (mAvatar != null)  {
-                mAvatar.init();
-                mAvatar.setShouldShowPresence(shouldShowAvatarPresence);
+            mAvatarView = ((AvatarView) itemView.findViewById(R.id.avatar));
+            if (mAvatarView != null)  {
+                mAvatarView.init();
+                mAvatarView.setShouldShowPresence(shouldShowAvatarPresence);
             }
         }
     }

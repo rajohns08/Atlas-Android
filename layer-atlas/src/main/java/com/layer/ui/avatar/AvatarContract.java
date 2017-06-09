@@ -41,15 +41,15 @@ public interface AvatarContract {
 
     interface View {
 
-        Avatar getAvatar();
+        AvatarView getAvatar();
 
         boolean setClusterSizes(Map<Identity, String> initials, List<UiImageTarget> pendingLoads);
 
         void revalidateView();
 
-        Avatar setParticipants(Identity... participants);
+        AvatarView setParticipants(Identity... participants);
 
-        Avatar setParticipants(Set<Identity> participants);
+        AvatarView setParticipants(Set<Identity> participants);
 
         String getInitials(Identity added);
 
