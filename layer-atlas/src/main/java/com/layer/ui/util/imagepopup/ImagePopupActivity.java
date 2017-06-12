@@ -31,7 +31,7 @@ public class ImagePopupActivity extends Activity implements LayerProgressListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setBackgroundDrawableResource(R.color.atlas_image_popup_background);
+        getWindow().setBackgroundDrawableResource(R.color.layer_ui_image_popup_background);
         setContentView(R.layout.ui_image_popup);
         mImageView = (SubsamplingScaleImageView) findViewById(R.id.image_popup);
         mProgressBar = (ContentLoadingProgressBar) findViewById(R.id.image_popup_progress);
