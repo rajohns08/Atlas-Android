@@ -16,11 +16,15 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+<<<<<<< HEAD
 <<<<<<< HEAD:layer-atlas/src/main/res/layout/ui_address_bar_item.xml
     android:layout_height="@dimen/layer_ui_secondary_item_height"
 =======
     android:layout_height="@dimen/atlas_secondary_item_height"
 >>>>>>> Rename resource files:layer-atlas/src/main/res/layout/ui_address_bar_item.xml
+=======
+    android:layout_height="@dimen/layer_ui_secondary_item_height"
+>>>>>>> Remove Layer-UI from resource file
     android:background="@drawable/ui_address_bar_item_background"
     android:orientation="horizontal">
 
