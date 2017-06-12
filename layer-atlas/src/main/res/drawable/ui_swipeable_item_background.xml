@@ -8,7 +8,7 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="2dp"
-                android:color="@color/atlas_item_divider"/>
+                android:color="@color/layer_ui_item_divider"/>
 
             <solid android:color="@android:color/transparent"/>
         </shape>

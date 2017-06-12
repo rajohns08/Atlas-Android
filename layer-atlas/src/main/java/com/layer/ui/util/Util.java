@@ -130,10 +130,10 @@ public class Util {
         if (date.getTime() > todayMidnight) {
             timeText = timeFormat.format(date.getTime());
         } else if (date.getTime() > yesterMidnight) {
-            timeText = context.getString(R.string.atlas_time_yesterday);
+            timeText = context.getString(R.string.layer_ui_time_yesterday);
         } else if (date.getTime() > weekAgoMidnight) {
             cal.setTime(date);
-            timeText = context.getResources().getStringArray(R.array.atlas_time_days_of_week)[cal.get(Calendar.DAY_OF_WEEK) - 1];
+            timeText = context.getResources().getStringArray(R.array.layer_ui_time_days_of_week)[cal.get(Calendar.DAY_OF_WEEK) - 1];
         } else {
             timeText = dateFormat.format(date);
         }
@@ -158,12 +158,12 @@ public class Util {
 
         String timeBarDayText;
         if (date.getTime() > todayMidnight) {
-            timeBarDayText = context.getString(R.string.atlas_time_today);
+            timeBarDayText = context.getString(R.string.layer_ui_time_today);
         } else if (date.getTime() > yesterdayMidnight) {
-            timeBarDayText = context.getString(R.string.atlas_time_yesterday);
+            timeBarDayText = context.getString(R.string.layer_ui_time_yesterday);
         } else if (date.getTime() > weekAgoMidnight) {
             cal.setTime(date);
-            timeBarDayText = context.getResources().getStringArray(R.array.atlas_time_days_of_week)[cal.get(Calendar.DAY_OF_WEEK) - 1];
+            timeBarDayText = context.getResources().getStringArray(R.array.layer_ui_time_days_of_week)[cal.get(Calendar.DAY_OF_WEEK) - 1];
         } else {
             timeBarDayText = DAY_OF_WEEK.format(date);
         }

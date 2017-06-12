@@ -22,10 +22,10 @@
     <ImageView
         android:id="@+id/attachment"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="@dimen/atlas_icon_button_size"
+        android:layout_width="@dimen/layer_ui_icon_button_size"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/atlas_icon_button_side_padding"
-        android:layout_marginRight="@dimen/atlas_icon_button_side_padding"
+        android:layout_marginLeft="@dimen/layer_ui_icon_button_side_padding"
+        android:layout_marginRight="@dimen/layer_ui_icon_button_side_padding"
         android:scaleType="center"
         android:src="@drawable/ic_add_white_24dp"
         />
@@ -36,10 +36,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_weight="1"
-        android:hint="@string/atlas_message_composer_hint"
+        android:hint="@string/layer_ui_message_composer_hint"
         android:maxLines="3"
-        android:minHeight="@dimen/atlas_input_height"
-        android:textSize="@dimen/atlas_text_size_input"
+        android:minHeight="@dimen/layer_ui_input_height"
+        android:textSize="@dimen/layer_ui_text_size_input"
         android:background="@drawable/ui_edit_text_background"
         android:textCursorDrawable="@drawable/ui_edit_text_cursor"
         />
@@ -49,10 +49,10 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/atlas_icon_button_side_padding"
-        android:layout_marginRight="@dimen/atlas_icon_button_side_padding"
-        android:text="@string/atlas_message_composer_send_button"
-        android:textSize="@dimen/atlas_text_size_button"
+        android:layout_marginLeft="@dimen/layer_ui_icon_button_side_padding"
+        android:layout_marginRight="@dimen/layer_ui_icon_button_side_padding"
+        android:text="@string/layer_ui_message_composer_send_button"
+        android:textSize="@dimen/layer_ui_text_size_button"
         />
 
 </LinearLayout>

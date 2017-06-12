@@ -96,7 +96,7 @@ public class AddressBar extends LinearLayout {
         mFilter = (EmptyDelEditText) findViewById(R.id.filter);
         mSelectedParticipantLayout.setStretchChild(mFilter);
         mParticipantList = (RecyclerView) findViewById(R.id.participant_list);
-        ((MaxHeightScrollView) findViewById(R.id.selected_participant_scroll)).setMaximumHeight(getResources().getDimensionPixelSize(R.dimen.atlas_selected_participant_group_max_height));
+        ((MaxHeightScrollView) findViewById(R.id.selected_participant_scroll)).setMaximumHeight(getResources().getDimensionPixelSize(R.dimen.layer_ui_selected_participant_group_max_height));
         setOrientation(VERTICAL);
     }
 
@@ -271,18 +271,18 @@ public class AddressBar extends LinearLayout {
     }
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyle) {
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AddressBar, R.attr.AtlasAddressBar, defStyle);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AddressBar, R.attr.AddressBar, defStyle);
         Resources resources = context.getResources();
-        this.mInputTextSize = ta.getDimensionPixelSize(R.styleable.AddressBar_inputTextSize, resources.getDimensionPixelSize(R.dimen.atlas_text_size_input));
-        this.mInputTextColor = ta.getColor(R.styleable.AddressBar_inputTextColor, resources.getColor(R.color.atlas_text_black));
+        this.mInputTextSize = ta.getDimensionPixelSize(R.styleable.AddressBar_inputTextSize, resources.getDimensionPixelSize(R.dimen.layer_ui_text_size_input));
+        this.mInputTextColor = ta.getColor(R.styleable.AddressBar_inputTextColor, resources.getColor(R.color.layer_ui_text_black));
         this.mInputTextStyle = ta.getInt(R.styleable.AddressBar_inputTextStyle, Typeface.NORMAL);
         String inputTextTypefaceName = ta.getString(R.styleable.AddressBar_inputTextTypeface);
         this.mInputTextTypeface = inputTextTypefaceName != null ? Typeface.create(inputTextTypefaceName, mInputTextStyle) : null;
-        this.mInputCursorColor = ta.getColor(R.styleable.AddressBar_inputCursorColor, resources.getColor(R.color.atlas_color_primary_blue));
-        this.mInputUnderlineColor = ta.getColor(R.styleable.AddressBar_inputUnderlineColor, resources.getColor(R.color.atlas_color_primary_blue));
+        this.mInputCursorColor = ta.getColor(R.styleable.AddressBar_inputCursorColor, resources.getColor(R.color.layer_ui_color_primary_blue));
+        this.mInputUnderlineColor = ta.getColor(R.styleable.AddressBar_inputUnderlineColor, resources.getColor(R.color.layer_ui_color_primary_blue));
 
-        this.mListTextSize = ta.getDimensionPixelSize(R.styleable.AddressBar_listTextSize, resources.getDimensionPixelSize(R.dimen.atlas_text_size_secondary_item));
-        this.mListTextColor = ta.getColor(R.styleable.AddressBar_listTextColor, resources.getColor(R.color.atlas_text_black));
+        this.mListTextSize = ta.getDimensionPixelSize(R.styleable.AddressBar_listTextSize, resources.getDimensionPixelSize(R.dimen.layer_ui_text_size_secondary_item));
+        this.mListTextColor = ta.getColor(R.styleable.AddressBar_listTextColor, resources.getColor(R.color.layer_ui_text_black));
         this.mListTextStyle = ta.getInt(R.styleable.AddressBar_listTextStyle, Typeface.NORMAL);
         String listTextTypefaceName = ta.getString(R.styleable.AddressBar_listTextTypeface);
         this.mListTextTypeface = listTextTypefaceName != null ? Typeface.create(listTextTypefaceName, mInputTextStyle) : null;
@@ -292,9 +292,9 @@ public class AddressBar extends LinearLayout {
         this.mChipTypeface = chipTypefaceName != null ? Typeface.create(chipTypefaceName, mChipStyle) : null;
 
         AvatarStyle.Builder avatarStyleBuilder = new AvatarStyle.Builder();
-        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.AddressBar_avatarBackgroundColor, resources.getColor(R.color.atlas_avatar_background)));
-        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.AddressBar_avatarTextColor, resources.getColor(R.color.atlas_avatar_text)));
-        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.AddressBar_avatarBorderColor, resources.getColor(R.color.atlas_avatar_border)));
+        avatarStyleBuilder.avatarBackgroundColor(ta.getColor(R.styleable.AddressBar_avatarBackgroundColor, resources.getColor(R.color.layer_ui_avatar_background)));
+        avatarStyleBuilder.avatarTextColor(ta.getColor(R.styleable.AddressBar_avatarTextColor, resources.getColor(R.color.layer_ui_avatar_text)));
+        avatarStyleBuilder.avatarBorderColor(ta.getColor(R.styleable.AddressBar_avatarBorderColor, resources.getColor(R.color.layer_ui_avatar_border)));
         int avatarTextStyle = ta.getInt(R.styleable.AddressBar_avatarTextStyle, Typeface.NORMAL);
         String avatarTextTypefaceName = ta.getString(R.styleable.AddressBar_avatarTextTypeface);
         avatarStyleBuilder.avatarTextTypeface(inputTextTypefaceName != null ? Typeface.create(avatarTextTypefaceName, avatarTextStyle) : null);
@@ -445,8 +445,8 @@ public class AddressBar extends LinearLayout {
             mName.setTypeface(mChipTypeface);
 
             // Set layout
-            int height = r.getDimensionPixelSize(R.dimen.atlas_chip_height);
-            int margin = r.getDimensionPixelSize(R.dimen.atlas_chip_margin);
+            int height = r.getDimensionPixelSize(R.dimen.layer_ui_chip_height);
+            int margin = r.getDimensionPixelSize(R.dimen.layer_ui_chip_margin);
             FlowLayout.LayoutParams p = new FlowLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, height);
             p.setMargins(margin, margin, margin, margin);
             setLayoutParams(p);

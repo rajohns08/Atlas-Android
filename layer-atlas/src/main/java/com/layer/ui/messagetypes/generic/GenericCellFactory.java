@@ -47,7 +47,7 @@ public class GenericCellFactory extends
         v.setBackgroundResource(isMe ? R.drawable.ui_message_item_cell_me : R.drawable.ui_message_item_cell_them);
 
         TextView t = (TextView) v.findViewById(R.id.cell_text);
-        t.setTextColor(context.getResources().getColor(isMe ? R.color.atlas_text_white : R.color.atlas_text_black));
+        t.setTextColor(context.getResources().getColor(isMe ? R.color.layer_ui_text_white : R.color.layer_ui_text_black));
         return new CellHolder(v);
     }
 

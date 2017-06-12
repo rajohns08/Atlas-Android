@@ -63,7 +63,7 @@ public class ThreePartImageCellFactory extends
     @Deprecated
     public ThreePartImageCellFactory(Activity activity, LayerClient layerClient, Picasso picasso) {
         this(layerClient, picasso);
-        float radius = activity.getResources().getDimension(com.layer.ui.R.dimen.atlas_message_item_cell_radius);
+        float radius = activity.getResources().getDimension(com.layer.ui.R.dimen.layer_ui_message_item_cell_radius);
         mTransform = new RoundedTransform(radius);
     }
 
@@ -182,7 +182,7 @@ public class ThreePartImageCellFactory extends
 
     private Transformation getTransform(Context context) {
         if (mTransform == null) {
-            float radius = context.getResources().getDimension(com.layer.ui.R.dimen.atlas_message_item_cell_radius);
+            float radius = context.getResources().getDimension(com.layer.ui.R.dimen.layer_ui_message_item_cell_radius);
             mTransform = new RoundedTransform(radius);
         }
 
@@ -204,7 +204,7 @@ public class ThreePartImageCellFactory extends
     @Override
     public String getPreviewText(Context context, Message message) {
         if (isType(message)) {
-            return context.getString(R.string.atlas_message_preview_image);
+            return context.getString(R.string.layer_ui_message_preview_image);
         }
         else {
             throw new IllegalArgumentException("Message is not of the correct type - ThreePartImage");

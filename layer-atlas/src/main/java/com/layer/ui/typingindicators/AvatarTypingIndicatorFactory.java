@@ -44,8 +44,8 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
         Tag tag = new Tag();
 
         Resources r = context.getResources();
-        int dotSize = r.getDimensionPixelSize(R.dimen.atlas_typing_indicator_dot_size);
-        int dotSpace = r.getDimensionPixelSize(R.dimen.atlas_typing_indicator_dot_space);
+        int dotSize = r.getDimensionPixelSize(R.dimen.layer_ui_typing_indicator_dot_size);
+        int dotSpace = r.getDimensionPixelSize(R.dimen.layer_ui_typing_indicator_dot_space);
 
         LinearLayout l = new LinearLayout(context);
         l.setGravity(Gravity.CENTER);
@@ -87,8 +87,8 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
         @SuppressWarnings("unchecked")
         Tag tag = (Tag) l.getTag();
 
-        int avatarSpace = l.getResources().getDimensionPixelSize(R.dimen.atlas_padding_narrow);
-        int avatarDim = l.getResources().getDimensionPixelSize(R.dimen.atlas_message_avatar_item_single);
+        int avatarSpace = l.getResources().getDimensionPixelSize(R.dimen.layer_ui_padding_narrow);
+        int avatarDim = l.getResources().getDimensionPixelSize(R.dimen.layer_ui_message_avatar_item_single);
 
         // Iterate over existing typists and remove non-typists
         List<Avatar> newlyFinished = new ArrayList<Avatar>();

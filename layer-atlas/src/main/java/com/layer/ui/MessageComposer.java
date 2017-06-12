@@ -271,15 +271,15 @@ public class MessageComposer extends FrameLayout {
     }
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyle) {
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MessageComposer, R.attr.AtlasMessageComposer, defStyle);
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MessageComposer, R.attr.MessageComposer, defStyle);
         mEnabled = ta.getBoolean(R.styleable.MessageComposer_android_enabled, true);
-        this.mTextColor = ta.getColor(R.styleable.MessageComposer_inputTextColor, context.getResources().getColor(R.color.atlas_text_black));
-        this.mTextSize = ta.getDimensionPixelSize(R.styleable.MessageComposer_inputTextSize, context.getResources().getDimensionPixelSize(R.dimen.atlas_text_size_input));
+        this.mTextColor = ta.getColor(R.styleable.MessageComposer_inputTextColor, context.getResources().getColor(R.color.layer_ui_text_black));
+        this.mTextSize = ta.getDimensionPixelSize(R.styleable.MessageComposer_inputTextSize, context.getResources().getDimensionPixelSize(R.dimen.layer_ui_text_size_input));
         this.mTextStyle = ta.getInt(R.styleable.MessageComposer_inputTextStyle, Typeface.NORMAL);
         String typeFaceName = ta.getString(R.styleable.MessageComposer_inputTextTypeface);
         this.mTypeFace = typeFaceName != null ? Typeface.create(typeFaceName, mTextStyle) : null;
-        this.mUnderlineColor = ta.getColor(R.styleable.MessageComposer_inputUnderlineColor, context.getResources().getColor(R.color.atlas_color_primary_blue));
-        this.mCursorColor = ta.getColor(R.styleable.MessageComposer_inputCursorColor, context.getResources().getColor(R.color.atlas_color_primary_blue));
+        this.mUnderlineColor = ta.getColor(R.styleable.MessageComposer_inputUnderlineColor, context.getResources().getColor(R.color.layer_ui_color_primary_blue));
+        this.mCursorColor = ta.getColor(R.styleable.MessageComposer_inputCursorColor, context.getResources().getColor(R.color.layer_ui_color_primary_blue));
         this.mAttachmentSendersBackground = ta.getDrawable(R.styleable.MessageComposer_attachmentSendersBackground);
         if (mAttachmentSendersBackground == null) {
             mAttachmentSendersBackground = ContextCompat.getDrawable(context, R.drawable.ui_popup_background);
@@ -324,7 +324,7 @@ public class MessageComposer extends FrameLayout {
             iconView.setImageResource(sender.getIcon());
             iconView.setVisibility(VISIBLE);
             Drawable d = DrawableCompat.wrap(iconView.getDrawable());
-            DrawableCompat.setTint(d, getResources().getColor(R.color.atlas_icon_enabled));
+            DrawableCompat.setTint(d, getResources().getColor(R.color.layer_ui_icon_enabled));
         }
         menuLayout.addView(menuItem);
     }

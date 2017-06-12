@@ -16,18 +16,18 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/atlas_secondary_item_height"
+    android:layout_height="@dimen/layer_ui_secondary_item_height"
     android:background="@drawable/ui_address_bar_item_background"
     android:orientation="horizontal">
 
     <com.layer.ui.Avatar
         android:id="@+id/avatar"
-        android:layout_width="@dimen/atlas_avatar_item_single"
-        android:layout_height="@dimen/atlas_avatar_item_single"
-        android:layout_marginBottom="@dimen/atlas_padding_narrow"
-        android:layout_marginLeft="@dimen/atlas_padding_normal"
-        android:layout_marginRight="@dimen/atlas_padding_normal"
-        android:layout_marginTop="@dimen/atlas_padding_narrow"
+        android:layout_width="@dimen/layer_ui_avatar_item_single"
+        android:layout_height="@dimen/layer_ui_avatar_item_single"
+        android:layout_marginBottom="@dimen/layer_ui_padding_narrow"
+        android:layout_marginLeft="@dimen/layer_ui_padding_normal"
+        android:layout_marginRight="@dimen/layer_ui_padding_normal"
+        android:layout_marginTop="@dimen/layer_ui_padding_narrow"
         />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_weight="1"
         android:singleLine="true"
         android:text="[title]"
-        android:textSize="@dimen/atlas_text_size_secondary_item"
+        android:textSize="@dimen/layer_ui_text_size_secondary_item"
         />
 
 </LinearLayout>

@@ -19,9 +19,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
-                android:minWidth="@dimen/atlas_participant_filter_min_width"
+                android:minWidth="@dimen/layer_ui_participant_filter_min_width"
                 android:singleLine="true"
-                android:textSize="@dimen/atlas_text_size_input"
+                android:textSize="@dimen/layer_ui_text_size_input"
                 android:background="@drawable/ui_edit_text_background"
                 android:textCursorDrawable="@drawable/ui_edit_text_cursor"
                 />

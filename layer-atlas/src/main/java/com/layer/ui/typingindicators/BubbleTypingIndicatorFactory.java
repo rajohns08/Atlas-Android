@@ -32,10 +32,10 @@ public class BubbleTypingIndicatorFactory implements TypingIndicatorLayout.Typin
     public LinearLayout onCreateView(Context context) {
         Resources r = context.getResources();
 
-        int minWidth = r.getDimensionPixelSize(R.dimen.atlas_message_item_cell_min_width);
-        int minHeight = r.getDimensionPixelSize(R.dimen.atlas_message_item_cell_min_height);
-        int dotSize = r.getDimensionPixelSize(R.dimen.atlas_typing_indicator_dot_size);
-        int dotSpace = r.getDimensionPixelSize(R.dimen.atlas_typing_indicator_dot_space);
+        int minWidth = r.getDimensionPixelSize(R.dimen.layer_ui_message_item_cell_min_width);
+        int minHeight = r.getDimensionPixelSize(R.dimen.layer_ui_message_item_cell_min_height);
+        int dotSize = r.getDimensionPixelSize(R.dimen.layer_ui_typing_indicator_dot_size);
+        int dotSpace = r.getDimensionPixelSize(R.dimen.layer_ui_typing_indicator_dot_space);
 
         LinearLayout l = new LinearLayout(context);
         l.setMinimumWidth(minWidth);

@@ -10,5 +10,5 @@
         android:layout_height="wrap_content"
         android:autoLink="all"
         android:linksClickable="true"
-        android:textSize="@dimen/atlas_text_size_message_item"/>
+        android:textSize="@dimen/layer_ui_text_size_message_item"/>
 </merge>

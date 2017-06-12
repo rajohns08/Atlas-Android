@@ -23,17 +23,17 @@
         android:id="@+id/leavebehind"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/atlas_item_leavebehind"
+        android:background="@color/layer_ui_item_leavebehind"
         android:orientation="horizontal"
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="@dimen/atlas_primary_icon_size"
-            android:layout_height="@dimen/atlas_primary_icon_size"
+            android:layout_width="@dimen/layer_ui_primary_icon_size"
+            android:layout_height="@dimen/layer_ui_primary_icon_size"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/atlas_padding_normal"
+            android:layout_marginLeft="@dimen/layer_ui_padding_normal"
             android:src="@drawable/ic_delete_white_24dp"
-            android:tint="@color/atlas_icon_enabled"/>
+            android:tint="@color/layer_ui_icon_enabled"/>
 
     </LinearLayout>
 
@@ -45,9 +45,9 @@
         android:background="@drawable/ui_swipeable_item_foreground_selector"
         android:duplicateParentState="true"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/atlas_padding_normal"
-        android:paddingRight="@dimen/atlas_padding_normal"
-        android:paddingTop="@dimen/atlas_message_cluster_space">
+        android:paddingLeft="@dimen/layer_ui_padding_normal"
+        android:paddingRight="@dimen/layer_ui_padding_normal"
+        android:paddingTop="@dimen/layer_ui_message_cluster_space">
 
         <LinearLayout
             android:id="@+id/time_group"
@@ -55,8 +55,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/atlas_message_item_time_group_padding_bottom"
-            android:paddingTop="@dimen/atlas_message_item_time_group_padding_top"
+            android:paddingBottom="@dimen/layer_ui_message_item_time_group_padding_bottom"
+            android:paddingTop="@dimen/layer_ui_message_item_time_group_padding_top"
             >
 
             <TextView
@@ -64,8 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="[day]"
-                android:textColor="@color/atlas_text_gray"
-                android:textSize="@dimen/atlas_text_size_message_item_metadata"
+                android:textColor="@color/layer_ui_text_gray"
+                android:textSize="@dimen/layer_ui_text_size_message_item_metadata"
                 android:textStyle="bold"
                 />
 
@@ -74,26 +74,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="[time]"
-                android:textColor="@color/atlas_text_gray"
-                android:textSize="@dimen/atlas_text_size_message_item_metadata"
+                android:textColor="@color/layer_ui_text_gray"
+                android:textSize="@dimen/layer_ui_text_size_message_item_metadata"
                 />
         </LinearLayout>
 
         <Space
             android:id="@+id/cluster_space"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/atlas_message_cluster_space_gap"
+            android:layout_height="@dimen/layer_ui_message_cluster_space_gap"
             />
 
         <TextView
             android:id="@+id/sender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/atlas_message_item_sender_margin_bottom"
-            android:layout_marginLeft="@dimen/atlas_message_item_sender_margin_left"
+            android:layout_marginBottom="@dimen/layer_ui_message_item_sender_margin_bottom"
+            android:layout_marginLeft="@dimen/layer_ui_message_item_sender_margin_left"
             android:text="[sender]"
-            android:textColor="@color/atlas_text_gray"
-            android:textSize="@dimen/atlas_text_size_message_item_metadata"
+            android:textColor="@color/layer_ui_text_gray"
+            android:textSize="@dimen/layer_ui_text_size_message_item_metadata"
             />
 
         <LinearLayout
@@ -104,18 +104,18 @@
 
             <com.layer.ui.Avatar
                 android:id="@+id/avatar"
-                android:layout_width="@dimen/atlas_message_avatar_item_single"
-                android:layout_height="@dimen/atlas_message_avatar_item_single"
+                android:layout_width="@dimen/layer_ui_message_avatar_item_single"
+                android:layout_height="@dimen/layer_ui_message_avatar_item_single"
                 android:layout_gravity="bottom"
-                android:layout_marginRight="@dimen/atlas_padding_narrow"/>
+                android:layout_marginRight="@dimen/layer_ui_padding_narrow"/>
 
             <FrameLayout
                 android:id="@+id/cell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/atlas_padding_normal"
-                android:minHeight="@dimen/atlas_message_item_cell_min_height"
-                android:minWidth="@dimen/atlas_message_item_cell_min_width"/>
+                android:layout_marginRight="@dimen/layer_ui_padding_normal"
+                android:minHeight="@dimen/layer_ui_message_item_cell_min_height"
+                android:minWidth="@dimen/layer_ui_message_item_cell_min_width"/>
 
         </LinearLayout>
 
