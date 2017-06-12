@@ -104,6 +104,7 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
                 newlyActives.remove(existingTypist);
             }
         }
+
         for (AvatarView avatarView : newlyFinished) {
             tag.mActives.remove(avatarView);
             tag.mPassives.add(avatarView);
