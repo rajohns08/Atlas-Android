@@ -88,8 +88,8 @@ public class TextCellFactory extends
     public boolean onLongClick(View v) {
         TextInfo parsed = (TextInfo) v.getTag();
         String text = parsed.getClipboardPrefix() + parsed.getString();
-        Util.copyToClipboard(v.getContext(), R.string.atlas_text_cell_factory_clipboard_description, text);
-        Toast.makeText(v.getContext(), R.string.atlas_text_cell_factory_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+        Util.copyToClipboard(v.getContext(), R.string.layer_ui_text_cell_factory_clipboard_description, text);
+        Toast.makeText(v.getContext(), R.string.layer_ui_text_cell_factory_copied_to_clipboard, Toast.LENGTH_SHORT).show();
         return true;
     }
 
