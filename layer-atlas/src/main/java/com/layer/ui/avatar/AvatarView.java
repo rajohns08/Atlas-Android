@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.layer.ui.Injection;
 import com.layer.ui.R;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.sdk.messaging.Identity;

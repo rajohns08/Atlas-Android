@@ -1,9 +1,11 @@
-package com.layer.ui.avatar;
+package com.layer.ui;
 
 import android.content.Context;
 
 import com.google.android.gms.tasks.RuntimeExecutionException;
 import com.layer.sdk.LayerClient;
+import com.layer.ui.avatar.AvatarContract;
+import com.layer.ui.avatar.AvatarViewModel;
 import com.layer.ui.util.ImageTransformImpl;
 import com.layer.ui.util.picasso.ImageCacheWrapper;
 import com.layer.ui.util.picasso.ImageCacheWrapperImpl;
