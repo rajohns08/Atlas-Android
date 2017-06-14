@@ -40,6 +40,7 @@ public class AvatarView extends View implements AvatarContract.View {
     private final Paint mBackgroundPaint = new Paint();
 
     private boolean mShouldShowPresence = true;
+    private AvatarInitials mAvatarInitials;
 
     // TODO: make these styleable
     private static final float BORDER_SIZE_DP = 1f;
@@ -97,6 +98,15 @@ public class AvatarView extends View implements AvatarContract.View {
         mPaintBorder.setColor(getResources().getColor(R.color.layer_ui_avatar_border));
         mPaintInitials.setColor(getResources().getColor(R.color.layer_ui_avatar_text));
 
+        return this;
+    }
+
+    public AvatarView init(AvatarInitials avatarInitials) {
+        return init().setAvatarInitials(avatarInitials);
+    }
+
+    public AvatarView setAvatarInitials(AvatarInitials avatarInitials) {
+        mAvatarInitials = avatarInitials;
         return this;
     }
 
@@ -328,7 +338,7 @@ public class AvatarView extends View implements AvatarContract.View {
     }
     @Override
     public String getInitials(Identity added) {
-        return Util.getInitials(added);
+        return mAvatarInitials != null ? mAvatarInitials.getInitials(added) : Util.getInitials(added);
     }
 
     @Override
