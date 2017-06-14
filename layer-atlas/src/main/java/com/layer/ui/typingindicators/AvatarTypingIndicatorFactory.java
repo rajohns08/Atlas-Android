@@ -10,8 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import com.layer.sdk.LayerClient;
 import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.TypingIndicatorLayout;
 import com.layer.ui.R;
@@ -33,11 +31,7 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
     private static final long ANIMATION_PERIOD = 600;
     private static final long ANIMATION_OFFSET = ANIMATION_PERIOD / 3;
 
-    private final LayerClient mLayerClient;
-
-    public AvatarTypingIndicatorFactory(LayerClient layerClient) {
-        mLayerClient = layerClient;
-    }
+    public AvatarTypingIndicatorFactory() {}
 
     @Override
     public LinearLayout onCreateView(Context context) {

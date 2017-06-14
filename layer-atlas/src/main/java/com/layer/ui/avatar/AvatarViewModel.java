@@ -111,7 +111,6 @@ public class AvatarViewModel implements AvatarContract.ViewModel  {
 
         mView.setClusterSizes(mInitials,mPendingLoads);
         mView.revalidateView();
-
     }
 
     @Override
@@ -210,5 +209,4 @@ public class AvatarViewModel implements AvatarContract.ViewModel  {
         public List<Identity> added = new ArrayList<>();
         public List<Identity> removed = new ArrayList<>();
     }
-
 }

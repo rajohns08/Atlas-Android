@@ -30,7 +30,6 @@ public interface AvatarContract {
 
         void setClusterSizes();
 
-        //TODO Change flag to Enum incase user has more than one transformation
         void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size, int size1,
                 boolean flag, ImageCacheWrapper.ImageTarget imageTarget);
 
@@ -65,5 +64,4 @@ public interface AvatarContract {
 
         void drawDefault(Canvas canvas);
     }
-
 }
