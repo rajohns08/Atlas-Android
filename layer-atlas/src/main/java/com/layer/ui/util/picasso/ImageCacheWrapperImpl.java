@@ -14,8 +14,6 @@ public class ImageCacheWrapperImpl implements ImageCacheWrapper {
     private LayerClient mLayerClient;
     private ImageCacheWrapper.ImageTransform mImageTransform;
 
-
-
     public ImageCacheWrapperImpl(Context context, LayerClient layerClient, ImageTransform imageTransform) {
         mContext = context;
         mLayerClient = layerClient;
@@ -23,9 +21,7 @@ public class ImageCacheWrapperImpl implements ImageCacheWrapper {
     }
 
     @Override
-    public void cancelRequest(Target target) {
-
-    }
+    public void cancelRequest(Target target) {}
 
     @Override
     public void load(String targetUrl, String tag, Object placeHolder, Object fade, int size,
@@ -39,7 +35,6 @@ public class ImageCacheWrapperImpl implements ImageCacheWrapper {
                 .centerCrop().resize(size, size)
                 .transform(mImageTransform.getTransformation(flag))
                 .into((Target) imageTarget);
-
     }
 
     public Picasso getPicasso() {

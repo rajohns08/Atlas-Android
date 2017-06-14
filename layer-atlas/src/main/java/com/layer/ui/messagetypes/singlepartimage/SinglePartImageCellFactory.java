@@ -17,7 +17,6 @@ import com.layer.ui.R;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.util.imagepopup.ImagePopupActivity;
 import com.layer.ui.util.picasso.transformations.RoundedTransform;
-
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessagePart;
