@@ -171,7 +171,7 @@ public class AvatarViewModel implements AvatarContract.ViewModel  {
                 mView.drawOffline(canvas);
                 break;
             case INVISIBLE:
-                mView.drawInvisible(canvas);
+               mView.drawInvisible(canvas);
                 break;
             case BUSY:
                 mView.drawBusy(canvas);
