@@ -1,6 +1,7 @@
 package com.layer.ui.avatar;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +22,7 @@ public class AvatarViewViewModelTest {
     Identity mMockIdentity, mMockIdentity2;
 
     @Mock
-    AvatarContract.View mMockView;
+    Avatar.View mMockView;
 
     AvatarViewModel mAvatarViewModel;
 
@@ -55,8 +56,52 @@ public class AvatarViewViewModelTest {
 
     @Test
     public void testIfAvailableIsDrawn() {
-        //mAvatarViewModel.checkPresence(Presence.PresenceStatus.AVAILABLE, mMockCanvas);
-        //verify(mMockView).drawAvailable(mMockCanvas);
+        mAvatarViewModel.checkPresence(Presence.PresenceStatus.AVAILABLE, mMockCanvas);
+        verify(mMockView).drawAvailable(mMockCanvas);
+        verify(mMockView, never()).drawAway(mMockCanvas);
+        verify(mMockView, never()).drawBusy(mMockCanvas);
+        verify(mMockView, never()).drawInvisible(mMockCanvas);
+        verify(mMockView, never()).drawOffline(mMockCanvas);
+    }
+
+    @Test
+    public void testIfAwayIsDrawn() {
+        mAvatarViewModel.checkPresence(Presence.PresenceStatus.AWAY, mMockCanvas);
+        verify(mMockView).drawAway(mMockCanvas);
+        verify(mMockView, never()).drawAvailable(mMockCanvas);
+        verify(mMockView, never()).drawBusy(mMockCanvas);
+        verify(mMockView, never()).drawInvisible(mMockCanvas);
+        verify(mMockView, never()).drawOffline(mMockCanvas);
+    }
+
+    @Test
+    public void testIfBusyIsDrawn() {
+        mAvatarViewModel.checkPresence(Presence.PresenceStatus.BUSY, mMockCanvas);
+        verify(mMockView).drawBusy(mMockCanvas);
+        verify(mMockView, never()).drawAvailable(mMockCanvas);
+        verify(mMockView, never()).drawAway(mMockCanvas);
+        verify(mMockView, never()).drawInvisible(mMockCanvas);
+        verify(mMockView, never()).drawOffline(mMockCanvas);
+    }
+
+    @Test
+    public void testIfInvisibleIsDrawn() {
+        mAvatarViewModel.checkPresence(Presence.PresenceStatus.INVISIBLE, mMockCanvas);
+        verify(mMockView).drawInvisible(mMockCanvas);
+        verify(mMockView, never()).drawAvailable(mMockCanvas);
+        verify(mMockView, never()).drawAway(mMockCanvas);
+        verify(mMockView, never()).drawBusy(mMockCanvas);
+        verify(mMockView, never()).drawOffline(mMockCanvas);
+    }
+
+    @Test
+    public void testIfOfflineIsDrawn() {
+        mAvatarViewModel.checkPresence(Presence.PresenceStatus.OFFLINE, mMockCanvas);
+        verify(mMockView).drawOffline(mMockCanvas);
+        verify(mMockView, never()).drawAvailable(mMockCanvas);
+        verify(mMockView, never()).drawAway(mMockCanvas);
+        verify(mMockView, never()).drawBusy(mMockCanvas);
+        verify(mMockView, never()).drawInvisible(mMockCanvas);
     }
 
 }

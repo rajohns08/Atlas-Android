@@ -27,7 +27,7 @@ import java.util.Set;
  *
  * AtlasAvatar uses Picasso to render the avatar image. So, you need to init
  */
-public class AvatarView extends View implements AvatarContract.View {
+public class AvatarView extends View implements Avatar.View {
     public static final String TAG = AvatarView.class.getSimpleName();
 
     private static final Paint PAINT_TRANSPARENT = new Paint();
@@ -47,7 +47,7 @@ public class AvatarView extends View implements AvatarContract.View {
     private static final float MULTI_FRACTION = 26f / 40f;
 
     //TODO: Inject this into View
-    private AvatarContract.ViewModel mAvatarViewModel;
+    private Avatar.ViewModel mAvatarViewModel;
 
     static {
         PAINT_TRANSPARENT.setARGB(0, 255, 255, 255);

@@ -19,7 +19,7 @@ import java.util.Queue;
 import java.util.Set;
 
 
-public class AvatarViewModel implements AvatarContract.ViewModel  {
+public class AvatarViewModel implements Avatar.ViewModel  {
 
     private Set<Identity> mParticipants = new LinkedHashSet<>();
     private final Map<Identity, String> mInitials = new HashMap<>();
@@ -27,7 +27,7 @@ public class AvatarViewModel implements AvatarContract.ViewModel  {
     // Initials and Picasso image targets by user ID
     private final List<UiImageTarget> mPendingLoads = new ArrayList<>();
 
-    private AvatarContract.View mView;
+    private Avatar.View mView;
 
     // TODO: make these styleable
     private static final int MAX_AVATARS = 3;
@@ -110,6 +110,8 @@ public class AvatarViewModel implements AvatarContract.ViewModel  {
 
         mView.setClusterSizes(mInitials,mPendingLoads);
         mView.revalidateView();
+
+
     }
 
     @Override
@@ -182,7 +184,7 @@ public class AvatarViewModel implements AvatarContract.ViewModel  {
     }
 
     @Override
-    public void setView(AvatarContract.View avatar) {
+    public void setView(Avatar.View avatar) {
         mView = avatar;
     }
 

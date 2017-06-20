@@ -37,7 +37,7 @@ public class ImageCacheWrapperImpl implements ImageCacheWrapper {
                 .into((Target) imageTarget);
     }
 
-    public Picasso getPicasso() {
+    public synchronized Picasso getPicasso() {
         if ( mPicasso == null) {
             // Picasso with custom RequestHandler for loading from Layer MessageParts.
             mPicasso = new Picasso.Builder(mContext)

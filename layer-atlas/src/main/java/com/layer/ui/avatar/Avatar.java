@@ -10,7 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public interface AvatarContract {
+
+/**
+ * Avatar interface exposes the interaction between the AvatarView and AvatarViewModel Avatar.
+ * @see Avatar.ViewModel is implemented by
+ * @see AvatarViewModel and
+ * @see Avatar.View is implemented by
+ * @see AvatarView
+ **/
+public interface Avatar {
 
     interface ViewModel {
 
@@ -33,22 +41,22 @@ public interface AvatarContract {
         void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size, int size1,
                 boolean flag, ImageCacheWrapper.ImageTarget imageTarget);
 
-        void setView(AvatarContract.View avatar);
+        void setView(Avatar.View avatar);
 
         void checkPresence(Presence.PresenceStatus currentStatus, Canvas canvas);
     }
 
     interface View {
 
-        AvatarView getAvatar();
+        Avatar.View getAvatar();
 
         boolean setClusterSizes(Map<Identity, String> initials, List<UiImageTarget> pendingLoads);
 
         void revalidateView();
 
-        AvatarView setParticipants(Identity... participants);
+        Avatar.View setParticipants(Identity... participants);
 
-        AvatarView setParticipants(Set<Identity> participants);
+        Avatar.View setParticipants(Set<Identity> participants);
 
         String getInitials(Identity added);
 

@@ -2,6 +2,7 @@ package com.layer.ui.avatar;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import com.layer.ui.util.picasso.ImageCacheWrapper;
 import com.squareup.picasso.Picasso;
@@ -12,13 +13,13 @@ import java.util.concurrent.atomic.AtomicLong;
 public class UiImageTarget implements Target, ImageCacheWrapper.ImageTarget {
     private final static AtomicLong sCounter = new AtomicLong(0);
     private final long mId;
-    private final AvatarView mCluster;
+    private final View mCluster;
     private String mUrl;
     private Bitmap mBitmap;
 
-    public UiImageTarget(AvatarView cluster) {
+    public UiImageTarget(Avatar.View cluster) {
         mId = sCounter.incrementAndGet();
-        mCluster = cluster;
+        mCluster = (View) cluster;
     }
 
     public UiImageTarget setUrl(String url) {
