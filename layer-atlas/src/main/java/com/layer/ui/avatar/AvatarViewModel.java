@@ -26,6 +26,8 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     private final Map<Identity, UiImageTarget> mImageTargets = new HashMap<>();
     // Initials and Picasso image targets by user ID
     private final List<UiImageTarget> mPendingLoads = new ArrayList<>();
+    private AvatarInitials mAvatarInitials;
+
 
     private Avatar.View mView;
 
@@ -35,6 +37,11 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
     public AvatarViewModel(ImageCacheWrapper imageCacheWrapper) {
         mImageCacheWrapper = imageCacheWrapper;
+    }
+
+    @Override
+    public void setAvatarInitials(AvatarInitials avatarInitials) {
+        mAvatarInitials = avatarInitials;
     }
 
     @Override
@@ -78,7 +85,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
         for (Identity added : diff.added) {
             if (added == null) return;
-            mInitials.put(added, mView.getInitials(added));
+            mInitials.put(added, getInitialsForAvatarView(added));
 
             final UiImageTarget target;
             if (recyclableTargets.isEmpty()) {
@@ -95,7 +102,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         // TODO: make caching intelligent wrt sizing
         for (Identity existing : diff.existing) {
             if (existing == null) continue;
-            mInitials.put(existing, Util.getInitials(existing));
+            mInitials.put(existing, getInitialsForAvatarView(existing));
 
             UiImageTarget existingTarget = mImageTargets.get(existing);
             mImageCacheWrapper.cancelRequest(existingTarget);
@@ -112,6 +119,10 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         mView.revalidateView();
 
 
+    }
+
+    private String getInitialsForAvatarView(Identity added) {
+        return mAvatarInitials != null ? mAvatarInitials.getInitials(added) : Util.getInitials(added);
     }
 
     @Override

@@ -37,13 +37,16 @@ public class ImageCacheWrapperImpl implements ImageCacheWrapper {
                 .into((Target) imageTarget);
     }
 
-    public synchronized Picasso getPicasso() {
-        if ( mPicasso == null) {
-            // Picasso with custom RequestHandler for loading from Layer MessageParts.
-            mPicasso = new Picasso.Builder(mContext)
-                    .addRequestHandler(new MessagePartRequestHandler(mLayerClient))
-                    .build();
+    public Picasso getPicasso() {
+        synchronized (ImageCacheWrapperImpl.class) {
+            if (mPicasso == null) {
+                // Picasso with custom RequestHandler for loading from Layer MessageParts.
+                mPicasso = new Picasso.Builder(mContext)
+                        .addRequestHandler(new MessagePartRequestHandler(mLayerClient))
+                        .build();
+            }
+            return mPicasso;
         }
-        return mPicasso;
+
     }
 }

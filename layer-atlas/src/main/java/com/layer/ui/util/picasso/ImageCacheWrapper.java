@@ -18,11 +18,7 @@ public interface ImageCacheWrapper {
         Transformation getTransformation(boolean flag);
     }
 
-    interface ImageTarget {
-        void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from);
+    interface ImageTarget  extends Target{
 
-        void onBitmapFailed(Drawable errorDrawable);
-
-        void onPrepareLoad(Drawable placeHolderDrawable);
     }
 }

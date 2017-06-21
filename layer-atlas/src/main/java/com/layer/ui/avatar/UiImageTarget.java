@@ -5,12 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import com.layer.ui.util.picasso.ImageCacheWrapper;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
+import com.squareup.picasso.Picasso.LoadedFrom;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public class UiImageTarget implements Target, ImageCacheWrapper.ImageTarget {
+public class UiImageTarget implements ImageCacheWrapper.ImageTarget {
     private final static AtomicLong sCounter = new AtomicLong(0);
     private final long mId;
     private final View mCluster;
@@ -32,7 +31,7 @@ public class UiImageTarget implements Target, ImageCacheWrapper.ImageTarget {
     }
 
     @Override
-    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+    public void onBitmapLoaded(Bitmap bitmap, LoadedFrom from) {
         mCluster.invalidate();
         mBitmap = bitmap;
     }

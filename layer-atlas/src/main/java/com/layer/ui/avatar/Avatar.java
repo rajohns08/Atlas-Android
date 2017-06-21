@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Avatar interface exposes the interaction between the AvatarView and AvatarViewModel Avatar.
  * @see Avatar.ViewModel is implemented by
@@ -18,32 +17,45 @@ import java.util.Set;
  * @see Avatar.View is implemented by
  * @see AvatarView
  **/
+
 public interface Avatar {
 
     interface ViewModel {
 
+        //Loop through the participants and calls setClusterSizes and revalidateView() on the View
         void update();
 
+        //Set the participants in the ViewModel and then call update on the ViewModel
         void setParticipants(Identity[] participants);
 
         void setParticipants(Set<Identity> participants);
 
         Set<Identity> getParticipants();
 
+        //Get the number of Avatar to be drawn in the View onDraw
         int getInitialSize();
 
         Set<Map.Entry<Identity, String>> getEntrySet();
 
+        //UiImageTarget implements ImageTarget a wrapper around Picasso Target
         UiImageTarget getImageTarget(Identity key);
 
+        //setClusterSizes is called in the View onLayout which in turns call the corresponding method on the View
         void setClusterSizes();
 
+
+         //This method is exposed to work with Picasso so that the AvatarViewModel can call it on the ImageWrapper
         void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size, int size1,
                 boolean flag, ImageCacheWrapper.ImageTarget imageTarget);
 
+        //Set the view on the ViewViewModel
         void setView(Avatar.View avatar);
 
+        //Pass presence status to the ViewModel and calls the corresponding method to draw in the view
         void checkPresence(Presence.PresenceStatus currentStatus, Canvas canvas);
+
+        //Set custom AvatarInitial on the ViewModel to allow client plug in their custom Initials
+        void setAvatarInitials(AvatarInitials avatarInitials);
     }
 
     interface View {
@@ -57,8 +69,6 @@ public interface Avatar {
         Avatar.View setParticipants(Identity... participants);
 
         Avatar.View setParticipants(Set<Identity> participants);
-
-        String getInitials(Identity added);
 
         void drawAvailable(Canvas canvas);
 

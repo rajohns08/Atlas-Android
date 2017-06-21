@@ -16,7 +16,6 @@ import com.layer.ui.R;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.sdk.messaging.Identity;
 import com.layer.sdk.messaging.Presence;
-import com.layer.ui.util.Util;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,6 @@ public class AvatarView extends View implements Avatar.View {
     private final Paint mBackgroundPaint = new Paint();
 
     private boolean mShouldShowPresence = true;
-    private AvatarInitials mAvatarInitials;
 
     // TODO: make these styleable
     private static final float BORDER_SIZE_DP = 1f;
@@ -106,7 +104,7 @@ public class AvatarView extends View implements Avatar.View {
     }
 
     public AvatarView setAvatarInitials(AvatarInitials avatarInitials) {
-        mAvatarInitials = avatarInitials;
+        mAvatarViewModel.setAvatarInitials(avatarInitials);
         return this;
     }
 
@@ -334,11 +332,6 @@ public class AvatarView extends View implements Avatar.View {
                 canvas.drawCircle(mPresenceCenterX, mPresenceCenterY, (mPresenceInnerRadius / 2f), mBackgroundPaint);
             }
         }
-
-    }
-    @Override
-    public String getInitials(Identity added) {
-        return mAvatarInitials != null ? mAvatarInitials.getInitials(added) : Util.getInitials(added);
     }
 
     @Override
