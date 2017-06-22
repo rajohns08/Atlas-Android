@@ -1,6 +1,7 @@
 package com.layer.ui.avatar;
 
 import android.graphics.Canvas;
+import android.widget.ImageView;
 
 import com.layer.sdk.messaging.Identity;
 import com.layer.sdk.messaging.Presence;
@@ -46,7 +47,7 @@ public interface Avatar {
 
          //This method is exposed to work with Picasso so that the AvatarViewModel can call it on the ImageWrapper
         void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size, int size1,
-                boolean flag, ImageCacheWrapper.ImageTarget imageTarget);
+                boolean flag, ImageView imageTarget);
 
         //Set the view on the ViewViewModel
         void setView(Avatar.View avatar);

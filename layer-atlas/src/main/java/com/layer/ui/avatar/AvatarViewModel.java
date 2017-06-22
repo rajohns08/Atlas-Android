@@ -2,6 +2,7 @@ package com.layer.ui.avatar;
 
 import android.graphics.Canvas;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.layer.sdk.messaging.Identity;
 import com.layer.sdk.messaging.Presence;
@@ -166,8 +167,8 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
     @Override
     public void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size,
-            int size1, boolean flag, ImageCacheWrapper.ImageTarget imageTarget) {
-        mImageCacheWrapper.load(targetUrl,tag,null,null,size,size1,flag,imageTarget);
+            int size1, boolean flag, ImageView imageTarget) {
+        mImageCacheWrapper.load(targetUrl,tag,null,null,size,size1,imageTarget,flag);
     }
 
     @Override
