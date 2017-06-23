@@ -1,20 +1,17 @@
 package com.layer.ui.util.picasso;
 
-import static com.layer.ui.util.Log.TAG;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.layer.sdk.LayerClient;
-import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.util.picasso.requesthandlers.MessagePartRequestHandler;
 import com.layer.ui.util.picasso.transformations.CircleTransform;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Target;
+
+import static com.layer.ui.util.Log.TAG;
 
 public class PicassoImageCacheWrapper implements ImageCacheWrapper {
     protected final static CircleTransform SINGLE_TRANSFORM = new CircleTransform(TAG + ".single");
@@ -35,7 +32,7 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
         }
 
         RequestCreator creator = mPicasso.load(targetUrl)
-                .tag(AvatarView.TAG)
+                .tag(tag)
                 .noPlaceholder()
                 .noFade()
                 .centerCrop()
@@ -46,15 +43,8 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
     }
 
     @Override
-    public void cancelRequest(ImageView imageView) {
-        if (imageView != null) {
-            Picasso.with(imageView.getContext()).cancelRequest(imageView);
-        }
-    }
-
-    @Override
-    public void fetchBitmap(String url, String tag, int width, int height, final AvatarView.BitmapWrapper bitmapWrapper,
-            final Callback callback, Object... args) {
+    public void fetchBitmap(String url, String tag, int width, int height, final Callback callback,
+                            Object... args) {
 
         boolean isMultiTransform = false;
         if (args != null && args.length > 0) {
@@ -62,7 +52,7 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
         }
 
         RequestCreator creator = mPicasso.load(url)
-                .tag(AvatarView.TAG)
+                .tag(tag)
                 .noPlaceholder()
                 .noFade()
                 .centerCrop()
@@ -72,7 +62,7 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
                 .into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        callback.onSuccess(bitmapWrapper.setBitmap(bitmap));
+                        callback.onSuccess(bitmap);
                     }
 
                     @Override
@@ -86,5 +76,19 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
                     }
                 });
 
+    }
+
+    @Override
+    public void cancelRequest(ImageView imageView) {
+        if (imageView != null) {
+            mPicasso.cancelRequest(imageView);
+        }
+    }
+
+    @Override
+    public void cancelRequest(String tag) {
+        if (tag != null && !tag.isEmpty()) {
+            mPicasso.cancelTag(tag);
+        }
     }
 }

@@ -12,11 +12,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.layer.sdk.messaging.Identity;
+import com.layer.sdk.messaging.Presence;
 import com.layer.ui.R;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.ui.util.Util;
-import com.layer.sdk.messaging.Identity;
-import com.layer.sdk.messaging.Presence;
 import com.layer.ui.util.picasso.ImageCacheWrapper;
 
 import java.util.ArrayList;
@@ -31,11 +31,10 @@ import java.util.Set;
 
 /**
  * AtlasAvatar can be used to show information about one user, or as a cluster of multiple users.
- *
+ * <p>
  * AtlasAvatar uses Picasso to render the avatar image. So, you need to init
  */
 public class AvatarView extends View {
-    public static final String TAG = AvatarView.class.getSimpleName();
 
     private static final Paint PAINT_TRANSPARENT = new Paint();
     private static final Paint PAINT_BITMAP = new Paint();
@@ -130,7 +129,7 @@ public class AvatarView extends View {
     /**
      * Enable or disable showing presence information for this avatar. Presence is shown only for
      * single user Avatars. If avatar is a cluster, presence will not be shown.
-     *
+     * <p>
      * Default is `true`, to show presence.
      *
      * @param shouldShowPresence set to `true` to show presence, `false` otherwise.
@@ -143,7 +142,7 @@ public class AvatarView extends View {
 
     /**
      * Returns if `shouldShowPresence` flag is enabled for this avatar.
-     *
+     * <p>
      * Default is `true`
      *
      * @return `true` if `shouldShowPresence` is set to `true`, `false` otherwise.
@@ -199,8 +198,7 @@ public class AvatarView extends View {
             mInitialsMap.remove(removed);
             BitmapWrapper target = mIdentityBitmapMap.remove(removed);
             if (target != null) {
-                //Todo : Change
-                //mImageCacheWrapper.cancelRequest(target);
+                mImageCacheWrapper.cancelRequest(target.getUrl());
                 recyclableTargets.add(target);
             }
         }
@@ -227,13 +225,11 @@ public class AvatarView extends View {
             mInitialsMap.put(existing, Util.getInitials(existing));
 
             BitmapWrapper existingTarget = mIdentityBitmapMap.get(existing);
-            //Todo : Change
-            //mImageCacheWrapper.cancelRequest(existingTarget);
+            mImageCacheWrapper.cancelRequest(existingTarget.getUrl());
             toLoad.add(existingTarget);
         }
         for (BitmapWrapper target : mPendingLoads) {
-            //Todo : Change
-            //mImageCacheWrapper.cancelRequest(target);
+            mImageCacheWrapper.cancelRequest(target.getUrl());
         }
         mPendingLoads.clear();
         mPendingLoads.addAll(toLoad);
@@ -284,28 +280,27 @@ public class AvatarView extends View {
         synchronized (mPendingLoads) {
             if (!mPendingLoads.isEmpty()) {
                 int size = Math.round(hasBorder ? (mInnerRadius * 2f) : (mOuterRadius * 2f));
-                for (BitmapWrapper bitmapWrapper : mPendingLoads) {
+                for (final BitmapWrapper bitmapWrapper : mPendingLoads) {
                     String targetUrl = bitmapWrapper.getUrl();
                     // Handle empty paths just like null paths. This ensures empty paths will go
                     // through the normal Picasso flow and the bitmap is set.
                     if (targetUrl != null && targetUrl.trim().length() == 0) {
                         targetUrl = null;
                     }
-                    //todo Cache bitmap and invalidate view
-                    //mImageCacheWrapper.load(targetUrl,TAG, size, size, null, avatarCount > 1);
 
-                    mImageCacheWrapper.fetchBitmap(targetUrl, TAG, size, size,bitmapWrapper,
-                            new ImageCacheWrapper.Callback() {
-                                @Override
-                                public void onSuccess(BitmapWrapper bitmapWrapper) {
-                                    AvatarView.this.invalidate();
-                                }
+                    mImageCacheWrapper.fetchBitmap(targetUrl, bitmapWrapper.getUrl(), size, size, new ImageCacheWrapper.Callback() {
+                        @Override
+                        public void onSuccess(Bitmap bitmap) {
+                            bitmapWrapper.setBitmap(bitmap);
+                            AvatarView.this.invalidate();
+                        }
 
-                                @Override
-                                public void onFailure() {
-                                    AvatarView.this.invalidate();
-                                }
-                            }, avatarCount > 1);
+                        @Override
+                        public void onFailure() {
+                            bitmapWrapper.setBitmap(null);
+                            AvatarView.this.invalidate();
+                        }
+                    }, avatarCount > 1);
                 }
                 mPendingLoads.clear();
             }
