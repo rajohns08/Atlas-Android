@@ -96,8 +96,8 @@ public class AvatarView extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    public AvatarView init(ImageCacheWrapper picasso) {
-        mImageCacheWrapper = picasso;
+    public AvatarView init(ImageCacheWrapper imageCacheWrapper) {
+        mImageCacheWrapper = imageCacheWrapper;
 
         mPaintInitials.setAntiAlias(true);
         mPaintInitials.setSubpixelText(true);
