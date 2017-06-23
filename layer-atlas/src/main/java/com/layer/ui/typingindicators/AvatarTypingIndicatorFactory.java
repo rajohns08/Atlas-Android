@@ -10,11 +10,15 @@ import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.layer.sdk.LayerClient;
 import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.TypingIndicatorLayout;
 import com.layer.ui.R;
 import com.layer.sdk.listeners.LayerTypingIndicatorListener;
 import com.layer.sdk.messaging.Identity;
+import com.layer.ui.util.picasso.PicassoImageCacheWrapper;
+import com.layer.ui.util.picasso.requesthandlers.MessagePartRequestHandler;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,8 +34,14 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
     private static final float DOT_ON_ALPHA = 0.31f;
     private static final long ANIMATION_PERIOD = 600;
     private static final long ANIMATION_OFFSET = ANIMATION_PERIOD / 3;
+    private final MessagePartRequestHandler messagePartRequestHandler;
+    private final PicassoImageCacheWrapper mPicassoImageCacheWrapper;
 
-    public AvatarTypingIndicatorFactory() {}
+    public AvatarTypingIndicatorFactory(LayerClient layerClient, Context context) {
+        messagePartRequestHandler = new MessagePartRequestHandler(layerClient);
+        mPicassoImageCacheWrapper = new PicassoImageCacheWrapper(
+                messagePartRequestHandler, context);
+    }
 
     @Override
     public LinearLayout onCreateView(Context context) {
@@ -110,7 +120,7 @@ public class AvatarTypingIndicatorFactory implements TypingIndicatorLayout.Typin
             AvatarView avatarView = tag.mPassives.poll();
             if (avatarView == null) {
                 // TODO: allow styling
-                avatarView = new AvatarView(l.getContext()).init();
+                avatarView = new AvatarView(l.getContext()).init(mPicassoImageCacheWrapper);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(avatarDim, avatarDim);
                 params.setMargins(0, 0, avatarSpace, 0);
                 avatarView.setLayoutParams(params);

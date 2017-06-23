@@ -15,14 +15,14 @@ public class Injection {
     private static ImageCacheWrapper sImageCacheWrapper;
     private static WeakReference<LayerClient> sLayerClient;
 
-    public static void init(Context context, LayerClient layerClient) {
+    /*public static void init(Context context, LayerClient layerClient) {
         sLayerClient = new WeakReference<>(layerClient);
     }
 
     public static Avatar.ViewModel provideAvatarViewModel(Context context) {
         return sImageCacheWrapper != null ? new AvatarViewModel(sImageCacheWrapper)
                 : new AvatarViewModel(new PicassoImageCacheWrapper(sLayerClient.get(), context));
-    }
+    }*/
 
 
    /* public static ImageCacheWrapper provideImageCacheWrapper() {

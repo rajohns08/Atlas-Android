@@ -3,6 +3,8 @@ package com.layer.ui.util.picasso;
 import static com.layer.ui.util.Log.TAG;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,18 +20,15 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
     protected final static CircleTransform SINGLE_TRANSFORM = new CircleTransform(TAG + ".single");
     protected final static CircleTransform MULTI_TRANSFORM = new CircleTransform(TAG + ".multi");
     protected final Picasso mPicasso;
-    protected MessagePartRequestHandler mMessagePartRequestHandler;
 
-    public PicassoImageCacheWrapper(LayerClient layerClient, Context context) {
-        mMessagePartRequestHandler = new MessagePartRequestHandler(layerClient);
+    public PicassoImageCacheWrapper(MessagePartRequestHandler messagePartRequestHandler, Context context) {
         mPicasso = new Picasso.Builder(context)
-                .addRequestHandler(mMessagePartRequestHandler)
+                .addRequestHandler(messagePartRequestHandler)
                 .build();
     }
 
     @Override
-    public void load(String targetUrl, String tag, Object placeHolder, Object fade, int size,
-            int size1, ImageView imageView, Object... args) {
+    public void load(String targetUrl, String tag, int size, int size1, ImageView imageView, Object... args) {
         boolean isMultiTransform = false;
         if (args != null && args.length > 0) {
             isMultiTransform = (boolean) args[0];
@@ -48,6 +47,44 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
 
     @Override
     public void cancelRequest(ImageView imageView) {
-        Picasso.with(imageView.getContext()).cancelRequest(imageView);
+        if (imageView != null) {
+            Picasso.with(imageView.getContext()).cancelRequest(imageView);
+        }
+    }
+
+    @Override
+    public void fetchBitmap(String url, String tag, int width, int height, final AvatarView.BitmapWrapper bitmapWrapper,
+            final Callback callback, Object... args) {
+
+        boolean isMultiTransform = false;
+        if (args != null && args.length > 0) {
+            isMultiTransform = (boolean) args[0];
+        }
+
+        RequestCreator creator = mPicasso.load(url)
+                .tag(AvatarView.TAG)
+                .noPlaceholder()
+                .noFade()
+                .centerCrop()
+                .resize(width, height);
+
+        creator.transform(isMultiTransform ? MULTI_TRANSFORM : SINGLE_TRANSFORM)
+                .into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        callback.onSuccess(bitmapWrapper.setBitmap(bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        callback.onFailure();
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
     }
 }

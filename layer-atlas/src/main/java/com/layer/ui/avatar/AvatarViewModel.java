@@ -79,7 +79,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
             mInitials.remove(removed);
             UiImageTarget target = mImageTargets.remove(removed);
             if (target != null) {
-                mImageCacheWrapper.cancelRequest(target);
+                mImageCacheWrapper.cancelRequest(null);
                 recyclableTargets.add(target);
             }
         }
@@ -106,12 +106,12 @@ public class AvatarViewModel implements Avatar.ViewModel  {
             mInitials.put(existing, getInitialsForAvatarView(existing));
 
             UiImageTarget existingTarget = mImageTargets.get(existing);
-            mImageCacheWrapper.cancelRequest(existingTarget);
+            mImageCacheWrapper.cancelRequest(null);
             toLoad.add(existingTarget);
         }
 
         for (UiImageTarget target : mPendingLoads) {
-            mImageCacheWrapper.cancelRequest(target);
+            mImageCacheWrapper.cancelRequest(null);
         }
         mPendingLoads.clear();
         mPendingLoads.addAll(toLoad);
@@ -168,7 +168,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     @Override
     public void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size,
             int size1, boolean flag, ImageView imageTarget) {
-        mImageCacheWrapper.load(targetUrl,tag,null,null,size,size1,imageTarget,flag);
+        mImageCacheWrapper.load(targetUrl,tag,size,size1,imageTarget,flag);
     }
 
     @Override

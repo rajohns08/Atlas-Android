@@ -26,6 +26,8 @@ import com.layer.sdk.messaging.Message;
 import com.layer.sdk.query.ListViewController;
 import com.layer.sdk.query.Query;
 import com.layer.sdk.query.RecyclerViewController;
+import com.layer.ui.util.picasso.PicassoImageCacheWrapper;
+import com.layer.ui.util.picasso.requesthandlers.MessagePartRequestHandler;
 
 import java.text.DateFormat;
 import java.util.Collections;
@@ -295,7 +297,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
 
         CellType cellType = mCellTypesByViewType.get(viewType);
         int rootResId = cellType.mMe ? CellViewHolder.RESOURCE_ID_ME : CellViewHolder.RESOURCE_ID_THEM;
-        CellViewHolder rootViewHolder = new CellViewHolder(mLayoutInflater.inflate(rootResId, parent, false), mShouldShowAvatarPresence);
+        CellViewHolder rootViewHolder = new CellViewHolder(mLayoutInflater.inflate(rootResId, parent, false), mShouldShowAvatarPresence, mLayerClient);
         rootViewHolder.mCellHolder = cellType.mCellFactory.createCellHolder(rootViewHolder.mCell, cellType.mMe, mLayoutInflater);
         rootViewHolder.mCellHolderSpecs = new CellFactory.CellHolderSpecs();
         return rootViewHolder;
@@ -700,6 +702,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
     static class CellViewHolder extends ViewHolder {
         public final static int RESOURCE_ID_ME = R.layout.ui_message_item_me;
         public final static int RESOURCE_ID_THEM = R.layout.ui_message_item_them;
+        private final MessagePartRequestHandler messagePartRequestHandler;
+        private final PicassoImageCacheWrapper mPicassoImageCacheWrapper;
 
         protected Message mMessage;
 
@@ -717,7 +721,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
         protected CellFactory.CellHolder mCellHolder;
         protected CellFactory.CellHolderSpecs mCellHolderSpecs;
 
-        public CellViewHolder(View itemView, boolean shouldShowAvatarPresence) {
+        public CellViewHolder(View itemView, boolean shouldShowAvatarPresence, LayerClient layerClient) {
             super(itemView);
             mUserName = (TextView) itemView.findViewById(R.id.sender);
             mTimeGroup = itemView.findViewById(R.id.time_group);
@@ -727,9 +731,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.ViewHo
             mCell = (ViewGroup) itemView.findViewById(R.id.cell);
             mReceipt = (TextView) itemView.findViewById(R.id.receipt);
 
+            messagePartRequestHandler = new MessagePartRequestHandler(layerClient);
+            mPicassoImageCacheWrapper = new PicassoImageCacheWrapper(
+                    messagePartRequestHandler, itemView.getContext());
+
             mAvatarView = ((AvatarView) itemView.findViewById(R.id.avatar));
             if (mAvatarView != null)  {
-                mAvatarView.init();
+                mAvatarView.init(mPicassoImageCacheWrapper);
                 mAvatarView.setShouldShowPresence(shouldShowAvatarPresence);
             }
         }

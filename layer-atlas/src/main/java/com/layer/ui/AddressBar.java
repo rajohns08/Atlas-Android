@@ -27,6 +27,8 @@ import com.layer.ui.util.AvatarStyle;
 import com.layer.ui.util.EditTextUtil;
 import com.layer.ui.util.IdentityDisplayNameComparator;
 import com.layer.ui.util.Util;
+import com.layer.ui.util.picasso.PicassoImageCacheWrapper;
+import com.layer.ui.util.picasso.requesthandlers.MessagePartRequestHandler;
 import com.layer.ui.util.views.EmptyDelEditText;
 import com.layer.ui.util.views.FlowLayout;
 import com.layer.ui.util.views.MaxHeightScrollView;
@@ -82,6 +84,8 @@ public class AddressBar extends LinearLayout {
     private Typeface mChipTypeface;
     private int mChipStyle;
     private AvatarStyle mAvatarStyle;
+    private MessagePartRequestHandler messagePartRequestHandler;
+    private PicassoImageCacheWrapper mPicassoImageCacheWrapper;
 
     public AddressBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -103,6 +107,10 @@ public class AddressBar extends LinearLayout {
 
     public AddressBar init(LayerClient layerClient, Picasso picasso) {
         mLayerClient = layerClient;
+        messagePartRequestHandler = new MessagePartRequestHandler(mLayerClient);
+        mPicassoImageCacheWrapper = new PicassoImageCacheWrapper(
+                messagePartRequestHandler, getContext());
+
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mParticipantList.setLayoutManager(manager);
         mAvailableConversationAdapter = new AvailableConversationAdapter(mLayerClient, mPicasso);
@@ -454,7 +462,7 @@ public class AddressBar extends LinearLayout {
 
             // Initialize participant data
             mName.setText(Util.getDisplayName(participant));
-            mAvatarView.init()
+            mAvatarView.init(mPicassoImageCacheWrapper)
                     .setStyle(mAvatarStyle)
                     .setParticipants(participant);
 
@@ -608,7 +616,7 @@ public class AddressBar extends LinearLayout {
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             ViewHolder viewHolder = new ViewHolder(parent);
             viewHolder.mAvatarView
-                    .init()
+                    .init(mPicassoImageCacheWrapper)
                     .setStyle(mAvatarStyle);
             return viewHolder;
         }

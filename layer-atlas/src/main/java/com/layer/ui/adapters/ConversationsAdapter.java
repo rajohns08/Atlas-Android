@@ -29,6 +29,8 @@ import com.layer.sdk.query.Predicate;
 import com.layer.sdk.query.Query;
 import com.layer.sdk.query.RecyclerViewController;
 import com.layer.sdk.query.SortDescriptor;
+import com.layer.ui.util.picasso.PicassoImageCacheWrapper;
+import com.layer.ui.util.picasso.requesthandlers.MessagePartRequestHandler;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -59,6 +61,8 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
     private Set<CellFactory> mDefaultCellFactories;
 
     protected ConversationFormatter mConversationFormatter;
+    private MessagePartRequestHandler messagePartRequestHandler;
+    private PicassoImageCacheWrapper mPicassoImageCacheWrapper;
 
     public ConversationsAdapter(Context context, LayerClient client, Picasso picasso, ConversationFormatter conversationFormatter) {
         this(context, client, picasso, null, conversationFormatter);
@@ -186,8 +190,11 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder viewHolder = new ViewHolder(mInflater.inflate(ViewHolder.RESOURCE_ID, parent, false), conversationStyle);
         viewHolder.setClickListener(mViewHolderClickListener);
+        messagePartRequestHandler = new MessagePartRequestHandler(mLayerClient);
+        mPicassoImageCacheWrapper = new PicassoImageCacheWrapper(
+                messagePartRequestHandler, parent.getContext());
         viewHolder.mAvatarViewCluster
-                .init()
+                .init(mPicassoImageCacheWrapper)
                 .setStyle(conversationStyle.getAvatarStyle());
         return viewHolder;
     }

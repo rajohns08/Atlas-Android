@@ -38,7 +38,7 @@ public interface Avatar {
 
         Set<Map.Entry<Identity, String>> getEntrySet();
 
-        //UiImageTarget implements ImageTarget a wrapper around Picasso Target
+        //UiImageTarget implements Bitmap a wrapper around Picasso Target
         UiImageTarget getImageTarget(Identity key);
 
         //setClusterSizes is called in the View onLayout which in turns call the corresponding method on the View
