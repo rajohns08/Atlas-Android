@@ -39,15 +39,15 @@ public interface Avatar {
         Set<Map.Entry<Identity, String>> getEntrySet();
 
         //UiImageTarget implements Bitmap a wrapper around Picasso Target
-        UiImageTarget getImageTarget(Identity key);
+        AvatarView.BitmapWrapper getImageTarget(Identity key);
 
-        //setClusterSizes is called in the View onLayout which in turns call the corresponding method on the View
+        //setClusterSizes is called in the View onLayout which in turns call th
+        // e corresponding method on the View
         void setClusterSizes();
 
 
          //This method is exposed to work with Picasso so that the AvatarViewModel can call it on the ImageWrapper
-        void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size, int size1,
-                boolean flag, ImageView imageTarget);
+        void loadImage(String url, String tag, int width, int height, AvatarView.BitmapWrapper bitmapWrapper, Object... args);
 
         //Set the view on the ViewViewModel
         void setView(Avatar.View avatar);
@@ -63,7 +63,7 @@ public interface Avatar {
 
         Avatar.View getAvatar();
 
-        boolean setClusterSizes(Map<Identity, String> initials, List<UiImageTarget> pendingLoads);
+        boolean setClusterSizes(Map<Identity, String> initials, List<AvatarView.BitmapWrapper> pendingLoads);
 
         void revalidateView();
 

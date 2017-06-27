@@ -1,5 +1,6 @@
 package com.layer.ui.avatar;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -24,9 +25,9 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
     private Set<Identity> mParticipants = new LinkedHashSet<>();
     private final Map<Identity, String> mInitials = new HashMap<>();
-    private final Map<Identity, UiImageTarget> mImageTargets = new HashMap<>();
+    private final Map<Identity, AvatarView.BitmapWrapper> mImageTargets = new HashMap<>();
     // Initials and Picasso image targets by user ID
-    private final List<UiImageTarget> mPendingLoads = new ArrayList<>();
+    private final List<AvatarView.BitmapWrapper> mPendingLoads = new ArrayList<>();
     private AvatarInitials mAvatarInitials;
 
 
@@ -72,14 +73,14 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         }
 
         Diff diff = diff(mInitials.keySet(), mParticipants);
-        List<UiImageTarget> toLoad = new ArrayList<>();
+        List<AvatarView.BitmapWrapper> toLoad = new ArrayList<>();
 
-        List<UiImageTarget> recyclableTargets = new ArrayList<UiImageTarget>();
+        List<AvatarView.BitmapWrapper> recyclableTargets = new ArrayList<>();
         for (Identity removed : diff.removed) {
             mInitials.remove(removed);
-            UiImageTarget target = mImageTargets.remove(removed);
+            AvatarView.BitmapWrapper target = mImageTargets.remove(removed);
             if (target != null) {
-                mImageCacheWrapper.cancelRequest(null);
+                mImageCacheWrapper.cancelRequest(target.getUrl());
                 recyclableTargets.add(target);
             }
         }
@@ -88,9 +89,9 @@ public class AvatarViewModel implements Avatar.ViewModel  {
             if (added == null) return;
             mInitials.put(added, getInitialsForAvatarView(added));
 
-            final UiImageTarget target;
+            final AvatarView.BitmapWrapper target;
             if (recyclableTargets.isEmpty()) {
-                target = new UiImageTarget(mView.getAvatar());
+                target = new AvatarView.BitmapWrapper(added.getAvatarImageUrl());
             } else {
                 target = recyclableTargets.remove(0);
             }
@@ -105,13 +106,13 @@ public class AvatarViewModel implements Avatar.ViewModel  {
             if (existing == null) continue;
             mInitials.put(existing, getInitialsForAvatarView(existing));
 
-            UiImageTarget existingTarget = mImageTargets.get(existing);
-            mImageCacheWrapper.cancelRequest(null);
+            AvatarView.BitmapWrapper existingTarget = mImageTargets.get(existing);
+            mImageCacheWrapper.cancelRequest(existingTarget.getUrl());
             toLoad.add(existingTarget);
         }
 
-        for (UiImageTarget target : mPendingLoads) {
-            mImageCacheWrapper.cancelRequest(null);
+        for (AvatarView.BitmapWrapper bitmapWrapper : mPendingLoads) {
+            mImageCacheWrapper.cancelRequest(bitmapWrapper.getUrl());
         }
         mPendingLoads.clear();
         mPendingLoads.addAll(toLoad);
@@ -156,7 +157,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public UiImageTarget getImageTarget(Identity key) {
+    public AvatarView.BitmapWrapper getImageTarget(Identity key) {
         return  mImageTargets.get(key);
     }
 
@@ -166,9 +167,22 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public void loadImage(String targetUrl, String tag, Object placeHolder, Object fade, int size,
-            int size1, boolean flag, ImageView imageTarget) {
-        mImageCacheWrapper.load(targetUrl,tag,size,size1,imageTarget,flag);
+    public void loadImage(String url, String tag, int width, int height, final AvatarView.BitmapWrapper bitmapWrapper, Object... args) {
+        mImageCacheWrapper.fetchBitmap(url, tag, width, height,
+                new ImageCacheWrapper.Callback() {
+                    @Override
+                    public void onSuccess(Bitmap bitmap) {
+                        if (mView != null) {
+                            bitmapWrapper.setBitmap(bitmap);
+                            mView.revalidateView();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                }, args);
     }
 
     @Override
