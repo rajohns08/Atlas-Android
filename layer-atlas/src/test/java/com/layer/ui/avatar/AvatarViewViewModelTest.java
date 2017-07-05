@@ -21,12 +21,13 @@ public class AvatarViewViewModelTest {
     @Mock
     Avatar.View mMockView;
 
-    AvatarViewModel mAvatarViewModel;
-
     @Mock
     ImageCacheWrapper mMockImageCacheWrapper;
-    @Mock Canvas mMockCanvas;
 
+    @Mock
+    Canvas mMockCanvas;
+
+    AvatarViewModel mAvatarViewModel;
 
     @Before
     public void setUp() {
