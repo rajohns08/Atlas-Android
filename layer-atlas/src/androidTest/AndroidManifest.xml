@@ -11,7 +11,7 @@
     <application>
 
         <activity
-            android:name="com.layer.atlas.view.AvatarActivityTestView">
+            android:name="com.layer.ui.view.AvatarActivityTestView">
         </activity>
 
     </application>

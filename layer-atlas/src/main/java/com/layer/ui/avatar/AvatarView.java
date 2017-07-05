@@ -27,7 +27,7 @@ import java.util.Set;
  * <p>
  * AtlasAvatar uses Picasso to render the avatar image. So, you need to init
  */
-public class AvatarView extends View implements Avatar.View{
+public class AvatarView extends View implements Avatar.View {
 
     private static final Paint PAINT_TRANSPARENT = new Paint();
     private static final Paint PAINT_BITMAP = new Paint();

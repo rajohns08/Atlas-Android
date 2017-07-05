@@ -1,9 +1,9 @@
-package com.layer.atlas.view;
+package com.layer.ui.view;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.layer.atlas.mock.MockLayerClient;
+import com.layer.ui.mock.MockLayerClient;
 import com.layer.sdk.LayerClient;
 import com.layer.ui.R;
 import com.layer.ui.avatar.AvatarView;

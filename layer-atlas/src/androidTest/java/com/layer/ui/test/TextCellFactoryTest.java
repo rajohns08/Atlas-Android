@@ -1,13 +1,13 @@
-package com.layer.atlas.test;
+package com.layer.ui.test;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.layer.ui.messagetypes.generic.GenericCellFactory;
-import com.layer.atlas.mock.MockLayerClient;
-import com.layer.atlas.mock.MockMessageImpl;
-import com.layer.atlas.mock.MockMessagePart;
+import com.layer.ui.messagetypes.text.TextCellFactory;
+import com.layer.ui.mock.MockLayerClient;
+import com.layer.ui.mock.MockMessageImpl;
+import com.layer.ui.mock.MockMessagePart;
 import com.layer.sdk.LayerClient;
 import com.layer.sdk.messaging.Message;
 import com.layer.sdk.messaging.MessagePart;
@@ -24,8 +24,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
-public class GenericCellFactoryTest {
+public class TextCellFactoryTest {
     private final static String MIME_TYPE = "text/plain";
+    private static final String TEST_MESSAGE_TEXT = "Hello, world!";
 
     private List<MessagePart> mTestMessageParts;
     private MessagePart mTextMessagePart;
@@ -35,7 +36,7 @@ public class GenericCellFactoryTest {
     @Before
     public void setUp() {
         mTestMessageParts = new ArrayList<>();
-        mTextMessagePart = new MockMessagePart("Generic message".getBytes(), MIME_TYPE);
+        mTextMessagePart = new MockMessagePart(TEST_MESSAGE_TEXT.getBytes(), MIME_TYPE);
         mTestMessageParts.add(mTextMessagePart);
         mMessage = new MockMessageImpl(mTestMessageParts);
         mLayerClient = new MockLayerClient();
@@ -43,31 +44,32 @@ public class GenericCellFactoryTest {
 
     @Test
     public void testParseContent() {
-        GenericCellFactory genericCellFactory = new GenericCellFactory();
-        GenericCellFactory.ParsedContent parsedContent = genericCellFactory.parseContent(mLayerClient, mMessage);
+        TextCellFactory textCellFactory = new TextCellFactory();
+        TextCellFactory.TextInfo parsedContent = textCellFactory.parseContent(mLayerClient, mMessage);
 
         assertThat(parsedContent.getString().isEmpty(), is(false));
+        assertThat(parsedContent.getString(), is(TEST_MESSAGE_TEXT));
     }
 
     @Test
     public void testIsType() {
-        GenericCellFactory genericCellFactory = new GenericCellFactory();
+        TextCellFactory textCellFactory = new TextCellFactory();
 
-        assertThat(genericCellFactory.isType(mMessage), is(true));
+        assertThat(textCellFactory.isType(mMessage), is(true));
     }
 
     @Test
     public void testIsBindable() {
-        GenericCellFactory genericCellFactory = new GenericCellFactory();
-
-        assertThat(genericCellFactory.isBindable(mMessage), is(true));
+        TextCellFactory textCellFactory = new TextCellFactory();
+        assertThat(textCellFactory.isBindable(mMessage), is(true));
     }
 
     @Test
     public void testGetPreviewText() {
-        GenericCellFactory genericCellFactory = new GenericCellFactory();
+        TextCellFactory textCellFactory = new TextCellFactory();
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertThat(genericCellFactory.getPreviewText(context, mMessage).isEmpty(), is(false));
+        assertThat(textCellFactory.getPreviewText(context, mMessage).isEmpty(), is(false));
+        assertThat(textCellFactory.getPreviewText(context, mMessage), is(TEST_MESSAGE_TEXT));
     }
 }

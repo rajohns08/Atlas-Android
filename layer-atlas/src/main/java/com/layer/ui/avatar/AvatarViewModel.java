@@ -8,6 +8,7 @@ import com.layer.ui.util.Util;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 import com.layer.ui.util.imagecache.ImageCacheWrapper;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     private AvatarInitials mAvatarInitials;
 
 
-    private Avatar.View mView;
+    private WeakReference<Avatar.View> mView;
 
     private int mMaxAvatar = 3;
     private ImageCacheWrapper mImageCacheWrapper;
@@ -114,10 +115,10 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         mPendingLoads.clear();
         mPendingLoads.addAll(toLoad);
 
-        mView.setClusterSizes(mInitials,mPendingLoads);
-        mView.revalidateView();
-
-
+        if (mView != null && mView.get() != null) {
+            mView.get().setClusterSizes(mInitials,mPendingLoads);
+            mView.get().revalidateView();
+        }
     }
 
     private String getInitialsForAvatarView(Identity added) {
@@ -165,7 +166,9 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
     @Override
     public void setClusterSizes() {
-        mView.setClusterSizes(mInitials,mPendingLoads);
+        if (mView != null && mView.get() != null) {
+            mView.get().setClusterSizes(mInitials,mPendingLoads);
+        }
     }
 
     @Override
@@ -175,29 +178,33 @@ public class AvatarViewModel implements Avatar.ViewModel  {
                 new ImageCacheWrapper.Callback() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
-                        if (mView != null) {
+                        if (mView != null && mView.get() != null) {
                             bitmapWrapper.setBitmap(bitmap);
-                            mView.revalidateView();
+                            mView.get().revalidateView();
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        bitmapWrapper.setBitmap(null);
-                        mView.revalidateView();
+                        if (mView != null && mView.get() != null) {
+                            bitmapWrapper.setBitmap(null);
+                            mView.get().revalidateView();
+                        }
                     }
 
                     @Override
                     public void onPrepareLoad() {
-                        bitmapWrapper.setBitmap(null);
-                        mView.revalidateView();
+                        if (mView != null && mView.get() != null) {
+                            bitmapWrapper.setBitmap(null);
+                            mView.get().revalidateView();
+                        }
                     }
                 }, args);
     }
 
     @Override
     public void setView(Avatar.View avatar) {
-        mView = avatar;
+        mView = new WeakReference<>(avatar);
     }
 
     private static Diff diff(Set<Identity> oldSet, Set<Identity> newSet) {
