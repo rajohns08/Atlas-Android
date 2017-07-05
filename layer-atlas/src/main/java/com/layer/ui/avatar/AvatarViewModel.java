@@ -45,7 +45,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public void update() {
+    public synchronized void update() {
         // Limit to mMaxAvatar valid avatars, prioritizing participants with avatars.
         if (mParticipants.size() > mMaxAvatar) {
             Queue<Identity> withAvatars = new LinkedList<>();
@@ -165,7 +165,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public void setClusterSizes() {
+    public synchronized void setClusterSizes() {
         Avatar.View view = mView != null ? mView.get() : null;
         if (view != null) {
             view.setClusterSizes(mInitials,mPendingLoads);
@@ -173,7 +173,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public void loadImage(String url, String tag, int width, int height, final BitmapWrapper bitmapWrapper, Object... args) {
+    public synchronized void loadImage(String url, String tag, int width, int height, final BitmapWrapper bitmapWrapper, Object... args) {
 
         mImageCacheWrapper.fetchBitmap(url, tag, width, height,
                 new ImageCacheWrapper.Callback() {
@@ -207,7 +207,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public void setView(Avatar.View avatar) {
+    public synchronized void setView(Avatar.View avatar) {
         mView = new WeakReference<>(avatar);
     }
 
