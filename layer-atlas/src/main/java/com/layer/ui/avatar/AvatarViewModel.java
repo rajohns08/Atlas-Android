@@ -114,10 +114,10 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         }
         mPendingLoads.clear();
         mPendingLoads.addAll(toLoad);
-
-        if (mView != null && mView.get() != null) {
-            mView.get().setClusterSizes(mInitials,mPendingLoads);
-            mView.get().revalidateView();
+        Avatar.View view = mView != null ? mView.get() : null;
+        if (view != null) {
+            view.setClusterSizes(mInitials,mPendingLoads);
+            view.revalidateView();
         }
     }
 
@@ -166,8 +166,9 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
     @Override
     public void setClusterSizes() {
-        if (mView != null && mView.get() != null) {
-            mView.get().setClusterSizes(mInitials,mPendingLoads);
+        Avatar.View view = mView != null ? mView.get() : null;
+        if (view != null) {
+            view.setClusterSizes(mInitials,mPendingLoads);
         }
     }
 
@@ -178,25 +179,28 @@ public class AvatarViewModel implements Avatar.ViewModel  {
                 new ImageCacheWrapper.Callback() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
-                        if (mView != null && mView.get() != null) {
+                        Avatar.View view = mView != null ? mView.get() : null;
+                        if (view != null) {
                             bitmapWrapper.setBitmap(bitmap);
-                            mView.get().revalidateView();
+                            view.revalidateView();
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        if (mView != null && mView.get() != null) {
+                        Avatar.View view = mView != null ? mView.get() : null;
+                        if (view != null) {
                             bitmapWrapper.setBitmap(null);
-                            mView.get().revalidateView();
+                            view.revalidateView();
                         }
                     }
 
                     @Override
                     public void onPrepareLoad() {
-                        if (mView != null && mView.get() != null) {
+                        Avatar.View view = mView != null ? mView.get() : null;
+                        if (view != null) {
                             bitmapWrapper.setBitmap(null);
-                            mView.get().revalidateView();
+                            view.revalidateView();
                         }
                     }
                 }, args);
