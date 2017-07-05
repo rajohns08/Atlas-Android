@@ -34,7 +34,7 @@ public class PicassoImageCacheWrapper implements ImageCacheWrapper {
     @Override
     public void load(String targetUrl, String tag, int size, int size1, ImageView imageView, Object... args) {
         boolean isMultiTransform = false;
-        if (args != null && args.length > 0) {
+        if (args != null && args.length > 0 && (args[0] instanceof Boolean)) {
             isMultiTransform = (boolean) args[0];
         }
 
