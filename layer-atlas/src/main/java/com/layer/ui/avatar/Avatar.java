@@ -1,6 +1,6 @@
 package com.layer.ui.avatar;
 
-import android.content.Context;
+import android.os.Handler;
 
 import com.layer.sdk.messaging.Identity;
 import com.layer.ui.util.imagecache.BitmapWrapper;
@@ -46,7 +46,7 @@ public interface Avatar {
         void loadImage(String url, String tag, int width, int height, BitmapWrapper bitmapWrapper, Object... args);
 
         //Set the view on the ViewViewModel
-        void setView(Avatar.View avatar, Context context);
+        void setView(Avatar.View avatar, Handler handler);
 
         //Set custom AvatarInitial on the ViewModel to allow client plug in their custom Initials
         void setAvatarInitials(AvatarInitials avatarInitials);

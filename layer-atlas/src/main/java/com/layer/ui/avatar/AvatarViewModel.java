@@ -1,6 +1,5 @@
 package com.layer.ui.avatar;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -29,10 +28,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     private final Map<Identity, BitmapWrapper> mImageTargets = new HashMap<>();
     private final List<BitmapWrapper> mPendingLoads = new ArrayList<>();
     private AvatarInitials mAvatarInitials;
-    private Handler mMainHandler;
-
-
-
+    private WeakReference<Handler> mHandlerWeakReference;
     private WeakReference<Avatar.View> mViewWeakReference;
 
     private int mMaxAvatar = 3;
@@ -118,15 +114,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         mPendingLoads.clear();
         mPendingLoads.addAll(toLoad);
 
-        if (mViewWeakReference != null) {
-            synchronized (mViewWeakReference) {
-                Avatar.View view = mViewWeakReference.get();
-                if (view != null) {
-                    view.setClusterSizes(mInitials,mPendingLoads);
-                    view.revalidateView();
-                }
-            }
-        }
+        updateView(null, null, true);
     }
 
     private String getInitialsForAvatarView(Identity added) {
@@ -174,15 +162,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
     @Override
     public void setClusterSizes() {
-        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
-        if (view != null) {
-            mMainHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    view.setClusterSizes(mInitials,mPendingLoads);
-                }
-            });
-        }
+        updateView(null, null, true);
     }
 
     @Override
@@ -192,48 +172,43 @@ public class AvatarViewModel implements Avatar.ViewModel  {
                 new ImageCacheWrapper.Callback() {
                     @Override
                     public void onSuccess(final Bitmap bitmap) {
-                        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
-                        if (view != null) {
-                            mMainHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    bitmapWrapper.setBitmap(bitmap);
-                                    view.revalidateView();                                }
-                            });
-                        }
+                        updateView(bitmapWrapper, bitmap, false);
                     }
 
                     @Override
                     public void onFailure() {
-                        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
-                        if (view != null) {
-                            mMainHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    bitmapWrapper.setBitmap(null);
-                                    view.revalidateView();                              }
-                            });
-                        }
+                        updateView(bitmapWrapper, null, false);
                     }
 
                     @Override
                     public void onPrepareLoad() {
-                        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
-                        if (view != null) {
-                            mMainHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    bitmapWrapper.setBitmap(null);
-                                    view.revalidateView();                              }
-                            });
-                        }
+                        updateView(bitmapWrapper, null, false);
                     }
                 }, args);
     }
 
+    private void updateView(final BitmapWrapper bitmapWrapper,final Bitmap bitmap, final boolean isSetClusterSize) {
+        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
+        final Handler handler = mViewWeakReference != null ? mHandlerWeakReference.get() : null;
+
+        if (view != null && handler != null) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (isSetClusterSize) {
+                        view.setClusterSizes(mInitials,mPendingLoads);
+                    } else {
+                        bitmapWrapper.setBitmap(bitmap);
+                    }
+                    view.revalidateView();
+                }
+            });
+        }
+    }
+
     @Override
-    public void setView(Avatar.View avatar, Context context) {
-        mMainHandler= new Handler(context.getMainLooper());
+    public void setView(Avatar.View avatar, Handler handler) {
+        mHandlerWeakReference = new WeakReference<>(handler);
         mViewWeakReference = new WeakReference<>(avatar);
     }
 
