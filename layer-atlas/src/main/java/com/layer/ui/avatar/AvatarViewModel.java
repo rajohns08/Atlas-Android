@@ -1,6 +1,8 @@
 package com.layer.ui.avatar;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.layer.sdk.messaging.Identity;
@@ -25,12 +27,13 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     private Set<Identity> mParticipants = new LinkedHashSet<>();
     private final Map<Identity, String> mInitials = new HashMap<>();
     private final Map<Identity, BitmapWrapper> mImageTargets = new HashMap<>();
-    // Initials and Picasso image targets by user ID
     private final List<BitmapWrapper> mPendingLoads = new ArrayList<>();
     private AvatarInitials mAvatarInitials;
+    private Handler mMainHandler;
 
 
-    private WeakReference<Avatar.View> mView;
+
+    private WeakReference<Avatar.View> mViewWeakReference;
 
     private int mMaxAvatar = 3;
     private ImageCacheWrapper mImageCacheWrapper;
@@ -45,7 +48,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public synchronized void update() {
+    public void update() {
         // Limit to mMaxAvatar valid avatars, prioritizing participants with avatars.
         if (mParticipants.size() > mMaxAvatar) {
             Queue<Identity> withAvatars = new LinkedList<>();
@@ -114,10 +117,15 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         }
         mPendingLoads.clear();
         mPendingLoads.addAll(toLoad);
-        Avatar.View view = mView != null ? mView.get() : null;
-        if (view != null) {
-            view.setClusterSizes(mInitials,mPendingLoads);
-            view.revalidateView();
+
+        if (mViewWeakReference != null) {
+            synchronized (mViewWeakReference) {
+                Avatar.View view = mViewWeakReference.get();
+                if (view != null) {
+                    view.setClusterSizes(mInitials,mPendingLoads);
+                    view.revalidateView();
+                }
+            }
         }
     }
 
@@ -165,50 +173,68 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public synchronized void setClusterSizes() {
-        Avatar.View view = mView != null ? mView.get() : null;
+    public void setClusterSizes() {
+        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
         if (view != null) {
-            view.setClusterSizes(mInitials,mPendingLoads);
+            mMainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    view.setClusterSizes(mInitials,mPendingLoads);
+                }
+            });
         }
     }
 
     @Override
-    public synchronized void loadImage(String url, String tag, int width, int height, final BitmapWrapper bitmapWrapper, Object... args) {
+    public void loadImage(String url, String tag, int width, int height, final BitmapWrapper bitmapWrapper, Object... args) {
 
         mImageCacheWrapper.fetchBitmap(url, tag, width, height,
                 new ImageCacheWrapper.Callback() {
                     @Override
-                    public void onSuccess(Bitmap bitmap) {
-                        Avatar.View view = mView != null ? mView.get() : null;
+                    public void onSuccess(final Bitmap bitmap) {
+                        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
                         if (view != null) {
-                            bitmapWrapper.setBitmap(bitmap);
-                            view.revalidateView();
+                            mMainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    bitmapWrapper.setBitmap(bitmap);
+                                    view.revalidateView();                                }
+                            });
                         }
                     }
 
                     @Override
                     public void onFailure() {
-                        Avatar.View view = mView != null ? mView.get() : null;
+                        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
                         if (view != null) {
-                            bitmapWrapper.setBitmap(null);
-                            view.revalidateView();
+                            mMainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    bitmapWrapper.setBitmap(null);
+                                    view.revalidateView();                              }
+                            });
                         }
                     }
 
                     @Override
                     public void onPrepareLoad() {
-                        Avatar.View view = mView != null ? mView.get() : null;
+                        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
                         if (view != null) {
-                            bitmapWrapper.setBitmap(null);
-                            view.revalidateView();
+                            mMainHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    bitmapWrapper.setBitmap(null);
+                                    view.revalidateView();                              }
+                            });
                         }
                     }
                 }, args);
     }
 
     @Override
-    public synchronized void setView(Avatar.View avatar) {
-        mView = new WeakReference<>(avatar);
+    public void setView(Avatar.View avatar, Context context) {
+        mMainHandler= new Handler(context.getMainLooper());
+        mViewWeakReference = new WeakReference<>(avatar);
     }
 
     private static Diff diff(Set<Identity> oldSet, Set<Identity> newSet) {

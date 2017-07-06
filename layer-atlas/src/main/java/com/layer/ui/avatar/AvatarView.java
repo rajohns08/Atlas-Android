@@ -107,7 +107,7 @@ public class AvatarView extends View implements Avatar.View {
     }
 
     private void setUpAvatarViewModel() {
-        mViewModel.setView(this);
+        mViewModel.setView(this, getContext());
     }
 
     public AvatarView setStyle(AvatarStyle avatarStyle) {
@@ -171,6 +171,7 @@ public class AvatarView extends View implements Avatar.View {
     @Override
     public boolean setClusterSizes( Map<Identity, String> mInitials,List<BitmapWrapper> mPendingLoads ) {
         int avatarCount = mInitials.size();
+
         if (avatarCount == 0) return false;
         ViewGroup.LayoutParams params = getLayoutParams();
         if (params == null) return false;
