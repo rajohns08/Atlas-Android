@@ -1,6 +1,7 @@
 package com.layer.ui.avatar;
 
 import android.os.Handler;
+import android.view.View;
 
 import com.layer.sdk.messaging.Identity;
 import com.layer.ui.util.imagecache.BitmapWrapper;
@@ -29,7 +30,7 @@ public interface Avatar {
         void cancelImage(String url);
 
         //Set the view on the ViewModel
-        void setViewAndHandler(WeakReference<Avatar.View> avatar, WeakReference<Handler> handler);
+        void setViewAndHandler(WeakReference<View> avatar, WeakReference<Handler> handler);
 
         //Set custom AvatarInitial on the ViewModel to allow client plug in their custom Initials
         void setIdentityNameFormatter(IdentityNameFormatter identityNameFormatter);
@@ -41,10 +42,4 @@ public interface Avatar {
         String getInitialsForAvatarView(Identity added);
     }
 
-    interface View {
-
-        boolean setClusterSizes();
-
-        void revalidateView();
-    }
 }

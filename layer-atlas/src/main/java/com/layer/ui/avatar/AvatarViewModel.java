@@ -2,6 +2,7 @@ package com.layer.ui.avatar;
 
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.view.View;
 
 import com.layer.sdk.messaging.Identity;
 import com.layer.ui.util.imagecache.BitmapWrapper;
@@ -13,7 +14,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
 
     private IdentityNameFormatter mIdentityNameFormatter;
     private WeakReference<Handler> mHandlerWeakReference;
-    private WeakReference<Avatar.View> mViewWeakReference;
+    private WeakReference<View> mViewWeakReference;
     private ImageCacheWrapper mImageCacheWrapper;
 
     public AvatarViewModel(ImageCacheWrapper imageCacheWrapper) {
@@ -40,44 +41,40 @@ public class AvatarViewModel implements Avatar.ViewModel  {
                 new ImageCacheWrapper.Callback() {
                     @Override
                     public void onSuccess(final Bitmap bitmap) {
-                        updateView(bitmapWrapper, bitmap, false);
+                        updateView(bitmapWrapper, bitmap);
                     }
 
                     @Override
                     public void onFailure() {
-                        updateView(bitmapWrapper, null, false);
+                        updateView(bitmapWrapper, null);
                     }
 
                     @Override
                     public void onPrepareLoad() {
-                        updateView(bitmapWrapper, null, false);
+                        updateView(bitmapWrapper, null);
                     }
                 }, args);
     }
 
-    private void updateView(final BitmapWrapper bitmapWrapper,final Bitmap bitmap, final boolean isSetClusterSize) {
-        final Avatar.View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
+    private void updateView(final BitmapWrapper bitmapWrapper,final Bitmap bitmap) {
+        final View view = mViewWeakReference != null ? mViewWeakReference.get() : null;
         final Handler handler = mViewWeakReference != null ? mHandlerWeakReference.get() : null;
 
         if (view != null && handler != null) {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (isSetClusterSize) {
-                        view.revalidateView();
-                    } else {
-                        bitmapWrapper.setBitmap(bitmap);
-                    }
-                    view.revalidateView();
+                    bitmapWrapper.setBitmap(bitmap);
+                    view.postInvalidate();
                 }
             });
         }
     }
 
     @Override
-    public void setViewAndHandler(WeakReference<Avatar.View> avatar, WeakReference<Handler> handler) {
+    public void setViewAndHandler(WeakReference<View> avatarView, WeakReference<Handler> handler) {
         mHandlerWeakReference = handler;
-        mViewWeakReference = avatar;
+        mViewWeakReference = avatarView;
     }
 
     @Override

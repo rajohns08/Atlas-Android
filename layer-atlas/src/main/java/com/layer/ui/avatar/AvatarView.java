@@ -37,7 +37,7 @@ import java.util.Set;
  * <p>
  * AtlasAvatar uses Picasso to render the avatar image. So, you need to init
  */
-public class AvatarView extends View implements Avatar.View {
+public class AvatarView extends View {
 
     private Set<Identity> mParticipants = new LinkedHashSet<>();
     private final Map<Identity, String> mInitials = new HashMap<>();
@@ -121,7 +121,7 @@ public class AvatarView extends View implements Avatar.View {
     }
 
     private void setUpAvatarViewModel() {
-        WeakReference<Avatar.View> viewWeakReference = new WeakReference<>((Avatar.View)this);
+        WeakReference<View> viewWeakReference = new WeakReference<>((View) this);
         Handler handler = new Handler(getContext().getMainLooper());
         WeakReference<Handler> handlerWeakReference = new WeakReference<>(handler);
         mViewModel.setViewAndHandler(viewWeakReference, handlerWeakReference);
@@ -188,8 +188,7 @@ public class AvatarView extends View implements Avatar.View {
         setClusterSizes();
     }
 
-    @Override
-    public boolean setClusterSizes( ) {
+    protected boolean setClusterSizes( ) {
         int avatarCount = mInitials.size();
 
         if (avatarCount == 0) return false;
@@ -237,12 +236,6 @@ public class AvatarView extends View implements Avatar.View {
             }
         }
         return true;
-    }
-
-    @Override
-    public void revalidateView() {
-        // Invalidate the current view, so it refreshes with new value.
-        postInvalidate();
     }
 
     @Override
