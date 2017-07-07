@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,7 @@ public class AvatarView extends View implements Avatar.View {
         parseStyle(getContext(), attrs, defStyleAttr);
     }
 
-    public AvatarView init(Avatar.ViewModel avatarViewModel) {
+    public AvatarView init(@NonNull Avatar.ViewModel avatarViewModel, @NonNull IdentityNameFormatter identityNameFormatter) {
         mViewModel = avatarViewModel;
 
         setUpAvatarViewModel();
@@ -99,13 +100,14 @@ public class AvatarView extends View implements Avatar.View {
         mPaintBackground.setColor(getResources().getColor(R.color.layer_ui_avatar_background));
         mPaintBorder.setColor(getResources().getColor(R.color.layer_ui_avatar_border));
         mPaintInitials.setColor(getResources().getColor(R.color.layer_ui_avatar_text));
+        mViewModel.setIdentityNameFormatter(identityNameFormatter);
         mViewModel.setMaximumAvatar(maximumAvatar);
 
         return this;
     }
 
-    public void setAvatarInitials(AvatarInitials avatarInitials) {
-        mViewModel.setAvatarInitials(avatarInitials);
+    public IdentityNameFormatter getIdentityNameFormatter(IdentityNameFormatter identityNameFormatter) {
+        return mViewModel.getIdentityNameFormatter();
     }
 
     private void setUpAvatarViewModel() {

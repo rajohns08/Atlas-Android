@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.layer.sdk.messaging.Identity;
-import com.layer.ui.util.Util;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 import com.layer.ui.util.imagecache.ImageCacheWrapper;
 
@@ -27,7 +26,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     private final Map<Identity, String> mInitials = new HashMap<>();
     private final Map<Identity, BitmapWrapper> mImageTargets = new HashMap<>();
     private final List<BitmapWrapper> mPendingLoads = new ArrayList<>();
-    private AvatarInitials mAvatarInitials;
+    private IdentityNameFormatter mIdentityNameFormatter;
     private WeakReference<Handler> mHandlerWeakReference;
     private WeakReference<Avatar.View> mViewWeakReference;
 
@@ -38,12 +37,11 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         mImageCacheWrapper = imageCacheWrapper;
     }
 
-    @Override
-    public void setAvatarInitials(AvatarInitials avatarInitials) {
-        mAvatarInitials = avatarInitials;
+    public void setIdentityNameFormatter(IdentityNameFormatter identityNameFormatter) {
+        mIdentityNameFormatter = identityNameFormatter;
     }
 
-    private void update() {
+    protected void update() {
         // Limit to mMaxAvatar valid avatars, prioritizing participants with avatars.
         if (mParticipants.size() > mMaxAvatar) {
             Queue<Identity> withAvatars = new LinkedList<>();
@@ -117,12 +115,12 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     private String getInitialsForAvatarView(Identity added) {
-        if (mAvatarInitials != null) {
-            return mAvatarInitials.getInitials(added);
-        } else {
-            mAvatarInitials = new AvatarInitialsImp();
-            return mAvatarInitials.getInitials(added);
-        }
+        return mIdentityNameFormatter.getInitials(added);
+    }
+
+    @Override
+    public IdentityNameFormatter getIdentityNameFormatter() {
+        return mIdentityNameFormatter;
     }
 
     @Override

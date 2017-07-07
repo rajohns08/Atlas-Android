@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.layer.ui.avatar.AvatarInitials;
 import com.layer.ui.avatar.AvatarView;
 import com.layer.ui.R;
 import com.layer.ui.avatar.AvatarViewModel;
+import com.layer.ui.avatar.IdentityNameFormatterImpl;
 import com.layer.ui.messagetypes.CellFactory;
 import com.layer.ui.messagetypes.generic.GenericCellFactory;
 import com.layer.ui.messagetypes.location.LocationCellFactory;
@@ -191,7 +191,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
         ViewHolder viewHolder = new ViewHolder(mInflater.inflate(ViewHolder.RESOURCE_ID, parent, false), conversationStyle);
         viewHolder.setClickListener(mViewHolderClickListener);
         viewHolder.mAvatarViewCluster
-                .init(new AvatarViewModel(mImageCacheWrapper))
+                .init(new AvatarViewModel(mImageCacheWrapper), new IdentityNameFormatterImpl())
                 .setStyle(conversationStyle.getAvatarStyle());
         return viewHolder;
     }

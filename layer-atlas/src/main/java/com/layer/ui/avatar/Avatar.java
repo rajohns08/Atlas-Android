@@ -43,11 +43,13 @@ public interface Avatar {
         void setViewAndHandler(WeakReference<Avatar.View> avatar, WeakReference<Handler> handler);
 
         //Set custom AvatarInitial on the ViewModel to allow client plug in their custom Initials
-        void setAvatarInitials(AvatarInitials avatarInitials);
+        void setIdentityNameFormatter(IdentityNameFormatter identityNameFormatter);
 
         void setMaximumAvatar(int maximumAvatar);
 
         List<BitmapWrapper> getBitmapWrappers();
+
+        IdentityNameFormatter getIdentityNameFormatter();
     }
 
     interface View {

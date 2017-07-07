@@ -3,6 +3,7 @@ package com.layer.ui.view;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.layer.ui.avatar.IdentityNameFormatterImpl;
 import com.layer.ui.mock.MockLayerClient;
 import com.layer.sdk.LayerClient;
 import com.layer.ui.R;
@@ -24,6 +25,6 @@ public class AvatarActivityTestView extends Activity {
         mAvatarView = (AvatarView) findViewById(R.id.test_avatar);
         MessagePartRequestHandler messagePartRequestHandler = new MessagePartRequestHandler(layerClient);
         ImageCacheWrapper imageCacheWrapper = new PicassoImageCacheWrapper(messagePartRequestHandler, this);
-        mAvatarView.init(new AvatarViewModel(imageCacheWrapper));
+        mAvatarView.init(new AvatarViewModel(imageCacheWrapper), new IdentityNameFormatterImpl());
     }
 }
