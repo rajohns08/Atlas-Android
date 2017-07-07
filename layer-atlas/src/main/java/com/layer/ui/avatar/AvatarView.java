@@ -10,6 +10,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,14 @@ import com.layer.ui.util.AvatarStyle;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -31,6 +38,11 @@ import java.util.Set;
  * AtlasAvatar uses Picasso to render the avatar image. So, you need to init
  */
 public class AvatarView extends View implements Avatar.View {
+
+    private Set<Identity> mParticipants = new LinkedHashSet<>();
+    private final Map<Identity, String> mInitials = new HashMap<>();
+    private final Map<Identity, BitmapWrapper> mImageTargets = new HashMap<>();
+    private final List<BitmapWrapper> mPendingLoads = new ArrayList<>();
 
     private static final Paint PAINT_TRANSPARENT = new Paint();
     private static final Paint PAINT_BITMAP = new Paint();
@@ -73,7 +85,7 @@ public class AvatarView extends View implements Avatar.View {
 
     private Rect mRect = new Rect();
     private RectF mContentRect = new RectF();
-    private int maximumAvatar;
+    private int mMaxAvatar = 3;
 
     public AvatarView(Context context) {
         super(context);
@@ -101,12 +113,10 @@ public class AvatarView extends View implements Avatar.View {
         mPaintBorder.setColor(getResources().getColor(R.color.layer_ui_avatar_border));
         mPaintInitials.setColor(getResources().getColor(R.color.layer_ui_avatar_text));
         mViewModel.setIdentityNameFormatter(identityNameFormatter);
-        mViewModel.setMaximumAvatar(maximumAvatar);
-
         return this;
     }
 
-    public IdentityNameFormatter getIdentityNameFormatter(IdentityNameFormatter identityNameFormatter) {
+    public IdentityNameFormatter getIdentityNameFormatter() {
         return mViewModel.getIdentityNameFormatter();
     }
 
@@ -126,7 +136,9 @@ public class AvatarView extends View implements Avatar.View {
     }
 
     public AvatarView setParticipants(Identity... participants) {
-        mViewModel.setParticipants(participants);
+        mParticipants.clear();
+        mParticipants.addAll(Arrays.asList(participants));
+        update();
         return this;
     }
 
@@ -159,23 +171,25 @@ public class AvatarView extends View implements Avatar.View {
      * Should be called from UI thread.
      */
     public AvatarView setParticipants(Set<Identity> participants) {
-        mViewModel.setParticipants(participants);
+        mParticipants.clear();
+        mParticipants.addAll(participants);
+        update();
         return this;
     }
 
     public Set<Identity> getParticipants() {
-        return mViewModel.getParticipants();
+        return mParticipants;
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (!changed) return;
-        setClusterSizes(mViewModel.getIdentityInitials(), mViewModel.getBitmapWrappers());
+        setClusterSizes();
     }
 
     @Override
-    public boolean setClusterSizes( Map<Identity, String> mInitials,List<BitmapWrapper> mPendingLoads ) {
+    public boolean setClusterSizes( ) {
         int avatarCount = mInitials.size();
 
         if (avatarCount == 0) return false;
@@ -234,7 +248,7 @@ public class AvatarView extends View implements Avatar.View {
     @Override
     protected void onDraw(Canvas canvas) {
         // Clear canvas
-        int avatarCount = mViewModel.getIdentityInitials().size();
+        int avatarCount = mInitials.size();
         canvas.drawRect(0f, 0f, canvas.getWidth(), canvas.getHeight(), PAINT_TRANSPARENT);
         if (avatarCount == 0) return;
         boolean hasBorder = (avatarCount != 1);
@@ -244,12 +258,12 @@ public class AvatarView extends View implements Avatar.View {
         float cx = mCenterX;
         float cy = mCenterY;
         mContentRect.set(cx - contentRadius, cy - contentRadius, cx + contentRadius, cy + contentRadius);
-        for (Map.Entry<Identity, String> entry : mViewModel.getIdentityInitials().entrySet()) {
+        for (Map.Entry<Identity, String> entry : mInitials.entrySet()) {
             // Border / background
             if (hasBorder) canvas.drawCircle(cx, cy, mOuterRadius, mPaintBorder);
 
             // Initials or bitmap
-            BitmapWrapper bitmapWrapper = mViewModel.getBitmapWrapper(entry.getKey());
+            BitmapWrapper bitmapWrapper = mImageTargets.get(entry.getKey());
             Bitmap bitmap = (bitmapWrapper == null) ? null : bitmapWrapper.getBitmap();
 
             if (bitmap == null) {
@@ -272,6 +286,79 @@ public class AvatarView extends View implements Avatar.View {
             cy += mDeltaY;
             mContentRect.offset(mDeltaX, mDeltaY);
         }
+    }
+
+    protected void update() {
+        // Limit to mMaxAvatar valid avatars, prioritizing participants with avatars.
+        if (mParticipants.size() > mMaxAvatar) {
+            Queue<Identity> withAvatars = new LinkedList<>();
+            Queue<Identity> withoutAvatars = new LinkedList<>();
+            for (Identity participant : mParticipants) {
+                if (participant == null) continue;
+                if (!TextUtils.isEmpty(participant.getAvatarImageUrl())) {
+                    withAvatars.add(participant);
+                } else {
+                    withoutAvatars.add(participant);
+                }
+            }
+
+            mParticipants = new LinkedHashSet<>();
+            int numWithout = Math.min(mMaxAvatar - withAvatars.size(), withoutAvatars.size());
+            for (int i = 0; i < numWithout; i++) {
+                mParticipants.add(withoutAvatars.remove());
+            }
+            int numWith = Math.min(mMaxAvatar, withAvatars.size());
+            for (int i = 0; i < numWith; i++) {
+                mParticipants.add(withAvatars.remove());
+            }
+        }
+
+        Diff diff = diff(mInitials.keySet(), mParticipants);
+        List<BitmapWrapper> toLoad = new ArrayList<>();
+
+        List<BitmapWrapper> recyclableTargets = new ArrayList<>();
+        for (Identity removed : diff.removed) {
+            mInitials.remove(removed);
+            BitmapWrapper target = mImageTargets.remove(removed);
+            if (target != null) {
+                mViewModel.getImageCacheWrapper().cancelRequest(target.getUrl());
+                recyclableTargets.add(target);
+            }
+        }
+
+        for (Identity added : diff.added) {
+            if (added == null) return;
+            mInitials.put(added, mViewModel.getInitialsForAvatarView(added));
+
+            final BitmapWrapper target;
+            if (recyclableTargets.isEmpty()) {
+                target = new BitmapWrapper(added.getAvatarImageUrl());
+            } else {
+                target = recyclableTargets.remove(0);
+            }
+            target.setUrl(added.getAvatarImageUrl());
+            mImageTargets.put(added, target);
+            toLoad.add(target);
+        }
+
+        // Cancel existing in case the size or anything else changed.
+        // TODO: make caching intelligent wrt sizing
+        for (Identity existing : diff.existing) {
+            if (existing == null) continue;
+            mInitials.put(existing, mViewModel.getInitialsForAvatarView(existing));
+
+            BitmapWrapper existingTarget = mImageTargets.get(existing);
+            mViewModel.getImageCacheWrapper().cancelRequest(existingTarget.getUrl());
+            toLoad.add(existingTarget);
+        }
+
+        for (BitmapWrapper bitmapWrapper : mPendingLoads) {
+            if (!toLoad.contains(bitmapWrapper)) {
+                mViewModel.getImageCacheWrapper().cancelRequest(bitmapWrapper.getUrl());
+            }
+        }
+        mPendingLoads.clear();
+        mPendingLoads.addAll(toLoad);
     }
 
     private void drawPresence(Canvas canvas, Identity identity) {
@@ -351,7 +438,30 @@ public class AvatarView extends View implements Avatar.View {
 
     private void parseStyle(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray ta = context.getTheme().obtainStyledAttributes(attrs, R.styleable.AvatarView, R.attr.AvatarView, defStyleAttr);
-        maximumAvatar = ta.getInt(R.styleable.AvatarView_maximumAvatar, 3);
+        mMaxAvatar = ta.getInt(R.styleable.AvatarView_maximumAvatar, 3);
         ta.recycle();
+    }
+
+    private static Diff diff(Set<Identity> oldSet, Set<Identity> newSet) {
+        Diff diff = new Diff();
+        for (Identity old : oldSet) {
+            if (newSet.contains(old)) {
+                diff.existing.add(old);
+            } else {
+                diff.removed.add(old);
+            }
+        }
+        for (Identity newItem : newSet) {
+            if (!oldSet.contains(newItem)) {
+                diff.added.add(newItem);
+            }
+        }
+        return diff;
+    }
+
+    private static class Diff {
+        public List<Identity> existing = new ArrayList<>();
+        public List<Identity> added = new ArrayList<>();
+        public List<Identity> removed = new ArrayList<>();
     }
 }

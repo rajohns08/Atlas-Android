@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.layer.sdk.messaging.Identity;
 import com.layer.ui.util.imagecache.BitmapWrapper;
+import com.layer.ui.util.imagecache.ImageCacheWrapper;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -22,18 +23,6 @@ public interface Avatar {
 
     interface ViewModel {
 
-        //Set the participants in the ViewModel and then call update on the ViewModel
-        void setParticipants(Identity[] participants);
-
-        void setParticipants(Set<Identity> participants);
-
-        Set<Identity> getParticipants();
-
-        Map<Identity, String> getIdentityInitials();
-
-        //BitmapWrapper is an interface that wraps the bitmap
-        BitmapWrapper getBitmapWrapper(Identity key);
-
          //loadImage Work with Image Caching Library to provide Bitmap to the View
         void loadImage(String url, String tag, int width, int height, BitmapWrapper bitmapWrapper, Object... args);
 
@@ -45,16 +34,16 @@ public interface Avatar {
         //Set custom AvatarInitial on the ViewModel to allow client plug in their custom Initials
         void setIdentityNameFormatter(IdentityNameFormatter identityNameFormatter);
 
-        void setMaximumAvatar(int maximumAvatar);
-
-        List<BitmapWrapper> getBitmapWrappers();
-
         IdentityNameFormatter getIdentityNameFormatter();
+
+        ImageCacheWrapper getImageCacheWrapper();
+
+        String getInitialsForAvatarView(Identity added);
     }
 
     interface View {
 
-        boolean setClusterSizes(Map<Identity, String> initials, List<BitmapWrapper> pendingLoads);
+        boolean setClusterSizes();
 
         void revalidateView();
     }
