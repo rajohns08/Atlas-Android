@@ -19,6 +19,7 @@ import com.layer.ui.R;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -108,7 +109,10 @@ public class AvatarView extends View implements Avatar.View {
     }
 
     private void setUpAvatarViewModel() {
-        mViewModel.setView(this, new Handler(getContext().getMainLooper()));
+        WeakReference<Avatar.View> viewWeakReference = new WeakReference<>((Avatar.View)this);
+        Handler handler = new Handler(getContext().getMainLooper());
+        WeakReference<Handler> handlerWeakReference = new WeakReference<>(handler);
+        mViewModel.setViewAndHandler(viewWeakReference, handlerWeakReference);
     }
 
     public AvatarView setStyle(AvatarStyle avatarStyle) {
@@ -121,7 +125,6 @@ public class AvatarView extends View implements Avatar.View {
 
     public AvatarView setParticipants(Identity... participants) {
         mViewModel.setParticipants(participants);
-        mViewModel.update();
         return this;
     }
 
@@ -166,7 +169,7 @@ public class AvatarView extends View implements Avatar.View {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (!changed) return;
-        mViewModel.setClusterSizes();
+        setClusterSizes(mViewModel.getIdentityInitials(), mViewModel.getBitmapWrappers());
     }
 
     @Override
@@ -229,7 +232,7 @@ public class AvatarView extends View implements Avatar.View {
     @Override
     protected void onDraw(Canvas canvas) {
         // Clear canvas
-        int avatarCount = mViewModel.getInitialSize();
+        int avatarCount = mViewModel.getIdentityInitials().size();
         canvas.drawRect(0f, 0f, canvas.getWidth(), canvas.getHeight(), PAINT_TRANSPARENT);
         if (avatarCount == 0) return;
         boolean hasBorder = (avatarCount != 1);
@@ -239,12 +242,12 @@ public class AvatarView extends View implements Avatar.View {
         float cx = mCenterX;
         float cy = mCenterY;
         mContentRect.set(cx - contentRadius, cy - contentRadius, cx + contentRadius, cy + contentRadius);
-        for (Map.Entry<Identity, String> entry : mViewModel.getEntrySet()) {
+        for (Map.Entry<Identity, String> entry : mViewModel.getIdentityInitials().entrySet()) {
             // Border / background
             if (hasBorder) canvas.drawCircle(cx, cy, mOuterRadius, mPaintBorder);
 
             // Initials or bitmap
-            BitmapWrapper bitmapWrapper = mViewModel.getImageTarget(entry.getKey());
+            BitmapWrapper bitmapWrapper = mViewModel.getBitmapWrapper(entry.getKey());
             Bitmap bitmap = (bitmapWrapper == null) ? null : bitmapWrapper.getBitmap();
 
             if (bitmap == null) {

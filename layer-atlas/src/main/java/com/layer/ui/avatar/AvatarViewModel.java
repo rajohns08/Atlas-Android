@@ -43,8 +43,7 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         mAvatarInitials = avatarInitials;
     }
 
-    @Override
-    public void update() {
+    private void update() {
         // Limit to mMaxAvatar valid avatars, prioritizing participants with avatars.
         if (mParticipants.size() > mMaxAvatar) {
             Queue<Identity> withAvatars = new LinkedList<>();
@@ -118,7 +117,12 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     private String getInitialsForAvatarView(Identity added) {
-        return mAvatarInitials != null ? mAvatarInitials.getInitials(added) : Util.getInitials(added);
+        if (mAvatarInitials != null) {
+            return mAvatarInitials.getInitials(added);
+        } else {
+            mAvatarInitials = new AvatarInitialsImp();
+            return mAvatarInitials.getInitials(added);
+        }
     }
 
     @Override
@@ -146,23 +150,13 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public int getInitialSize() {
-        return mInitials.size();
+    public Map<Identity, String> getIdentityInitials() {
+        return mInitials;
     }
 
     @Override
-    public Set<Map.Entry<Identity, String>> getEntrySet() {
-        return mInitials.entrySet();
-    }
-
-    @Override
-    public BitmapWrapper getImageTarget(Identity key) {
+    public BitmapWrapper getBitmapWrapper(Identity key) {
         return  mImageTargets.get(key);
-    }
-
-    @Override
-    public void setClusterSizes() {
-        updateView(null, null, true);
     }
 
     @Override
@@ -207,9 +201,19 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public void setView(Avatar.View avatar, Handler handler) {
-        mHandlerWeakReference = new WeakReference<>(handler);
-        mViewWeakReference = new WeakReference<>(avatar);
+    public List<BitmapWrapper> getBitmapWrappers() {
+        return mPendingLoads;
+    }
+
+    @Override
+    public void setViewAndHandler(WeakReference<Avatar.View> avatar, WeakReference<Handler> handler) {
+        mHandlerWeakReference = handler;
+        mViewWeakReference = avatar;
+    }
+
+    @Override
+    public void cancelImage(String url) {
+        mImageCacheWrapper.cancelRequest(url);
     }
 
     private static Diff diff(Set<Identity> oldSet, Set<Identity> newSet) {
