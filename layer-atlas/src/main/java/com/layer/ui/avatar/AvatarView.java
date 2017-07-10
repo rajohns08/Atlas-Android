@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -21,7 +20,6 @@ import com.layer.ui.R;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -41,7 +39,7 @@ public class AvatarView extends View {
 
     private Set<Identity> mParticipants = new LinkedHashSet<>();
     private final Map<Identity, String> mInitials = new HashMap<>();
-    private final Map<Identity, BitmapWrapper> mImageTargets = new HashMap<>();
+    private final Map<Identity, BitmapWrapper> mBitmapWrappers = new HashMap<>();
     private final List<BitmapWrapper> mPendingLoads = new ArrayList<>();
 
     private static final Paint PAINT_TRANSPARENT = new Paint();
@@ -102,8 +100,6 @@ public class AvatarView extends View {
 
     public AvatarView init(@NonNull Avatar.ViewModel avatarViewModel, @NonNull IdentityNameFormatter identityNameFormatter) {
         mViewModel = avatarViewModel;
-
-        setUpAvatarViewModel();
         mPaintInitials.setAntiAlias(true);
         mPaintInitials.setSubpixelText(true);
         mPaintBorder.setAntiAlias(true);
@@ -118,13 +114,6 @@ public class AvatarView extends View {
 
     public IdentityNameFormatter getIdentityNameFormatter() {
         return mViewModel.getIdentityNameFormatter();
-    }
-
-    private void setUpAvatarViewModel() {
-        WeakReference<View> viewWeakReference = new WeakReference<>((View) this);
-        Handler handler = new Handler(getContext().getMainLooper());
-        WeakReference<Handler> handlerWeakReference = new WeakReference<>(handler);
-        mViewModel.setViewAndHandler(viewWeakReference, handlerWeakReference);
     }
 
     public AvatarView setStyle(AvatarStyle avatarStyle) {
@@ -223,14 +212,17 @@ public class AvatarView extends View {
             if (!mPendingLoads.isEmpty()) {
                 int size = Math.round(hasBorder ? (mInnerRadius * 2f) : (mOuterRadius * 2f));
                 for (BitmapWrapper bitmapWrapper : mPendingLoads) {
-                    String targetUrl = bitmapWrapper.getUrl();
+                    String bitmapUrl = bitmapWrapper.getUrl();
                     // Handle empty paths just like null paths. This ensures empty paths will go
                     // through the normal Picasso flow and the bitmap is set.
-                    if (targetUrl != null && targetUrl.trim().length() == 0) {
-                        targetUrl = null;
+                    if (bitmapUrl != null && bitmapUrl.trim().length() == 0) {
+                        bitmapUrl = null;
                     }
 
-                    mViewModel.loadImage(targetUrl, targetUrl == null ? "" : targetUrl, size, size, bitmapWrapper, (avatarCount > 1));
+                    if (bitmapUrl != null) {
+                        mViewModel.loadImage(bitmapUrl, bitmapUrl, size, size, bitmapWrapper, (avatarCount > 1));
+                    }
+
                 }
                 mPendingLoads.clear();
             }
@@ -256,7 +248,7 @@ public class AvatarView extends View {
             if (hasBorder) canvas.drawCircle(cx, cy, mOuterRadius, mPaintBorder);
 
             // Initials or bitmap
-            BitmapWrapper bitmapWrapper = mImageTargets.get(entry.getKey());
+            BitmapWrapper bitmapWrapper = mBitmapWrappers.get(entry.getKey());
             Bitmap bitmap = (bitmapWrapper == null) ? null : bitmapWrapper.getBitmap();
 
             if (bitmap == null) {
@@ -309,13 +301,13 @@ public class AvatarView extends View {
         Diff diff = diff(mInitials.keySet(), mParticipants);
         List<BitmapWrapper> toLoad = new ArrayList<>();
 
-        List<BitmapWrapper> recyclableTargets = new ArrayList<>();
+        List<BitmapWrapper> recyclableBitmap = new ArrayList<>();
         for (Identity removed : diff.removed) {
             mInitials.remove(removed);
-            BitmapWrapper target = mImageTargets.remove(removed);
-            if (target != null) {
-                mViewModel.getImageCacheWrapper().cancelRequest(target.getUrl());
-                recyclableTargets.add(target);
+            BitmapWrapper bitmapWrapper = mBitmapWrappers.remove(removed);
+            if (bitmapWrapper != null) {
+                mViewModel.cancelImage(bitmapWrapper.getUrl());
+                recyclableBitmap.add(bitmapWrapper);
             }
         }
 
@@ -323,15 +315,15 @@ public class AvatarView extends View {
             if (added == null) return;
             mInitials.put(added, mViewModel.getInitialsForAvatarView(added));
 
-            final BitmapWrapper target;
-            if (recyclableTargets.isEmpty()) {
-                target = new BitmapWrapper(added.getAvatarImageUrl());
+            final BitmapWrapper bitmapWrapper;
+            if (recyclableBitmap.isEmpty()) {
+                bitmapWrapper = new BitmapWrapper(added.getAvatarImageUrl(), this);
             } else {
-                target = recyclableTargets.remove(0);
+                bitmapWrapper = recyclableBitmap.remove(0);
             }
-            target.setUrl(added.getAvatarImageUrl());
-            mImageTargets.put(added, target);
-            toLoad.add(target);
+            bitmapWrapper.setUrl(added.getAvatarImageUrl());
+            mBitmapWrappers.put(added, bitmapWrapper);
+            toLoad.add(bitmapWrapper);
         }
 
         // Cancel existing in case the size or anything else changed.
@@ -340,9 +332,9 @@ public class AvatarView extends View {
             if (existing == null) continue;
             mInitials.put(existing, mViewModel.getInitialsForAvatarView(existing));
 
-            BitmapWrapper existingTarget = mImageTargets.get(existing);
-            mViewModel.getImageCacheWrapper().cancelRequest(existingTarget.getUrl());
-            toLoad.add(existingTarget);
+            BitmapWrapper existingBitmaps = mBitmapWrappers.get(existing);
+            mViewModel.getImageCacheWrapper().cancelRequest(existingBitmaps.getUrl());
+            toLoad.add(existingBitmaps);
         }
 
         for (BitmapWrapper bitmapWrapper : mPendingLoads) {

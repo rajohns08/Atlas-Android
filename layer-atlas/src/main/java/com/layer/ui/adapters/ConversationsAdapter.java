@@ -69,7 +69,7 @@ public class ConversationsAdapter extends RecyclerView.Adapter<ConversationsAdap
 
     public ConversationsAdapter(Context context, LayerClient client, Picasso picasso, Collection<String> updateAttributes, ConversationFormatter conversationFormatter, ImageCacheWrapper imageCacheWrapper) {
         mConversationFormatter = conversationFormatter;
-        mImageCacheWrapper =imageCacheWrapper;
+        mImageCacheWrapper = imageCacheWrapper;
         Query<Conversation> query = Query.builder(Conversation.class)
                 /* Only show conversations we're still a member of */
                 .predicate(new Predicate(Conversation.Property.PARTICIPANT_COUNT, Predicate.Operator.GREATER_THAN, 1))

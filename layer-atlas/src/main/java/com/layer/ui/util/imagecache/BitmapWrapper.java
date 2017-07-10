@@ -1,13 +1,19 @@
 package com.layer.ui.util.imagecache;
 
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.view.View;
+
+import java.lang.ref.WeakReference;
 
 public class BitmapWrapper {
     private Bitmap mBitmap;
     private String mUrl;
+    private WeakReference<View> mViewWeakReference;
 
-    public BitmapWrapper(String url) {
+    public BitmapWrapper(@NonNull String url, @NonNull View view) {
         mUrl = url;
+        mViewWeakReference = new WeakReference<>(view);
     }
 
     public String getUrl() {
@@ -20,6 +26,10 @@ public class BitmapWrapper {
 
     public Bitmap getBitmap() {
         return mBitmap;
+    }
+
+    public WeakReference<View> getViewWeakReference() {
+        return mViewWeakReference;
     }
 
     public BitmapWrapper setBitmap(Bitmap bitmap) {
