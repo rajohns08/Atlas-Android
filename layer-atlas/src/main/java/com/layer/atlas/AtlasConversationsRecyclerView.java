@@ -72,6 +72,10 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         return this;
     }
 
+    public AtlasConversationsRecyclerView init(LayerClient layerClient, Picasso picasso, @Nullable AtlasConversationsAdapter adapter) {
+        return init(layerClient, picasso, new ConversationFormatter(), adapter);
+    }
+
     public AtlasConversationsRecyclerView init(LayerClient layerClient, Picasso picasso) {
         return init(layerClient, picasso, new ConversationFormatter(), null);
     }

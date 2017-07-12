@@ -62,6 +62,10 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
         this(context, client, picasso, null, conversationFormatter, null);
     }
 
+    public AtlasConversationsAdapter(Context context, LayerClient client, Picasso picasso, ConversationFormatter conversationFormatter, Query<Conversation> query) {
+        this(context, client, picasso, null, conversationFormatter, query);
+    }
+
     public AtlasConversationsAdapter(Context context, LayerClient client, Picasso picasso, Collection<String> updateAttributes, ConversationFormatter conversationFormatter, Query<Conversation> query) {
         mConversationFormatter = conversationFormatter;
         Query<Conversation> defaultQuery = Query.builder(Conversation.class)
