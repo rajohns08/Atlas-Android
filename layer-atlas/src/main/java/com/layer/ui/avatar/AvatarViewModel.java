@@ -1,14 +1,21 @@
 package com.layer.ui.avatar;
 
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.view.View;
+
 import com.layer.sdk.messaging.Identity;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 import com.layer.ui.util.imagecache.ImageCacheWrapper;
+
+import java.lang.ref.WeakReference;
 
 
 public class AvatarViewModel implements Avatar.ViewModel  {
 
     private IdentityNameFormatter mIdentityNameFormatter;
     private ImageCacheWrapper mImageCacheWrapper;
+    private WeakReference<View> mView;
 
     public AvatarViewModel(ImageCacheWrapper imageCacheWrapper) {
         mImageCacheWrapper = imageCacheWrapper;
@@ -23,14 +30,40 @@ public class AvatarViewModel implements Avatar.ViewModel  {
     }
 
     @Override
-    public IdentityNameFormatter getIdentityNameFormatter() {
-        return mIdentityNameFormatter;
+    public void fetchBitmap(BitmapWrapper bitmapWrapper) {
+
+        mImageCacheWrapper.fetchBitmap(bitmapWrapper, new ImageCacheWrapper.Callback() {
+            @Override
+            public void onSuccess() {
+                updateView();
+
+            }
+
+            @Override
+            public void onFailure() {
+                updateView();
+            }
+        });
+    }
+
+    private void updateView() {
+        final View view = mView != null ? mView.get() : null;
+        if (view != null) {
+            Handler handler = view.getHandler();
+            if (handler != null) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.invalidate();
+                    }
+                });
+            }
+        }
     }
 
     @Override
-    public void loadImage(String url, String tag, int width, int height, final BitmapWrapper bitmapWrapper, Object... args) {
-
-        mImageCacheWrapper.fetchBitmap(width, height, bitmapWrapper, args);
+    public void setView(@NonNull WeakReference<View> view) {
+        mView = view;
     }
 
     @Override
@@ -38,8 +71,4 @@ public class AvatarViewModel implements Avatar.ViewModel  {
         return mImageCacheWrapper;
     }
 
-    @Override
-    public void cancelImage(String url) {
-        mImageCacheWrapper.cancelRequest(url);
-    }
 }

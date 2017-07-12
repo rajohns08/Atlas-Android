@@ -1,8 +1,12 @@
 package com.layer.ui.avatar;
 
+import android.view.View;
+
 import com.layer.sdk.messaging.Identity;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 import com.layer.ui.util.imagecache.ImageCacheWrapper;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Avatar interface exposes the interaction between the AvatarView and AvatarViewModel Avatar.
@@ -13,21 +17,44 @@ import com.layer.ui.util.imagecache.ImageCacheWrapper;
 
 public interface Avatar {
 
+    /**
+     * @see AvatarViewModel to view implementation
+     */
     interface ViewModel {
 
-         //loadImage Work with Image Caching Library to provide Bitmap to the View
-        void loadImage(String url, String tag, int width, int height, BitmapWrapper bitmapWrapper, Object... args);
+        /**
+         * Set the View on the ViewModel
+         * @see AvatarView#init(ViewModel, IdentityNameFormatter)
+         * @param view
+         */
+        void setView(WeakReference<View> view);
 
-        void cancelImage(String url);
+        /**
+         * Fetch BitMap from ImageCacheWrapper Implentation passed into the ViewModel
+         * @param bitmapWrapper
+         */
+        void fetchBitmap(BitmapWrapper bitmapWrapper);
 
-        //Set custom AvatarInitial on the ViewModel to allow client plug in their custom Initials
+        /**
+         * Set Name Formatter for the Identity
+         * @param identityNameFormatter
+         */
         void setIdentityNameFormatter(IdentityNameFormatter identityNameFormatter);
 
-        IdentityNameFormatter getIdentityNameFormatter();
-
+        /**
+         * getter for ImageCacherWrapper so that the view can cancel Bitmap Load request
+         * @return
+         */
         ImageCacheWrapper getImageCacheWrapper();
 
-        String getInitialsForAvatarView(Identity added);
+        /**
+         * Returns the initial base on the
+         * @see IdentityNameFormatter passed into the ViewModel
+         * @param identity
+         * @return
+         */
+
+        String getInitialsForAvatarView(Identity identity);
     }
 
 }

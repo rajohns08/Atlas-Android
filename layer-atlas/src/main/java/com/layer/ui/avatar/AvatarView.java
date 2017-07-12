@@ -20,6 +20,7 @@ import com.layer.ui.R;
 import com.layer.ui.util.AvatarStyle;
 import com.layer.ui.util.imagecache.BitmapWrapper;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,11 +38,6 @@ import java.util.Set;
  */
 public class AvatarView extends View {
 
-    private Set<Identity> mParticipants = new LinkedHashSet<>();
-    private final Map<Identity, String> mInitials = new HashMap<>();
-    private final Map<Identity, BitmapWrapper> mBitmapWrappers = new HashMap<>();
-    private final List<BitmapWrapper> mPendingLoads = new ArrayList<>();
-
     private static final Paint PAINT_TRANSPARENT = new Paint();
     private static final Paint PAINT_BITMAP = new Paint();
 
@@ -53,11 +49,9 @@ public class AvatarView extends View {
 
     private boolean mShouldShowPresence = true;
 
-    // TODO: make these styleable
+    private int mMaxAvatar = 3;
     private static final float BORDER_SIZE_DP = 1f;
     private static final float MULTI_FRACTION = 26f / 40f;
-
-    private Avatar.ViewModel mViewModel;
 
     static {
         PAINT_TRANSPARENT.setARGB(0, 255, 255, 255);
@@ -67,6 +61,11 @@ public class AvatarView extends View {
         PAINT_BITMAP.setAntiAlias(true);
     }
 
+    private Set<Identity> mParticipants = new LinkedHashSet<>();
+
+    private final Map<Identity, BitmapWrapper> mIdentityBitmapWrapperHashMap = new HashMap<>();
+    private final Map<Identity, String> mInitials = new HashMap<>();
+    private final List<BitmapWrapper> mPendingLoads = new ArrayList<>();
 
     // Sizing set in setClusterSizes() and used in onDraw()
     private float mOuterRadius;
@@ -83,7 +82,7 @@ public class AvatarView extends View {
 
     private Rect mRect = new Rect();
     private RectF mContentRect = new RectF();
-    private int mMaxAvatar = 3;
+    private Avatar.ViewModel mViewModel;
 
     public AvatarView(Context context) {
         super(context);
@@ -100,6 +99,9 @@ public class AvatarView extends View {
 
     public AvatarView init(@NonNull Avatar.ViewModel avatarViewModel, @NonNull IdentityNameFormatter identityNameFormatter) {
         mViewModel = avatarViewModel;
+        mViewModel.setView(new WeakReference<View>(this));
+        mViewModel.setIdentityNameFormatter(identityNameFormatter);
+
         mPaintInitials.setAntiAlias(true);
         mPaintInitials.setSubpixelText(true);
         mPaintBorder.setAntiAlias(true);
@@ -108,33 +110,37 @@ public class AvatarView extends View {
         mPaintBackground.setColor(getResources().getColor(R.color.layer_ui_avatar_background));
         mPaintBorder.setColor(getResources().getColor(R.color.layer_ui_avatar_border));
         mPaintInitials.setColor(getResources().getColor(R.color.layer_ui_avatar_text));
-        mViewModel.setIdentityNameFormatter(identityNameFormatter);
+
+
         return this;
     }
 
-    public IdentityNameFormatter getIdentityNameFormatter() {
-        return mViewModel.getIdentityNameFormatter();
-    }
-
-    public AvatarView setStyle(AvatarStyle avatarStyle) {
+    public void setStyle(AvatarStyle avatarStyle) {
         mPaintBackground.setColor(avatarStyle.getAvatarBackgroundColor());
         mPaintBorder.setColor(avatarStyle.getAvatarBorderColor());
         mPaintInitials.setColor(avatarStyle.getAvatarTextColor());
         mPaintInitials.setTypeface(avatarStyle.getAvatarTextTypeface());
-        return this;
     }
 
-    public AvatarView setParticipants(Identity... participants) {
+    public void setParticipants(Identity... participants) {
         mParticipants.clear();
         mParticipants.addAll(Arrays.asList(participants));
         update();
-        return this;
+    }
+
+    /**
+     * Should be called from UI thread.
+     */
+    public void setParticipants(Set<Identity> participants) {
+        mParticipants.clear();
+        mParticipants.addAll(participants);
+        update();
     }
 
     /**
      * Enable or disable showing presence information for this avatar. Presence is shown only for
      * single user Avatars. If avatar is a cluster, presence will not be shown.
-     *
+     * <p>
      * Default is `true`, to show presence.
      *
      * @param shouldShowPresence set to `true` to show presence, `false` otherwise.
@@ -147,7 +153,7 @@ public class AvatarView extends View {
 
     /**
      * Returns if `shouldShowPresence` flag is enabled for this avatar.
-     *
+     * <p>
      * Default is `true`
      *
      * @return `true` if `shouldShowPresence` is set to `true`, `false` otherwise.
@@ -156,18 +162,86 @@ public class AvatarView extends View {
         return mShouldShowPresence;
     }
 
-    /**
-     * Should be called from UI thread.
-     */
-    public AvatarView setParticipants(Set<Identity> participants) {
-        mParticipants.clear();
-        mParticipants.addAll(participants);
-        update();
-        return this;
+    public Set<Identity> getParticipants() {
+        return new LinkedHashSet<>(mParticipants);
     }
 
-    public Set<Identity> getParticipants() {
-        return mParticipants;
+    private void update() {
+        // Limit to mMaxAvatar valid avatars, prioritizing participants with avatars.
+        if (mParticipants.size() > mMaxAvatar) {
+            Queue<Identity> withAvatars = new LinkedList<>();
+            Queue<Identity> withoutAvatars = new LinkedList<>();
+            for (Identity participant : mParticipants) {
+                if (participant == null) continue;
+                if (!TextUtils.isEmpty(participant.getAvatarImageUrl())) {
+                    withAvatars.add(participant);
+                } else {
+                    withoutAvatars.add(participant);
+                }
+            }
+
+            mParticipants = new LinkedHashSet<>();
+            int numWithout = Math.min(mMaxAvatar - withAvatars.size(), withoutAvatars.size());
+            for (int i = 0; i < numWithout; i++) {
+                mParticipants.add(withoutAvatars.remove());
+            }
+            int numWith = Math.min(mMaxAvatar, withAvatars.size());
+            for (int i = 0; i < numWith; i++) {
+                mParticipants.add(withAvatars.remove());
+            }
+        }
+
+        Diff diff = diff(mInitials.keySet(), mParticipants);
+        List<BitmapWrapper> toLoad = new ArrayList<>();
+
+        List<BitmapWrapper> recyclableBitmapWrappers = new ArrayList<>();
+        for (Identity removed : diff.removed) {
+            mInitials.remove(removed);
+            BitmapWrapper bitmapWrapper = mIdentityBitmapWrapperHashMap.remove(removed);
+            if (bitmapWrapper != null && removed.getAvatarImageUrl() != null) {
+                mViewModel.getImageCacheWrapper().cancelBitmap(bitmapWrapper);
+                recyclableBitmapWrappers.add(bitmapWrapper);
+            }
+        }
+
+        for (Identity added : diff.added) {
+            if (added == null) return;
+            mInitials.put(added, mViewModel.getInitialsForAvatarView(added));
+
+            final BitmapWrapper bitmapWrapper;
+            if (recyclableBitmapWrappers.isEmpty()) {
+                bitmapWrapper = new BitmapWrapper(added.getAvatarImageUrl(), 0, 0, false);
+            } else {
+                bitmapWrapper = recyclableBitmapWrappers.remove(0);
+            }
+            bitmapWrapper.setUrl(added.getAvatarImageUrl());
+            mIdentityBitmapWrapperHashMap.put(added, bitmapWrapper);
+            toLoad.add(bitmapWrapper);
+        }
+
+        // Cancel existing in case the size or anything else changed.
+        // TODO: make caching intelligent wrt sizing
+        for (Identity existing : diff.existing) {
+            if (existing == null) continue;
+            mInitials.put(existing, mViewModel.getInitialsForAvatarView(existing));
+            String url = existing.getAvatarImageUrl() != null ? existing.getAvatarImageUrl() : "";
+            if (!url.isEmpty()) {
+                BitmapWrapper existingBitmapWrapper = mIdentityBitmapWrapperHashMap.get(existing);
+                mViewModel.getImageCacheWrapper().cancelBitmap(existingBitmapWrapper);
+                toLoad.add(existingBitmapWrapper);
+            }
+
+        }
+        for (BitmapWrapper bitmapWrapper : mPendingLoads) {
+            mViewModel.getImageCacheWrapper().cancelBitmap(bitmapWrapper);
+        }
+        mPendingLoads.clear();
+        mPendingLoads.addAll(toLoad);
+
+        setClusterSizes();
+
+        // Invalidate the current view, so it refreshes with new value.
+        postInvalidate();
     }
 
     @Override
@@ -177,9 +251,8 @@ public class AvatarView extends View {
         setClusterSizes();
     }
 
-    protected boolean setClusterSizes( ) {
+    private boolean setClusterSizes() {
         int avatarCount = mInitials.size();
-
         if (avatarCount == 0) return false;
         ViewGroup.LayoutParams params = getLayoutParams();
         if (params == null) return false;
@@ -212,17 +285,19 @@ public class AvatarView extends View {
             if (!mPendingLoads.isEmpty()) {
                 int size = Math.round(hasBorder ? (mInnerRadius * 2f) : (mOuterRadius * 2f));
                 for (BitmapWrapper bitmapWrapper : mPendingLoads) {
-                    String bitmapUrl = bitmapWrapper.getUrl();
+                    String url = bitmapWrapper.getUrl();
                     // Handle empty paths just like null paths. This ensures empty paths will go
                     // through the normal Picasso flow and the bitmap is set.
-                    if (bitmapUrl != null && bitmapUrl.trim().length() == 0) {
-                        bitmapUrl = null;
+                    if (url != null && url.trim().length() == 0) {
+                        url = null;
                     }
 
-                    if (bitmapUrl != null) {
-                        mViewModel.loadImage(bitmapUrl, bitmapUrl, size, size, bitmapWrapper, (avatarCount > 1));
+                    if (url != null) {
+                        bitmapWrapper.setWidth(size);
+                        bitmapWrapper.setHeight(size);
+                        bitmapWrapper.setMultiTransform(avatarCount > 1);
+                        mViewModel.fetchBitmap(bitmapWrapper);
                     }
-
                 }
                 mPendingLoads.clear();
             }
@@ -248,17 +323,17 @@ public class AvatarView extends View {
             if (hasBorder) canvas.drawCircle(cx, cy, mOuterRadius, mPaintBorder);
 
             // Initials or bitmap
-            BitmapWrapper bitmapWrapper = mBitmapWrappers.get(entry.getKey());
+            Identity identity = entry.getKey();
+            BitmapWrapper bitmapWrapper = mIdentityBitmapWrapperHashMap.get(identity);
             Bitmap bitmap = (bitmapWrapper == null) ? null : bitmapWrapper.getBitmap();
-
-            if (bitmap == null) {
+            if (bitmap != null && identity.getAvatarImageUrl() != null) {
+                canvas.drawBitmap(bitmap, mContentRect.left, mContentRect.top, PAINT_BITMAP);
+            } else {
                 String initials = entry.getValue();
                 mPaintInitials.setTextSize(mTextSize);
                 mPaintInitials.getTextBounds(initials, 0, initials.length(), mRect);
                 canvas.drawCircle(cx, cy, contentRadius, mPaintBackground);
                 canvas.drawText(initials, cx - mRect.centerX(), cy - mRect.centerY() - 1f, mPaintInitials);
-            } else {
-                canvas.drawBitmap(bitmap, mContentRect.left, mContentRect.top, PAINT_BITMAP);
             }
 
             // Presence
@@ -273,137 +348,36 @@ public class AvatarView extends View {
         }
     }
 
-    protected void update() {
-        // Limit to mMaxAvatar valid avatars, prioritizing participants with avatars.
-        if (mParticipants.size() > mMaxAvatar) {
-            Queue<Identity> withAvatars = new LinkedList<>();
-            Queue<Identity> withoutAvatars = new LinkedList<>();
-            for (Identity participant : mParticipants) {
-                if (participant == null) continue;
-                if (!TextUtils.isEmpty(participant.getAvatarImageUrl())) {
-                    withAvatars.add(participant);
-                } else {
-                    withoutAvatars.add(participant);
-                }
-            }
-
-            mParticipants = new LinkedHashSet<>();
-            int numWithout = Math.min(mMaxAvatar - withAvatars.size(), withoutAvatars.size());
-            for (int i = 0; i < numWithout; i++) {
-                mParticipants.add(withoutAvatars.remove());
-            }
-            int numWith = Math.min(mMaxAvatar, withAvatars.size());
-            for (int i = 0; i < numWith; i++) {
-                mParticipants.add(withAvatars.remove());
-            }
-        }
-
-        Diff diff = diff(mInitials.keySet(), mParticipants);
-        List<BitmapWrapper> toLoad = new ArrayList<>();
-
-        List<BitmapWrapper> recyclableBitmap = new ArrayList<>();
-        for (Identity removed : diff.removed) {
-            mInitials.remove(removed);
-            BitmapWrapper bitmapWrapper = mBitmapWrappers.remove(removed);
-            if (bitmapWrapper != null) {
-                mViewModel.cancelImage(bitmapWrapper.getUrl());
-                recyclableBitmap.add(bitmapWrapper);
-            }
-        }
-
-        for (Identity added : diff.added) {
-            if (added == null) return;
-            mInitials.put(added, mViewModel.getInitialsForAvatarView(added));
-
-            final BitmapWrapper bitmapWrapper;
-            if (recyclableBitmap.isEmpty()) {
-                bitmapWrapper = new BitmapWrapper(added.getAvatarImageUrl(), this);
-            } else {
-                bitmapWrapper = recyclableBitmap.remove(0);
-            }
-            bitmapWrapper.setUrl(added.getAvatarImageUrl());
-            mBitmapWrappers.put(added, bitmapWrapper);
-            toLoad.add(bitmapWrapper);
-        }
-
-        // Cancel existing in case the size or anything else changed.
-        // TODO: make caching intelligent wrt sizing
-        for (Identity existing : diff.existing) {
-            if (existing == null) continue;
-            mInitials.put(existing, mViewModel.getInitialsForAvatarView(existing));
-
-            BitmapWrapper existingBitmaps = mBitmapWrappers.get(existing);
-            mViewModel.getImageCacheWrapper().cancelRequest(existingBitmaps.getUrl());
-            toLoad.add(existingBitmaps);
-        }
-
-        for (BitmapWrapper bitmapWrapper : mPendingLoads) {
-            if (!toLoad.contains(bitmapWrapper)) {
-                mViewModel.getImageCacheWrapper().cancelRequest(bitmapWrapper.getUrl());
-            }
-        }
-        mPendingLoads.clear();
-        mPendingLoads.addAll(toLoad);
-    }
-
     private void drawPresence(Canvas canvas, Identity identity) {
         Presence.PresenceStatus currentStatus = identity.getPresenceStatus();
         if (currentStatus == null) {
             return;
         }
 
+        boolean drawPresence = true;
+        boolean makeCircleHollow = false;
         switch (currentStatus) {
             case AVAILABLE:
-                drawAvailable(canvas);
+                mPresencePaint.setColor(Color.rgb(0x4F, 0xBF, 0x62));
                 break;
             case AWAY:
-                drawAway(canvas);
+                mPresencePaint.setColor(Color.rgb(0xF7, 0xCA, 0x40));
                 break;
             case OFFLINE:
-                drawOffline(canvas);
+                mPresencePaint.setColor(Color.rgb(0x99, 0x99, 0x9c));
+                makeCircleHollow = true;
                 break;
             case INVISIBLE:
-                drawInvisible(canvas);
+                mPresencePaint.setColor(Color.rgb(0x50, 0xC0, 0x62));
+                makeCircleHollow = true;
                 break;
             case BUSY:
-                drawBusy(canvas);
+                mPresencePaint.setColor(Color.rgb(0xE6, 0x44, 0x3F));
                 break;
             default:
-                drawDefault(canvas);
+                drawPresence = false;
                 break;
         }
-    }
-
-    public void drawAvailable(Canvas canvas) {
-        mPresencePaint.setColor(Color.rgb(0x4F, 0xBF, 0x62));
-        drawPresence(canvas, false, true);
-    }
-
-    public void drawAway(Canvas canvas) {
-        mPresencePaint.setColor(Color.rgb(0xF7, 0xCA, 0x40));
-        drawPresence(canvas, false, true);
-    }
-
-    public void drawOffline(Canvas canvas) {
-        mPresencePaint.setColor(Color.rgb(0x99, 0x99, 0x9c));
-        drawPresence(canvas, true, true);
-    }
-
-    public void drawInvisible(Canvas canvas) {
-        mPresencePaint.setColor(Color.rgb(0x50, 0xC0, 0x62));
-        drawPresence(canvas, true, true);
-    }
-
-    public void drawBusy(Canvas canvas) {
-        mPresencePaint.setColor(Color.rgb(0xE6, 0x44, 0x3F));
-        drawPresence(canvas, false, true);
-    }
-
-    public void drawDefault(Canvas canvas) {
-        drawPresence(canvas, false, false);
-    }
-
-    private void drawPresence(Canvas canvas,boolean makeCircleHollow,  boolean drawPresence) {
         if (drawPresence) {
             // Clear background + create border
             mBackgroundPaint.setColor(Color.WHITE);

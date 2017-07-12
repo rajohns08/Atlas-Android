@@ -1,14 +1,34 @@
 package com.layer.ui.util.imagecache;
 
-import android.widget.ImageView;
+import android.graphics.Bitmap;
 
 public interface ImageCacheWrapper {
 
-    void load(String targetUrl, String tag, int width, int height, ImageView imageView, Object... args);
+    /**
+     * Fetch Bitmap from any Image Caching Library
+     * Set the Bitmap on the BitmapWrapper in your implementation
+     * @see BitmapWrapper#setBitmap(Bitmap)
+     * Pass the BitmapWrapper to the onSuccess of Callback
+     * @see PicassoImageCacheWrapper for sample implementation
+     * @param bitmapWrapper
+     */
+    void fetchBitmap(BitmapWrapper bitmapWrapper, Callback callback);
 
-    void fetchBitmap(int width, int height, BitmapWrapper bitmapWrapper, Object... args);
+    /**
+     * Makes call to cancel BitMap request
+     * @see PicassoImageCacheWrapper for sample implementation
+     * @param bitmapWrapper
+     */
+    void cancelBitmap(BitmapWrapper bitmapWrapper);
 
-    void cancelRequest(ImageView imageView);
+    /**
+     * Callback on the ViewModel when the Bitmap is loaded from the ImageCache Library
+     * @see com.layer.ui.avatar.AvatarViewModel#fetchBitmap(BitmapWrapper)
+     *
+     */
+    interface Callback {
+        void onSuccess();
+        void onFailure();
+    }
 
-    void cancelRequest(Object tag);
 }
