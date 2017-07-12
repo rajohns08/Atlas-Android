@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -55,7 +56,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         super(context);
     }
 
-    public AtlasConversationsRecyclerView init(LayerClient layerClient, Picasso picasso, ConversationFormatter conversationFormatter) {
+    public AtlasConversationsRecyclerView init(LayerClient layerClient, Picasso picasso, ConversationFormatter conversationFormatter, @Nullable AtlasConversationsAdapter adapter) {
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         manager.setStackFromEnd(false);
         setLayoutManager(manager);
@@ -63,7 +64,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
         // Don't flash items when changing content
         setItemAnimator(new NoChangeAnimator());
 
-        mAdapter = new AtlasConversationsAdapter(getContext(), layerClient, picasso, conversationFormatter);
+        mAdapter = adapter == null ? new AtlasConversationsAdapter(getContext(), layerClient, picasso, conversationFormatter) : adapter;
         mAdapter.setStyle(conversationStyle);
         super.setAdapter(mAdapter);
         refresh();
@@ -72,7 +73,7 @@ public class AtlasConversationsRecyclerView extends RecyclerView {
     }
 
     public AtlasConversationsRecyclerView init(LayerClient layerClient, Picasso picasso) {
-        return init(layerClient, picasso, new ConversationFormatter());
+        return init(layerClient, picasso, new ConversationFormatter(), null);
     }
 
     @Override
