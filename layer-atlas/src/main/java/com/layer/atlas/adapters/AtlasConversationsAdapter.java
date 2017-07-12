@@ -59,19 +59,19 @@ public class AtlasConversationsAdapter extends RecyclerView.Adapter<AtlasConvers
     protected boolean mShouldShowAvatarPresence = true;
 
     public AtlasConversationsAdapter(Context context, LayerClient client, Picasso picasso, ConversationFormatter conversationFormatter) {
-        this(context, client, picasso, null, conversationFormatter);
+        this(context, client, picasso, null, conversationFormatter, null);
     }
 
-    public AtlasConversationsAdapter(Context context, LayerClient client, Picasso picasso, Collection<String> updateAttributes, ConversationFormatter conversationFormatter) {
+    public AtlasConversationsAdapter(Context context, LayerClient client, Picasso picasso, Collection<String> updateAttributes, ConversationFormatter conversationFormatter, Query<Conversation> query) {
         mConversationFormatter = conversationFormatter;
-        Query<Conversation> query = Query.builder(Conversation.class)
+        Query<Conversation> defaultQuery = Query.builder(Conversation.class)
                 /* Only show conversations we're still a member of */
                 .predicate(new Predicate(Conversation.Property.PARTICIPANT_COUNT, Predicate.Operator.GREATER_THAN, 1))
 
                 /* Sort by the last Message's receivedAt time */
                 .sortDescriptor(new SortDescriptor(Conversation.Property.LAST_MESSAGE_RECEIVED_AT, SortDescriptor.Order.DESCENDING))
                 .build();
-        mQueryController = client.newRecyclerViewController(query, updateAttributes, this);
+        mQueryController = client.newRecyclerViewController(query == null ? defaultQuery : query, updateAttributes, this);
         mLayerClient = client;
         mPicasso = picasso;
         mInflater = LayoutInflater.from(context);
